@@ -31,6 +31,6 @@ repl:
 	$(run) python
 
 %::
-	@$(textual) run $@.py
+	@$(python) $@.py
 
 ### Makefile ends here
