@@ -29,15 +29,16 @@ class Specificity( App[ None ] ):
         yield Static( id="result" )
 
     def on_button_pressed( self, event: Button.Pressed ) -> None:
-        find = dict(
-            button=( Button, Button ),
-            static=( Static, Static ),
-            button_str=( "Button", Button ),
-            static_str=( "Static", Static )
-        )
-        self.query_one( "#result", Static ).update(
-            f"I found {self.query_one( *find[ event.button.id ] )}"
-        )
+        if event.button.id is not None:
+            find = dict(
+                button=( Button, Button ),
+                static=( Static, Static ),
+                button_str=( "Button", Button ),
+                static_str=( "Static", Static )
+            )
+            self.query_one( "#result", Static ).update(
+                f"I found {self.query_one( *find[ event.button.id ] )}"
+            )
 
 if __name__ == "__main__":
     Specificity().run()
