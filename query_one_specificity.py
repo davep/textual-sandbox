@@ -13,7 +13,6 @@ from textual.containers import Vertical
 class Specificity( App[ None ] ):
 
     CSS = """
-    Screen { align: center middle; height: 50%; }
     Vertical { align: center middle; height: 50%; }
     Button { margin: 1; }
     Static { text-align: center; }
@@ -26,7 +25,7 @@ class Specificity( App[ None ] ):
             Button( "query_one( 'Button' )", id="button_str" ),
             Button( "query_one( 'Static' )", id="static_str" )
         )
-        yield Static( id="result" )
+        yield Vertical( Static( id="result" ) )
 
     def on_button_pressed( self, event: Button.Pressed ) -> None:
         if event.button.id is not None:
