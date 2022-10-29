@@ -1,4 +1,4 @@
-from textual.app import App, ComposeResult, RenderResult
+from textual.app import App, ComposeResult
 from textual.widgets import Static
 
 class Greetings(App[None]):
