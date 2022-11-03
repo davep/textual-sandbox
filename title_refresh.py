@@ -1,5 +1,5 @@
 from textual.app import App, ComposeResult
-from textual.widgets import Header
+from textual.widgets import Header, Static
 from textual.reactive import Reactive
 
 class TitleApp( App[ None ] ):
@@ -12,6 +12,8 @@ class TitleApp( App[ None ] ):
 
     def compose( self ) -> ComposeResult:
         yield Header()
+        for _ in range(450):
+            yield Static()
 
     def watch_title_count( self, new_count: int ) -> None:
         self.title = f"{self.TITLE} - This is a refresh: {self.title_count}"
