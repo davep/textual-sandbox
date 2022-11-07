@@ -30,6 +30,7 @@ class Issue1122( App[ None ] ):
     .box {
         height: 100%;
         border: round white;
+        transition: offset 500ms in_out_cubic;
     }
 
     #sidebar {
@@ -43,7 +44,6 @@ class Issue1122( App[ None ] ):
     #sidebar.shown {
         display: block;
         offset-x: 0;
-        transition: offset 500ms in_out_cubic;
     }
 
     #bottombar {
@@ -57,7 +57,6 @@ class Issue1122( App[ None ] ):
     #bottombar.shown {
         display: block;
         offset-y: 0;
-        transition: offset 500ms in_out_cubic;
     }
     """
 
