@@ -16,7 +16,7 @@ class EnterLeak( App[ None ] ):
            self.set_focus( self.query_one( "#second" ), Input )
            print( "on_input_submitted is on the #first input and is moving to the #second input" )
         else:
-           self.set_focus( self.query_one( "#second" ), Input )
+           self.set_focus( self.query_one( "#first" ), Input )
            print( "on_input_submitted is on the #second input and is moving to the #first input" )
 
     def on_button_pressed( self, event: Button.Pressed ) -> None:
