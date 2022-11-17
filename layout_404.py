@@ -24,7 +24,7 @@ class Layout404( App[ None ] ):
     }
 
     #right-top {
-        height: 100%;
+        height: 1fr;
     }
 
     #right-bottom {
