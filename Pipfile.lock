@@ -400,11 +400,11 @@
                 "dev"
             ],
             "hashes": [
-                "sha256:10aac2d244ef4a5aef89a38f9088382a5ce6914cec953d40a9527d729c300f53",
-                "sha256:53c836c978a8d8460efc4f097fc4748a3d68060b4c77d8fa80fdf6cca9a8198c"
+                "sha256:516bf4db05830e70f9806828610a1a00de08068d984d329dbecc8dbef5d71ab7",
+                "sha256:d1925f9f019858beaabda8a87cb87fb57cbbf321e948fc3b28d7085e83c8f5ab"
             ],
             "index": "pypi",
-            "version": "==0.4.0"
+            "version": "==0.5.0"
         },
         "yarl": {
             "hashes": [
