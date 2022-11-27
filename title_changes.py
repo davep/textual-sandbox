@@ -2,17 +2,9 @@
 
 from textual.app import App, ComposeResult
 from textual.widgets import Header, Footer, Button
+from textual.screen import Screen
 
-class HeaderTest( App[ None ] ):
-
-    TITLE = "This is the title"
-    SUB_TITLE = "This is the sub-title"
-
-    CSS = """
-    Screen {
-        align: center middle;
-    }
-    """
+class Main( Screen ):
 
     counter = 0
 
@@ -23,8 +15,18 @@ class HeaderTest( App[ None ] ):
 
     def on_button_pressed( self, _: Button.Pressed ) -> None:
         self.counter += 1
-        self.title = f"This is title update {self.counter}"
-        self.sub_title = f"This is sub-title update {self.counter}"
+        self.app.title = f"This is title update {self.counter}"
+        self.app.sub_title = f"This is sub-title update {self.counter}"
+
+class HeaderTest( App[ None ] ):
+
+    TITLE     = "This is the title"
+    SUB_TITLE = "This is the sub-title"
+    CSS       = "Main { align: center middle;}"
+    SCREENS   = { "main": Main }
+
+    def on_mount( self ):
+        self.push_screen( "main" )
 
 if __name__ == "__main__":
     HeaderTest().run()
