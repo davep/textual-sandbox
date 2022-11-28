@@ -9,4 +9,9 @@ about, or help with, Textual, please head over to the [main help
 page](https://textual.textualize.io/help/) for details on all the help
 resources available.
 
+**PLEASE NOTE:** This is my own sandbox: still will move, still will break,
+stuff will go away. Perhaps the whole repo will go away.
+
+Ain't nowt to do wi't'Textual repo.
+
 [//]: # (README.md ends here)
