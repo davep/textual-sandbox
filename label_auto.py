@@ -63,5 +63,12 @@ class LabelAuto( App[ None ] ):
             Label( "width: 1fr;", classes="one-fr" )
         )
 
+    def on_mount( self ) -> None:
+        self.call_after_refresh( self.add_actual_width )
+
+    def add_actual_width( self ) -> None:
+        for label in self.query( Label ):
+            label.update( f"{label.renderable} ({label.styles.width})" )
+
 if __name__ == "__main__":
     LabelAuto().run()
