@@ -1,3 +1,5 @@
+"""https://github.com/Textualize/textual/discussions/1321"""
+
 from __future__ import annotations  # noqa
 
 from rich.console import Console
