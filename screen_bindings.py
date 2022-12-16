@@ -6,7 +6,7 @@ from textual.reactive import reactive
 
 class BinaryScreen( Screen ):
 
-    counter = reactive( 0, init=False )
+    counter = reactive( 0 )
 
     BINDINGS = [
         Binding( "h", "app.switch_screen( 'hex' )", "Switch to the hex counter" ),
@@ -15,7 +15,7 @@ class BinaryScreen( Screen ):
 
     def compose( self ) -> ComposeResult:
         yield Header()
-        yield Static( "Press the up arrow to get counting" )
+        yield Static()
         yield Footer()
 
     def action_up( self ) -> None:
@@ -26,7 +26,7 @@ class BinaryScreen( Screen ):
 
 class HexScreen( Screen ):
 
-    counter = reactive( 0, init=True )
+    counter = reactive( 0 )
 
     BINDINGS = [
         Binding( "b", "app.switch_screen( 'binary' )", "Switch to the binary counter" ),
@@ -35,7 +35,7 @@ class HexScreen( Screen ):
 
     def compose( self ) -> ComposeResult:
         yield Header()
-        yield Static( "Press the up arrow to get counting" )
+        yield Static()
         yield Footer()
 
     def action_up( self ) -> None:
