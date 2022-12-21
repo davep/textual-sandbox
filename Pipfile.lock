@@ -126,11 +126,11 @@
         },
         "attrs": {
             "hashes": [
-                "sha256:29adc2665447e5191d0e7c568fde78b21f9672d344281d0c6e1ab085429b22b6",
-                "sha256:86efa402f67bf2df34f51a335487cf46b1ec130d02b8d39fd248abfd30da551c"
+                "sha256:29e95c7f6778868dbd49170f98f8818f78f3dc5e0e37c0b1f474e3561b240836",
+                "sha256:c9227bfc2f01993c03f68db37d1d15c9690188323c067c641f1a35ca58185f99"
             ],
-            "markers": "python_version >= '3.5'",
-            "version": "==22.1.0"
+            "markers": "python_version >= '3.6'",
+            "version": "==22.2.0"
         },
         "charset-normalizer": {
             "hashes": [
@@ -415,11 +415,11 @@
                 "dev"
             ],
             "hashes": [
-                "sha256:08236279ed0b53d264f7ac61fd346cace7a49fcc1682ea4d195c3045ac0715bc",
-                "sha256:32e901085aaf217290025c4d934c414ef7e203da7d334b80333240e9b867e771"
+                "sha256:bf96a2d4270e9f34e4d18c499eb99c377d0ab035578984d45e692b9dbef1cf12",
+                "sha256:f7ae3b2726204a62df22798a9d9aa7465ae16e2bb417fa118f4d07bc4723ff4f"
             ],
             "index": "pypi",
-            "version": "==0.6.0"
+            "version": "==0.7.0"
         },
         "yarl": {
             "hashes": [
