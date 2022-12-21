@@ -13,7 +13,7 @@ class ShowHideApp( App[ None ] ):
     }
     Button {
        width: 100%;
-       height: 1fr;
+       height: 3;
     }
     Label {
         width: 100%;
@@ -46,7 +46,6 @@ class ShowHideApp( App[ None ] ):
         if event.button.id == "via-code":
             label = self.query_one( "#via-code-label" )
             label.styles.visibility = "visible" if label.styles.visibility == "hidden" else "hidden"
-            self.refresh(layout=True)
         elif event.button.id == "via-classes":
             self.query_one( "#via-classes-label" ).toggle_class( "hidden" )
 
