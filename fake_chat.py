@@ -75,7 +75,7 @@ class FakeChatApp( App[ None ] ):
     the various releases.""".lower().split() ) )
 
     def action_log( self ):
-        if self.focused is not None:
+        if isinstance( self.focused, TextLog ):
             self.focused.write( " ".join( sample( self.TEXT, 50 ) ) )
 
 if __name__ == "__main__":
