@@ -66,15 +66,15 @@ class ScreenAndDomApp( App[ None ] ):
     def refresh_panels( self ) -> None:
         self.query_one( DOMView ).update( self.tree )
         self.query_one( ScreenView ).update( Pretty( self.installed_screens ) )
-        self.query_one( QueryResult ).update( Pretty( list( self.query( "#only-on-child" ) ) ) )
+        self.query_one( QueryResult ).update( Pretty( [ ( node, node.screen ) for node in self.query( "#only-on-child" ) ] ) )
 
     def on_mount( self ) -> None:
         self.refresh_panels()
 
-    def action_install( self ) -> None:
+    async def action_install( self ) -> None:
         self.screen_names.append( f"child-{ self.screen_id}" )
         self.screen_id += 1
-        self.install_screen( ChildScreen(), self.screen_names[ -1 ] )
+        await self.install_screen( ChildScreen(id=self.screen_names[ -1 ]), self.screen_names[ -1 ] )
         self.refresh_panels()
 
     def action_uninstall( self ) -> None:
