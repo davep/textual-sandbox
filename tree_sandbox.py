@@ -15,7 +15,10 @@ class TreeSandbox( App[ None ] ):
 
     BINDINGS = [
         *[ Binding( str( n ), f"select( {n} )", f"Select {n}" ) for n in range( 10 ) ],
-        *[ Binding( f"f{n}", f"expand( {n} )", f"Expand {n}" ) for n in range( 10 ) ]
+        *[ Binding( f"f{n}", f"expand( {n} )", f"Expand {n}" ) for n in range( 10 ) ],
+        Binding( "e", "expand_all", "Expand All" ),
+        Binding( "c", "collapse_all", "Collapse All" ),
+        Binding( "t", "toggle_all", "Toggle All" ),
     ]
 
 
@@ -38,6 +41,11 @@ class TreeSandbox( App[ None ] ):
                 self.nodes[ -1 ].add_leaf(
                     f"Child node {child}"
                 )
+        deeply = 0
+        node   = self.nodes[ 0 ]
+        while deeply < 50:
+            node = node.add( "We must go deeper" )
+            deeply += 1
         self.sandbox.focus()
 
     def action_select( self, node: int ) -> None:
@@ -48,6 +56,19 @@ class TreeSandbox( App[ None ] ):
             self.nodes[ node ].collapse()
         else:
             self.nodes[ node ].expand()
+
+    def action_expand_all( self ) -> None:
+        """Expand all"""
+        self.sandbox.root.expand( expand_all=True )
+
+    def action_collapse_all( self ) -> None:
+        """Collapse all"""
+        self.sandbox.root.collapse( collapse_all=True )
+
+    def action_toggle_all( self ) -> None:
+        """Toggle all"""
+        self.sandbox.root.toggle( toggle_all=True )
+
 
 if __name__ == "__main__":
     TreeSandbox().run()
