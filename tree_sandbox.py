@@ -59,15 +59,18 @@ class TreeSandbox( App[ None ] ):
 
     def action_expand_all( self ) -> None:
         """Expand all"""
-        self.sandbox.root.expand( expand_all=True )
+        if self.sandbox.cursor_node:
+            self.sandbox.cursor_node.expand( expand_all=True )
 
     def action_collapse_all( self ) -> None:
         """Collapse all"""
-        self.sandbox.root.collapse( collapse_all=True )
+        if self.sandbox.cursor_node:
+            self.sandbox.cursor_node.collapse( collapse_all=True )
 
     def action_toggle_all( self ) -> None:
         """Toggle all"""
-        self.sandbox.root.toggle( toggle_all=True )
+        if self.sandbox.cursor_node:
+            self.sandbox.cursor_node.toggle( toggle_all=True )
 
 
 if __name__ == "__main__":
