@@ -1,5 +1,6 @@
 from textual.app     import App, ComposeResult
-from textual.widgets import Header, Footer, Tree, TreeNode
+from textual.widgets import Header, Footer, Tree
+from textual.widgets.tree import TreeNode
 from textual.binding import Binding
 
 class Sandbox( Tree[ None ] ):
@@ -60,17 +61,17 @@ class TreeSandbox( App[ None ] ):
     def action_expand_all( self ) -> None:
         """Expand all"""
         if self.sandbox.cursor_node:
-            self.sandbox.cursor_node.expand( expand_all=True )
+            self.sandbox.cursor_node.expand_all()
 
     def action_collapse_all( self ) -> None:
         """Collapse all"""
         if self.sandbox.cursor_node:
-            self.sandbox.cursor_node.collapse( collapse_all=True )
+            self.sandbox.cursor_node.collapse_all()
 
     def action_toggle_all( self ) -> None:
         """Toggle all"""
         if self.sandbox.cursor_node:
-            self.sandbox.cursor_node.toggle( toggle_all=True )
+            self.sandbox.cursor_node.toggle_all()
 
 
 if __name__ == "__main__":
