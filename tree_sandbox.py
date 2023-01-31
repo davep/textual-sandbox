@@ -13,11 +13,16 @@ class TreeSandbox( App[ None ] ):
     Tree {
         width: 1fr;
         height: 2fr;
+        border: round darkred;
     }
 
     TextLog {
         height: 1fr;
-        border-top: wide red;
+        border: round darkred;
+    }
+
+    *:focus {
+        border: double green;
     }
     """
 
