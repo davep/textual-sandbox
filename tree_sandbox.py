@@ -1,7 +1,8 @@
-from textual.app     import App, ComposeResult
-from textual.widgets import Header, Footer, Tree
+from textual.app          import App, ComposeResult
+from textual.containers   import Vertical
+from textual.widgets      import Header, Footer, Tree, TextLog
 from textual.widgets.tree import TreeNode
-from textual.binding import Binding
+from textual.binding      import Binding
 
 class Sandbox( Tree[ None ] ):
     pass
@@ -11,6 +12,12 @@ class TreeSandbox( App[ None ] ):
     CSS = """
     Tree {
         width: 1fr;
+        height: 2fr;
+    }
+
+    TextLog {
+        height: 1fr;
+        border-top: wide red;
     }
     """
 
@@ -30,7 +37,7 @@ class TreeSandbox( App[ None ] ):
     def compose( self ) -> ComposeResult:
         yield Header()
         self.sandbox = Sandbox( "Tree Sandbox" )
-        yield self.sandbox
+        yield Vertical( self.sandbox, TextLog() )
         yield Footer()
 
     def on_mount( self ) -> None:
@@ -73,6 +80,17 @@ class TreeSandbox( App[ None ] ):
         if self.sandbox.cursor_node:
             self.sandbox.cursor_node.toggle_all()
 
+    def on_tree_node_collapsed( self, event: Tree.NodeCollapsed ) -> None:
+        self.query_one( TextLog ).write( ( event, event.node ) )
+
+    def on_tree_node_expanded( self, event: Tree.NodeExpanded ) -> None:
+        self.query_one( TextLog ).write( ( event, event.node ) )
+
+    def on_tree_node_highlighted( self, event: Tree.NodeHighlighted ) -> None:
+        self.query_one( TextLog ).write( ( event, event.node ) )
+
+    def on_tree_node_selected( self, event: Tree.NodeSelected ) -> None:
+        self.query_one( TextLog ).write( ( event, event.node ) )
 
 if __name__ == "__main__":
     TreeSandbox().run()
