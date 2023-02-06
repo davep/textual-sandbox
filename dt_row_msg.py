@@ -4,10 +4,6 @@ from textual.widgets    import Header, Footer, TextLog, DataTable
 
 class TestDataTable( App[ None ] ):
 
-    BINDINGS = (
-        ("r", "row_mode", "Select Rows"),
-    )
-
     CSS = """
     DataTable {
         height: 1fr;
@@ -30,20 +26,19 @@ class TestDataTable( App[ None ] ):
 
     def compose(self) -> ComposeResult:
         yield Header()
-        yield Vertical( DataTable(), TextLog() )
+        self.dt = DataTable()
+        yield Vertical( self.dt, TextLog() )
         yield Footer()
 
     def on_mount(self) -> None:
-        self.dt = self.query_one(DataTable)
-        self.dt.add_columns('one', 'two')
-        self.dt.add_rows([['1', '2'], ['a', 'b']])
+        self.dt.cursor_type = "row"
+        self.dt.add_columns( "Row", *[ f"Column {n}" for n in range( 10 ) ] )
+        for row in range( 50 ):
+            self.dt.add_row( *[ str( row ), *[ str( n ) for n in range( 10 ) ] ] )
+        self.dt.focus()
 
     async def on_data_table_row_selected(self, row_selected: DataTable.RowSelected):
         self.query_one( TextLog ).write( row_selected )
-
-    async def action_row_mode(self) -> None:
-        self.dt.show_cursor = True
-        self.dt.cursor_type = "row"
 
 if __name__ == "__main__":
     TestDataTable().run()
