@@ -33,6 +33,14 @@ class DisableTestingApp( App[ None ] ):
     #inputs {
         height: auto;
     }
+
+    *:disabled {
+        border: solid red;
+    }
+
+    *:enabled {
+        border: solid green;
+    }
     """
 
     @property
