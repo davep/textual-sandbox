@@ -83,7 +83,7 @@ class DisableTestingApp( App[ None ] ):
         # container and all the children will follow. For now though, as we
         # work through this, we'll do each child in turn.
         if event.button.id in ( "enable", "disable" ):
-            for child in self.query( "Grid > *" ):
+            for child in self.query( "Grid *" ):
                 if hasattr( child, "disabled" ):
                     self.log.debug( f"Child {child} can be disabled" )
                     child.disabled = event.button.id == "disable"
