@@ -71,10 +71,10 @@ class ScreenAndDomApp( App[ None ] ):
     def on_mount( self ) -> None:
         self.refresh_panels()
 
-    async def action_install( self ) -> None:
+    def action_install( self ) -> None:
         self.screen_names.append( f"child-{ self.screen_id}" )
         self.screen_id += 1
-        await self.install_screen( ChildScreen(id=self.screen_names[ -1 ]), self.screen_names[ -1 ] )
+        self.install_screen( ChildScreen(id=self.screen_names[ -1 ]), self.screen_names[ -1 ] )
         self.refresh_panels()
 
     def action_uninstall( self ) -> None:
