@@ -1,8 +1,12 @@
 from textual.app          import App, ComposeResult
 from textual.containers   import Vertical
 from textual.widgets      import Header, Footer, Tree, TextLog
-from textual.widgets.tree import TreeNode
 from textual.binding      import Binding
+
+try:
+    from textual.widgets.tree import TreeNode
+except ImportError:
+    from textual.widgets import TreeNode
 
 class Sandbox( Tree[ None ] ):
     pass
