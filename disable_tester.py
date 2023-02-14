@@ -87,16 +87,11 @@ class DisableTestingApp( App[ None ] ):
         yield Footer()
 
     def on_button_pressed( self, event: Button.Pressed ) -> None:
-        # Eventually this will be able to just set enabled/disabled on the
-        # container and all the children will follow. For now though, as we
-        # work through this, we'll do each child in turn.
         if event.button.id in ( "enable", "disable" ):
-            for child in self.query( "Grid *" ):
-                if hasattr( child, "disabled" ):
-                    self.log.debug( f"Child {child} can be disabled" )
-                    child.disabled = event.button.id == "disable"
-                else:
-                    self.log.debug( f"Child {child} CAN NOT BE disabled" )
+            grid = self.query_one( Grid )
+            self.log.debug( grid.disabled )
+            grid.disabled = event.button.id == "disable"
+            self.log.debug( grid.disabled )
 
 if __name__ == "__main__":
     DisableTestingApp().run()
