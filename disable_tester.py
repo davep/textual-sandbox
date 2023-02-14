@@ -1,11 +1,27 @@
 from textual.app        import App, ComposeResult
 from textual.containers import Horizontal, Vertical, Grid
-from textual.widgets    import Header, Footer, Input, Button, Tree, DataTable
+from textual.widgets    import (
+    Header, Footer, Input, Button, Tree, DataTable, Static, ListView, ListItem, Label
+)
+from textual.events     import MouseMove
 
 try:
     from textual.widgets import Switch
 except ImportError:
     from textual.widgets import Checkbox as Switch
+
+class MouseWatcher( Static ):
+
+    DEFAULT_CSS = """
+    MouseWatcher {
+        height: 100%;
+        width: 100%;
+        background: green;
+    }
+    """
+
+    def on_mouse_move( self, event: MouseMove ) -> None:
+        self.update( repr( event ) )
 
 class DisableTestingApp( App[ None ] ):
 
@@ -34,12 +50,8 @@ class DisableTestingApp( App[ None ] ):
         height: auto;
     }
 
-    *:disabled {
-        border: solid red;
-    }
-
-    *:enabled {
-        border: solid green;
+    ListView {
+        height: 100%;
     }
     """
 
@@ -61,6 +73,13 @@ class DisableTestingApp( App[ None ] ):
         )
         return data_table
 
+    @property
+    def list_view( self ) -> ListView:
+        return ListView(
+            *[ ListItem( Label( f"This is list item {n}" ) ) for n in range( 20 ) ]
+        )
+
+
     def compose( self ) -> ComposeResult:
         yield Header()
         yield Vertical(
@@ -81,7 +100,9 @@ class DisableTestingApp( App[ None ] ):
                 ),
                 self.tree,
                 self.data_table,
-                Switch()
+                Switch(),
+                MouseWatcher(),
+                self.list_view
             )
         )
         yield Footer()
