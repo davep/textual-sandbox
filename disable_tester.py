@@ -3,15 +3,10 @@ from textual.containers import Horizontal, Vertical, Grid
 from textual.widgets    import (
     Header, Footer, Input, Button, Tree, DataTable,
     Static, ListView, ListItem, Label, DirectoryTree,
-    TextLog
+    TextLog, Switch
 )
 from textual.events     import MouseMove
 from textual.css.query  import NoMatches
-
-try:
-    from textual.widgets import Switch
-except ImportError:
-    from textual.widgets import Checkbox as Switch
 
 class MouseWatcher( Static ):
 
