@@ -116,10 +116,7 @@ class DisableTestingApp( App[ None ] ):
 
     def on_button_pressed( self, event: Button.Pressed ) -> None:
         if event.button.id in ( "enable", "disable" ):
-            grid = self.query_one( Grid )
-            self.log.debug( grid.disabled )
-            grid.disabled = event.button.id == "disable"
-            self.log.debug( grid.disabled )
+            self.query_one( Grid ).disabled = event.button.id == "disable"
 
 if __name__ == "__main__":
     DisableTestingApp().run()
