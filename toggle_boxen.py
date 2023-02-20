@@ -1,5 +1,5 @@
 from textual.app        import App, ComposeResult
-from textual.containers import Vertical
+from textual.containers import Vertical, Horizontal
 from textual.message    import Message
 from textual.widgets    import Header, Footer, Checkbox, RadioButton, RadioSet, Button, TextLog
 from textual.css.query  import NoMatches
@@ -8,29 +8,44 @@ class ToggleTesterApp( App[ None ] ):
 
     CSS = """
     Vertical {
-        border: solid red;
+        border: round #666;
         height: 1fr;
-        width: 30%;
+        width: 1fr;
     }
 
     TextLog {
         border: round red;
         height: 3fr;
     }
+
+    RadioSet {
+        border: round #666;
+        width: 1fr;
+    }
+
+    RadioSet.grid {
+        layout: grid;
+        grid-size: 5 10;
+    }
     """
 
     def compose( self ) -> ComposeResult:
         yield Header()
-        yield Vertical(
-            Checkbox( "Checkbox 1" ),
-            Checkbox( "Checkbox 2", button_first=False ),
-            Checkbox( "Checkbox 3" ),
-            Checkbox( "Checkbox 4", id="changer" ),
+        yield Horizontal(
+            Vertical(
+                Checkbox( "Checkbox 1" ),
+                Checkbox( "Checkbox 2", button_first=False ),
+                Checkbox( "Checkbox 3" ),
+                Checkbox( "Checkbox 4", id="changer" ),
+            ),
             RadioSet(
                 RadioButton("Radio Button 1", id="btn1"),
                 RadioButton("Radio Button 2", id="btn2"),
                 RadioButton("Radio Button 3", id="btn3"),
                 RadioButton("Radio Button 4", id="btn4"),
+            ),
+            RadioSet(
+                *[ str( n ) for n in range( 50 ) ], classes="grid"
             ),
         )
         yield Button( "Change" )
