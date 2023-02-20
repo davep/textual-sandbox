@@ -1,7 +1,7 @@
 from textual.app        import App, ComposeResult
 from textual.containers import Vertical
 from textual.message    import Message
-from textual.widgets    import Header, Footer, Checkbox, RadioButton, Button, TextLog
+from textual.widgets    import Header, Footer, Checkbox, RadioButton, RadioSet, Button, TextLog
 from textual.css.query  import NoMatches
 
 class ToggleTesterApp( App[ None ] ):
@@ -26,10 +26,12 @@ class ToggleTesterApp( App[ None ] ):
             Checkbox( "Checkbox 2", button_first=False ),
             Checkbox( "Checkbox 3" ),
             Checkbox( "Checkbox 4", id="changer" ),
-            RadioButton( "Radio Button 1" ),
-            RadioButton( "Radio Button 2" ),
-            RadioButton( "Radio Button 3" ),
-            RadioButton( "Radio Button 4" ),
+            RadioSet(
+                RadioButton("Radio Button 1", id="btn1"),
+                RadioButton("Radio Button 2", id="btn2"),
+                RadioButton("Radio Button 3", id="btn3"),
+                RadioButton("Radio Button 4", id="btn4"),
+            ),
         )
         yield Button( "Change" )
         yield TextLog()
@@ -38,7 +40,7 @@ class ToggleTesterApp( App[ None ] ):
     async def _on_message( self, event: Message ) -> None:
         await super()._on_message( event )
         try:
-            if isinstance( event, Checkbox.Changed ):
+            if isinstance( event, ( Checkbox.Changed, RadioButton.Changed, Checkbox.Selected, RadioButton.Selected ) ):
                 self.query_one( TextLog ).write( f"For {event._handler_name} -- {repr( event )}" )
         except NoMatches:
             pass
