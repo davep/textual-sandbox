@@ -55,7 +55,10 @@ class ToggleTesterApp( App[ None ] ):
     async def _on_message( self, event: Message ) -> None:
         await super()._on_message( event )
         try:
-            if isinstance( event, ( Checkbox.Changed, RadioButton.Changed, Checkbox.Selected, RadioButton.Selected ) ):
+            if isinstance( event, (
+                    Checkbox.Changed, RadioButton.Changed, Checkbox.Selected, RadioButton.Selected,
+                    RadioSet.Changed
+            ) ):
                 self.query_one( TextLog ).write( f"For {event._handler_name} -- {repr( event )}" )
         except NoMatches:
             pass
