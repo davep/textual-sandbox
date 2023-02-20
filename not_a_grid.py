@@ -7,33 +7,30 @@ from textual.widgets    import Header, Footer, TextLog, Input
 class NotAGridLayout( App[ None ] ):
 
     CSS = """
-    .left, .middle, .right {
+    Horizontal > * {
         border: round #777;
     }
 
-    .left, .right {
-        width: 1fr;
-    }
-
-    .middle {
+    Horizontal > Vertical {
         width: 2fr;
     }
 
     TextLog {
         height: 1fr;
+        width: 1fr;
     }
     """
 
     def compose( self ) -> ComposeResult:
         yield Header()
         yield Vertical(
-            Horizontal( TextLog( classes="left" ), TextLog( classes="middle" ), TextLog( classes="right" ) ),
+            Horizontal( TextLog(), TextLog(), TextLog() ),
             Horizontal(
-                TextLog( classes="left" ),
-                Vertical( TextLog(), Input( placeholder="Here's the Input" ), classes="middle" ),
-                TextLog( classes="right" )
+                TextLog(),
+                Vertical( TextLog(), Input( placeholder="Here's the Input" ) ),
+                TextLog()
             ),
-            Horizontal( TextLog( classes="left" ), TextLog( classes="middle" ), TextLog( classes="right" ) ),
+            Horizontal( TextLog(), TextLog(), TextLog() ),
         )
         yield Footer()
 
