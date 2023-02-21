@@ -50,12 +50,11 @@ class ToggleTesterApp( App[ None ] ):
                 yield Checkbox( "Checkbox 2", button_first=False )
                 yield Checkbox( "Checkbox 3" )
                 yield Checkbox( "Checkbox 4", id="changer" )
-            yield RadioSet(
-                RadioButton("Radio Button 1", id="btn1"),
-                RadioButton("Radio Button 2", id="btn2"),
-                RadioButton("Radio Button 3", id="btn3"),
-                RadioButton("Radio Button 4", id="btn4"),
-            )
+            with RadioSet():
+                yield RadioButton("Radio Button 1", id="btn1")
+                yield RadioButton("Radio Button 2", id="btn2")
+                yield RadioButton("Radio Button 3", id="btn3")
+                yield RadioButton("Radio Button 4", id="btn4")
             yield RadioSet( *[ str( n ) for n in range( 50 ) ], classes="grid" )
         with Horizontal( id="buttons" ):
             yield Button( "Change", id="change" )
