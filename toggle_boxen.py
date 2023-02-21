@@ -11,6 +11,7 @@ class ToggleTesterApp( App[ None ] ):
         border: round #666;
         height: 1fr;
         width: 1fr;
+        background: $panel;
     }
 
     TextLog {
