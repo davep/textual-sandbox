@@ -6,6 +6,8 @@ from textual.css.query  import NoMatches
 
 class ToggleTesterApp( App[ None ] ):
 
+    BINDINGS = [ ( "d", "app.toggle_dark", "Toggle Dark Mode" ) ]
+
     CSS = """
     Vertical {
         border: round #666;
