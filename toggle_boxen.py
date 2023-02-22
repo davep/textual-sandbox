@@ -3,7 +3,7 @@ from rich.text import Text
 from textual.app        import App, ComposeResult
 from textual.containers import Vertical, Horizontal
 from textual.message    import Message
-from textual.widgets    import Header, Footer, Checkbox, RadioButton, RadioSet, Button, TextLog
+from textual.widgets    import Header, Footer, Checkbox, RadioButton, RadioSet, Button, TextLog, Label
 from textual.css.query  import NoMatches
 
 class ToggleTesterApp( App[ None ] ):
@@ -26,6 +26,7 @@ class ToggleTesterApp( App[ None ] ):
     RadioSet {
         border: round #666;
         width: 1fr;
+        background: $panel;
     }
 
     RadioSet.grid {
@@ -39,8 +40,18 @@ class ToggleTesterApp( App[ None ] ):
     }
 
     #buttons > Button {
-        margin-left: 1;
-        margin-right: 1;
+        width: 100%;
+    }
+
+    #info {
+        height: auto;
+        background: $panel;
+    }
+
+    #info > Label {
+        width: 1fr;
+        height: 1;
+        text-align: center;
     }
     """
 
@@ -51,15 +62,18 @@ class ToggleTesterApp( App[ None ] ):
                 yield Checkbox( "Checkbox 1" )
                 yield Checkbox( Text.from_markup("Check[b][red]b[/][green]o[/][blue]x[/][/] 2"), button_first=False )
                 yield Checkbox( "Checkbox 3" )
-                yield Checkbox( "Checkbox 4", id="changer" )
-            with RadioSet():
+                yield Checkbox( "Checkbox 4" )
+            with RadioSet(id="rs1"):
                 yield RadioButton("Radio Button 1", id="btn1")
                 yield RadioButton("Radio Button 2", id="btn2")
                 yield RadioButton("Radio Button 3", id="btn3")
                 yield RadioButton("Radio Button 4", id="btn4")
-            yield RadioSet( *[ f"[red]R[/][green]G[/][blue]B[/][i]{n}[/]" for n in range( 50 ) ], classes="grid" )
+            yield RadioSet( *[ f"[red]R[/][green]G[/][blue]B[/][i]{n}[/]" for n in range( 50 ) ], id="rs2", classes="grid" )
+        with Horizontal( id="info" ):
+            yield Label()
+            yield Label(id="rs1")
+            yield Label(id="rs2")
         with Horizontal( id="buttons" ):
-            yield Button( "Change", id="change" )
             yield Button( "Toggle Disabled", id="disabled" )
         yield TextLog()
         yield Footer()
@@ -85,6 +99,7 @@ class ToggleTesterApp( App[ None ] ):
             self.query_one( ".grid", RadioSet ).disabled = not self.query_one( ".grid", RadioSet ).disabled
 
     def on_radio_set_changed( self, event: RadioSet.Changed ):
+        self.query_one( f"Label#{event.input.id}", Label ).update( f"Pressed: {event.input.pressed_index}" )
         self.query_one( TextLog ).write( f"> {event!r}" )
         self.query_one( TextLog ).write( f">> {event.input.pressed_index} {event.input.pressed_button}" )
 
