@@ -1,3 +1,5 @@
+from rich.text import Text
+
 from textual.app        import App, ComposeResult
 from textual.containers import Vertical, Horizontal
 from textual.message    import Message
@@ -47,7 +49,7 @@ class ToggleTesterApp( App[ None ] ):
         with Horizontal():
             with Vertical():
                 yield Checkbox( "Checkbox 1" )
-                yield Checkbox( "Checkbox 2", button_first=False )
+                yield Checkbox( Text.from_markup("Check[b][red]b[/][green]o[/][blue]x[/][/] 2"), button_first=False )
                 yield Checkbox( "Checkbox 3" )
                 yield Checkbox( "Checkbox 4", id="changer" )
             with RadioSet():
@@ -55,7 +57,7 @@ class ToggleTesterApp( App[ None ] ):
                 yield RadioButton("Radio Button 2", id="btn2")
                 yield RadioButton("Radio Button 3", id="btn3")
                 yield RadioButton("Radio Button 4", id="btn4")
-            yield RadioSet( *[ str( n ) for n in range( 50 ) ], classes="grid" )
+            yield RadioSet( *[ f"[red]R[/][green]G[/][blue]B[/][i]{n}[/]" for n in range( 50 ) ], classes="grid" )
         with Horizontal( id="buttons" ):
             yield Button( "Change", id="change" )
             yield Button( "Toggle Disabled", id="disabled" )
@@ -66,8 +68,7 @@ class ToggleTesterApp( App[ None ] ):
         await super()._on_message( event )
         try:
             if isinstance( event, (
-                    Checkbox.Changed, RadioButton.Changed, Checkbox.Selected, RadioButton.Selected,
-                    RadioSet.Changed
+                    Checkbox.Changed, RadioButton.Changed, RadioSet.Changed
             ) ):
                 self.query_one( TextLog ).write( f"For {event._handler_name} -- {repr( event )}" )
         except NoMatches:
