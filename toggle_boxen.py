@@ -23,10 +23,9 @@ class ToggleTesterApp( App[ None ] ):
         height: 3fr;
     }
 
-    RadioSet {
-        border: round #666;
+    Horizontal > * {
         width: 1fr;
-        background: $panel;
+        height: 1fr;
     }
 
     RadioSet.grid {
@@ -57,12 +56,13 @@ class ToggleTesterApp( App[ None ] ):
 
     def compose( self ) -> ComposeResult:
         yield Header()
+        yield RadioSet(":apple:"*50, ":car:"*50, ":pear:"*50)
         with Horizontal():
             with Vertical():
-                yield Checkbox( "Checkbox 1" )
+                yield Checkbox( "Checkbox 1\nLine 2\nLine 3" )
                 yield Checkbox( Text.from_markup("Check[b][red]b[/][green]o[/][blue]x[/][/] 2"), button_first=False )
                 yield Checkbox( "Checkbox 3" )
-                yield Checkbox( "Checkbox 4" )
+                yield Checkbox( "Checkbox 4", value=True )
             with RadioSet(id="rs1"):
                 yield RadioButton("Radio Button 1", id="btn1")
                 yield RadioButton("Radio Button 2", id="btn2")
@@ -99,7 +99,8 @@ class ToggleTesterApp( App[ None ] ):
             self.query_one( ".grid", RadioSet ).disabled = not self.query_one( ".grid", RadioSet ).disabled
 
     def on_radio_set_changed( self, event: RadioSet.Changed ):
-        self.query_one( f"Label#{event.input.id}", Label ).update( f"Pressed: {event.input.pressed_index}" )
+        if event.input.id:
+            self.query_one( f"Label#{event.input.id}", Label ).update( f"Pressed: {event.input.pressed_index}" )
         self.query_one( TextLog ).write( f"> {event!r}" )
         self.query_one( TextLog ).write( f">> {event.input.pressed_index} {event.input.pressed_button}" )
 
