@@ -700,11 +700,11 @@
                 "dev"
             ],
             "hashes": [
-                "sha256:908eca1c93615297ebf8db51566705ea6b5a0230d779a5c7ca141dd619bf4288",
-                "sha256:da0d19897b9b124565ad0eba7eb587e6273351faf89d132c7aea2263c028f738"
+                "sha256:976226eb7e56e31e70acff0d4146d8c96a0cd35613769c7f9e0b63df28ee6902",
+                "sha256:f826b422e39e4ca188307336f6a4f4b0a89834dab2628430b613084c70799dfd"
             ],
             "index": "pypi",
-            "version": "==0.12.0"
+            "version": "==0.12.1"
         },
         "typing-extensions": {
             "hashes": [
@@ -838,11 +838,11 @@
         },
         "zipp": {
             "hashes": [
-                "sha256:188834565033387710d046e3fe96acfc9b5e86cbca7f39ff69cf21a4128198b7",
-                "sha256:9e5421e176ef5ab4c0ad896624e87a7b2f07aca746c9b2aa305952800cb8eecb"
+                "sha256:112929ad649da941c23de50f356a2b5570c954b65150642bccdd66bf194d224b",
+                "sha256:48904fc76a60e542af151aded95726c1a5c34ed43ab4134b597665c86d7ad556"
             ],
             "markers": "python_version >= '3.7'",
-            "version": "==3.14.0"
+            "version": "==3.15.0"
         }
     },
     "develop": {}
