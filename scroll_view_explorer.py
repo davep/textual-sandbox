@@ -15,6 +15,10 @@ class ScrollViewPlaceHolder( ScrollView ):
 
     def render( self ) -> RenderResult:
         return "\n".join( (
+            "".join( f"{n + 1:3}"[ 0 ] for n in range( self.size.width ) ),
+            "".join( f"{n + 1:3}"[ 1 ] for n in range( self.size.width ) ),
+            "".join( f"{n + 1:3}"[ 2 ] for n in range( self.size.width ) ),
+            "", "",
             f"Size: {self.size!r}",
             f"Virtual size: {self.virtual_size!r}",
             f"Vertical scrollbar width: {self.scrollbar_size_vertical}",
