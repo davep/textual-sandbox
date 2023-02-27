@@ -64,10 +64,10 @@ class ToggleTesterApp( App[ None ] ):
                 yield Checkbox( "Checkbox 3" )
                 yield Checkbox( "Checkbox 4", value=True )
             with RadioSet(id="rs1"):
-                yield RadioButton("Radio Button 1", id="btn1")
-                yield RadioButton("Radio Button 2", id="btn2")
-                yield RadioButton("Radio Button 3", id="btn3")
-                yield RadioButton("Radio Button 4", id="btn4")
+                yield RadioButton("Radio Button 1", id="btn1", value=True)
+                yield RadioButton("Radio Button 2", id="btn2", value=True)
+                yield RadioButton("Radio Button 3", id="btn3", value=True)
+                yield RadioButton("Radio Button 4", id="btn4", value=True)
             yield RadioSet( *[ f"[red]R[/][green]G[/][blue]B[/][i]{n}[/]" for n in range( 50 ) ], id="rs2", classes="grid" )
         with Horizontal( id="info" ):
             yield Label()
@@ -101,8 +101,6 @@ class ToggleTesterApp( App[ None ] ):
     def on_radio_set_changed( self, event: RadioSet.Changed ):
         if event.input.id:
             self.query_one( f"Label#{event.input.id}", Label ).update( f"Pressed: {event.input.pressed_index}" )
-        self.query_one( TextLog ).write( f"> {event!r}" )
-        self.query_one( TextLog ).write( f">> {event.input.pressed_index} {event.input.pressed_button}" )
 
 if __name__ == "__main__":
     ToggleTesterApp().run()
