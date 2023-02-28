@@ -22,7 +22,7 @@ class ScrollEndApp( App[ None ] ):
                 f"This is test line #{n}" for n in range( times )
             )
         )
-        self.call_after_refresh( self.query_one( Vertical ).scroll_end )
+        self.query_one( Vertical ).scroll_end()
 
 if __name__ == "__main__":
     ScrollEndApp().run()
