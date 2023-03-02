@@ -12,7 +12,7 @@ class BorderPCentApp( App[ None ] ):
     }
 
     Container.old-border-type {
-        border: outer red;
+        border: outer red red inner red dashed red;
     }
 
     Container.new-border-type {
@@ -29,6 +29,7 @@ class BorderPCentApp( App[ None ] ):
             Container( Label( "With border percentage" ), classes="new-border-type" ),
         )
         yield Footer()
+
 
 if __name__ == "__main__":
     BorderPCentApp().run()
