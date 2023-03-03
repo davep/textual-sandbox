@@ -38,7 +38,6 @@ class FSBrowser( ListView ):
         for entry in self._cwd.iterdir():
             self.append( FSEntry( entry ) )
 
-
     def on_list_view_selected( self, event: ListView.Selected ) -> None:
         # If the user selected a directory entry...
         if event.item.entry.is_dir():
