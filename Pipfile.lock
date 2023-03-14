@@ -698,11 +698,11 @@
                 "dev"
             ],
             "hashes": [
-                "sha256:9a78751ecc97a0c8e2ceb7bcb76177474036addff2889dfdcc6d83389c6277f8",
-                "sha256:9b71b1a90de8745b419d29eea3c5e040e5440ccca36254d934fa1e9e2916e340"
+                "sha256:b86d4668a072fc85092f081e157e1e7575b353b2f6b728755752bbbe23123063",
+                "sha256:be79dd8d7f3f5b5c40893da4d5d8228e54c5c9f7b844abfb0e8a13ce2b3a7930"
             ],
             "index": "pypi",
-            "version": "==0.14.0"
+            "version": "==0.15.1"
         },
         "typing-extensions": {
             "hashes": [
