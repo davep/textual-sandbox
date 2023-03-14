@@ -22,6 +22,11 @@ class DialogIssueApp( App[ None ] ):
         display: none;
     }
 
+    Vertical {
+        border: round green;
+        height: 1fr;
+    }
+
     Dialog {
         align: center middle;
         border: round red;
