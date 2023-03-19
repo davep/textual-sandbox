@@ -63,5 +63,11 @@ class MenuTestApp( App[ None ] ):
     def on_menu_debug( self, event: Menu.Debug ):
         self.query_one( TextLog ).write( f"{event.cargo!r}" )
 
+    def on_menu_option_highlighted( self, event: Menu.OptionHighlighted ) -> None:
+        self.query_one( TextLog ).write( f"{event!r}" )
+
+    def on_menu_option_selected( self, event: Menu.OptionSelected ) -> None:
+        self.query_one( TextLog ).write( f"{event!r}" )
+
 if __name__ == "__main__":
     MenuTestApp().run()
