@@ -37,7 +37,8 @@ class MenuTestApp( App[ None ] ):
     """
 
     BINDINGS = [
-        ( "space", "add", "Add to menu" ),
+        ( "space", "add(-1)", "Add a random option" ),
+        *[ ( str( n ), f"add({n})", f"Add option type {n}") for n in range(1,6)]
     ]
 
 
@@ -52,24 +53,23 @@ class MenuTestApp( App[ None ] ):
         table.add_row("Dec 16, 2016", "Rogue One: A Star Wars Story", "$1,332,439,889")
         return table
 
-    def random_prompt( self, n: int ) -> RenderableType | MenuSeparator:
-        prompt_type = randint( 0, 5 )
-        if prompt_type == 0:
+    def type_of_option( self, n: int, option_type: int ) -> RenderableType | MenuSeparator:
+        if option_type == 0:
             return f"This is a single line prompt {n}"
-        elif prompt_type == 1:
+        elif option_type == 1:
             return f"This is a two line prompt\nSee? This is the second line. {n}"
-        elif prompt_type == 2:
+        elif option_type == 2:
             return self.test_table( n )
-        elif prompt_type == 3:
+        elif option_type == 3:
             return Panel( f"This is a panel.\n\nIt has multiple lines.", title=f"Option {n}" )
-        elif prompt_type == 4:
+        elif option_type == 4:
             return MenuSeparator()
         return f"{n} Yeah, I don't know what happened either"
 
     @property
-    def random_heights( self ) -> list[ RenderableType]:
+    def random_heights( self ) -> list[ RenderableType ]:
         return [
-            self.random_prompt( n ) for n in range( 1_000 )
+            self.type_of_option( n, randint( 0, 5 ) ) for n in range( 1_000 )
         ]
 
     def compose( self ) -> ComposeResult:
@@ -105,9 +105,9 @@ class MenuTestApp( App[ None ] ):
         self.query_one( TextLog ).write( f"{event!r}" )
         self.query_one( TextLog ).write( f"\tThat was option: {event.menu.option( event.index )}" )
 
-    def action_add( self ):
+    def action_add( self, add_type: int ):
         menu = self.query_one( "#adder", Menu )
-        menu.add( self.random_prompt(menu.option_count ) )
+        menu.add( self.type_of_option( menu.option_count, randint( 0, 5 ) if add_type == -1 else add_type ) )
 
 if __name__ == "__main__":
     MenuTestApp().run()
