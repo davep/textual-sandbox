@@ -1,5 +1,11 @@
+from __future__ import annotations
+
+from random import randint
+
 from rich.panel           import Panel
 from rich.table           import Table
+from rich.console         import RenderableType
+
 from textual.app          import App, ComposeResult
 from textual.widgets      import Header, Footer, Menu, TextLog
 from textual.widgets.menu import MenuOption
@@ -14,6 +20,7 @@ class MenuTestApp( App[ None ] ):
 
     TextLog {
         height: 1fr;
+        width: 1fr;
         border: round blue;
     }
 
@@ -39,6 +46,24 @@ class MenuTestApp( App[ None ] ):
         table.add_row("Dec 16, 2016", "Rogue One: A Star Wars Story", "$1,332,439,889")
         return table
 
+    @property
+    def random_heights( self ) -> list[ RenderableType]:
+        options: list[ RenderableType ] = []
+
+        for n in range( 1_000 ):
+            prompt_type = randint( 0, 4 )
+            if prompt_type == 0:
+                options.append( f"This is a single line prompt {n}" )
+            elif prompt_type == 1:
+                options.append( f"This is a two line prompt\nSee? This is the second line. {n}" )
+            elif prompt_type == 2:
+                options.append( self.test_table( n ) )
+            elif prompt_type == 3:
+                options.append( Panel( f"This is a panel.\n\nIt has multiple lines.", title=f"Option {n}" ) )
+            else:
+                options.append( f"{n} Yeah, I don't know what happened either" )
+        return options
+
     def compose( self ) -> ComposeResult:
         yield Header()
         with Vertical():
@@ -57,7 +82,9 @@ class MenuTestApp( App[ None ] ):
                 yield Menu[None](
                     *[ self.test_table( n ) for n in range(1_000) ]
                 )
-            yield TextLog()
+            with Horizontal():
+                yield Menu[None]( *self.random_heights )
+                yield TextLog()
         yield Footer()
 
     def on_menu_debug( self, event: Menu.Debug ):
