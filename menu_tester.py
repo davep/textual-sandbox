@@ -10,6 +10,7 @@ from textual.app          import App, ComposeResult
 from textual.widgets      import Header, Footer, Menu, TextLog
 from textual.widgets.menu import MenuOption
 from textual.containers   import Horizontal, Vertical
+from textual.widgets.menu import MenuSeparator
 
 class MenuTestApp( App[ None ] ):
 
@@ -35,6 +36,11 @@ class MenuTestApp( App[ None ] ):
     }
     """
 
+    BINDINGS = [
+        ( "space", "add", "Add to menu" ),
+    ]
+
+
     def test_table( self, n: int ) -> Table:
         table = Table(title=f"Star Wars Movies Example {n}")
         table.add_column("Released", justify="right", style="cyan", no_wrap=True)
@@ -46,23 +52,25 @@ class MenuTestApp( App[ None ] ):
         table.add_row("Dec 16, 2016", "Rogue One: A Star Wars Story", "$1,332,439,889")
         return table
 
+    def random_prompt( self, n: int ) -> RenderableType | MenuSeparator:
+        prompt_type = randint( 0, 5 )
+        if prompt_type == 0:
+            return f"This is a single line prompt {n}"
+        elif prompt_type == 1:
+            return f"This is a two line prompt\nSee? This is the second line. {n}"
+        elif prompt_type == 2:
+            return self.test_table( n )
+        elif prompt_type == 3:
+            return Panel( f"This is a panel.\n\nIt has multiple lines.", title=f"Option {n}" )
+        elif prompt_type == 4:
+            return MenuSeparator()
+        return f"{n} Yeah, I don't know what happened either"
+
     @property
     def random_heights( self ) -> list[ RenderableType]:
-        options: list[ RenderableType ] = []
-
-        for n in range( 1_000 ):
-            prompt_type = randint( 0, 4 )
-            if prompt_type == 0:
-                options.append( f"This is a single line prompt {n}" )
-            elif prompt_type == 1:
-                options.append( f"This is a two line prompt\nSee? This is the second line. {n}" )
-            elif prompt_type == 2:
-                options.append( self.test_table( n ) )
-            elif prompt_type == 3:
-                options.append( Panel( f"This is a panel.\n\nIt has multiple lines.", title=f"Option {n}" ) )
-            else:
-                options.append( f"{n} Yeah, I don't know what happened either" )
-        return options
+        return [
+            self.random_prompt( n ) for n in range( 1_000 )
+        ]
 
     def compose( self ) -> ComposeResult:
         yield Header()
@@ -74,7 +82,7 @@ class MenuTestApp( App[ None ] ):
                 yield Menu[None](
                     *[ Panel( f"This is option {n}") for n in range(1_000) ]
                 )
-                yield Menu[None]()
+                yield Menu[None]( id="adder" )
             with Horizontal():
                 yield Menu[None](
                     *[ Panel( f"This is option {n}\nIt has multiple lines\n\n\n\nSee?") for n in range(1_000) ]
@@ -95,6 +103,11 @@ class MenuTestApp( App[ None ] ):
 
     def on_menu_option_selected( self, event: Menu.OptionSelected ) -> None:
         self.query_one( TextLog ).write( f"{event!r}" )
+        self.query_one( TextLog ).write( f"\tThat was option: {event.menu.option( event.index )}" )
+
+    def action_add( self ):
+        menu = self.query_one( "#adder", Menu )
+        menu.add( self.random_prompt(menu.option_count ) )
 
 if __name__ == "__main__":
     MenuTestApp().run()
