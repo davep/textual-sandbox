@@ -38,7 +38,10 @@ class MenuTestApp( App[ None ] ):
 
     BINDINGS = [
         ( "space", "add(-1)", "Add a random option" ),
-        *[ ( str( n ), f"add({n})", f"Add option type {n}") for n in range(1,6)]
+        *[ ( str( n ), f"add({n})", f"Add option type {n}") for n in range(1,6)],
+        ("c", "clear", "Clear"),
+        ("d", "disable(True)", "Disable"),
+        ("e", "disable(False)", "Enable"),
     ]
 
 
@@ -77,7 +80,7 @@ class MenuTestApp( App[ None ] ):
         with Vertical():
             with Horizontal():
                 yield Menu[int](
-                    *[ MenuOption( f"This is option {n}", data=n) for n in range(1_000) ]
+                    *[ MenuOption( f"This is option {n}", data=n, disabled=not bool( n % 3 ) ) for n in range(1_000) ]
                 )
                 yield Menu[None](
                     *[ Panel( f"This is option {n}") for n in range(1_000) ]
@@ -103,11 +106,21 @@ class MenuTestApp( App[ None ] ):
 
     def on_menu_option_selected( self, event: Menu.OptionSelected ) -> None:
         self.query_one( TextLog ).write( f"{event!r}" )
-        self.query_one( TextLog ).write( f"\tThat was option: {event.menu.option( event.index )}" )
+        self.query_one( TextLog ).write( f"\tThat was option: {event.menu.option_at_index( event.index )}" )
 
     def action_add( self, add_type: int ):
         menu = self.query_one( "#adder", Menu )
         menu.add( self.type_of_option( menu.option_count, randint( 0, 5 ) if add_type == -1 else add_type ) )
+
+    def action_clear( self ):
+        self.query_one( "#adder", Menu ).clear()
+
+    def action_disable( self, disable: bool ) -> None:
+        assert isinstance(self.focused, Menu)
+        if disable:
+            self.focused.disable_option_at_index( self.focused.highlighted )
+        else:
+            self.focused.enable_option_at_index( self.focused.highlighted )
 
 if __name__ == "__main__":
     MenuTestApp().run()
