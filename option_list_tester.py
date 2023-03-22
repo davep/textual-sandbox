@@ -9,12 +9,11 @@ from rich.console         import RenderableType
 from rich.repr import Result
 
 from textual.app          import App, ComposeResult
-from textual.widgets      import Header, Footer, Menu, TextLog
-from textual.widgets.menu import MenuOption
+from textual.widgets      import Header, Footer, OptionList, TextLog
+from textual.widgets.option_list import Option, Separator
 from textual.containers   import Horizontal, Vertical
-from textual.widgets.menu import MenuSeparator
 
-class MyMenuOption( MenuOption ):
+class MyOption( Option ):
 
     def __init__(self, *args: Any, data: str | None=None, **kwargs: Any) -> None:
         super().__init__( *args, **kwargs )
@@ -24,7 +23,7 @@ class MyMenuOption( MenuOption ):
         yield from super().__rich_repr__()
         yield "data", self.data
 
-class MenuTestApp( App[ None ] ):
+class OptionListTestApp( App[ None ] ):
 
     CSS = """
     Horizontal {
@@ -37,7 +36,7 @@ class MenuTestApp( App[ None ] ):
         border: round blue;
     }
 
-    Menu {
+    OptionList {
         border: round red;
         width: 1fr;
         height: 1fr;
@@ -69,7 +68,7 @@ class MenuTestApp( App[ None ] ):
         table.add_row("Dec 16, 2016", "Rogue One: A Star Wars Story", "$1,332,439,889")
         return table
 
-    def type_of_option( self, n: int, option_type: int ) -> RenderableType | MenuSeparator | None:
+    def type_of_option( self, n: int, option_type: int ) -> RenderableType | Separator | None:
         if option_type == 0:
             return f"This is a single line prompt {n}"
         elif option_type == 1:
@@ -83,7 +82,7 @@ class MenuTestApp( App[ None ] ):
         return f"{n} Yeah, I don't know what happened either"
 
     @property
-    def random_heights( self ) -> list[ RenderableType | MenuSeparator | None ]:
+    def random_heights( self ) -> list[ RenderableType | Separator | None ]:
         return [
             self.type_of_option( n, randint( 0, 5 ) ) for n in range( 1_000 )
         ]
@@ -92,60 +91,60 @@ class MenuTestApp( App[ None ] ):
         yield Header()
         with Vertical():
             with Horizontal():
-                yield Menu(
-                    *[ MyMenuOption(
+                yield OptionList(
+                    *[ MyOption(
                         f"This is option {n}", disabled=not bool( n % 3 ),
                         id=str( n ),
                         data=f"{n} DATA!"
                     ) for n in range(1_000) ],
                     id="first"
                 )
-                yield Menu(
+                yield OptionList(
                     *[ Panel( f"This is option {n}" ) for n in range(1_000) ]
                 )
-                yield Menu( id="adder" )
+                yield OptionList( id="adder" )
             with Horizontal():
-                yield Menu(
+                yield OptionList(
                     *[ Panel( f"This is option {n}\nIt has multiple lines\n\n\n\nSee?") for n in range(1_000) ]
                 )
-                yield Menu(
+                yield OptionList(
                     *[ self.test_table( n ) for n in range(1_000) ]
                 )
             with Horizontal():
-                yield Menu( *self.random_heights )
+                yield OptionList( *self.random_heights )
                 yield TextLog()
         yield Footer()
 
-    def on_menu_debug( self, event: Menu.Debug ):
+    def on_option_list_debug( self, event: OptionList.Debug ):
         self.query_one( TextLog ).write( f"{event.cargo!r}" )
 
-    def on_menu_option_highlighted( self, event: Menu.OptionHighlighted ) -> None:
+    def on_option_list_option_highlighted( self, event: OptionList.OptionHighlighted ) -> None:
         self.query_one( TextLog ).write( f"{event!r}" )
 
-    def on_menu_option_selected( self, event: Menu.OptionSelected ) -> None:
+    def on_option_list_option_selected( self, event: OptionList.OptionSelected ) -> None:
         self.query_one( TextLog ).write( f"{event!r}" )
         self.query_one( TextLog ).write( event.menu.get_option_at_index( event.option_index ) )
 
     def action_add( self, add_type: int ):
-        menu = self.query_one( "#adder", Menu )
+        menu = self.query_one( "#adder", OptionList )
         menu.add( self.type_of_option( menu.option_count, randint( 0, 5 ) if add_type == -1 else add_type ) )
 
     def action_clear( self ):
-        self.query_one( "#adder", Menu ).clear()
+        self.query_one( "#adder", OptionList ).clear()
 
     def action_disable( self, disable: bool ) -> None:
-        assert isinstance(self.focused, Menu)
+        assert isinstance(self.focused, OptionList )
         if disable:
             self.focused.disable_option_at_index( self.focused.highlighted )
         else:
             self.focused.enable_option_at_index( self.focused.highlighted )
 
     def action_id_toggle_test( self ) -> None:
-        first = self.query_one( "#first", Menu )
+        first = self.query_one( "#first", OptionList )
         if first.get_option("1").disabled:
             first.enable_option( "1" )
         else:
             first.disable_option( "1" )
 
 if __name__ == "__main__":
-    MenuTestApp().run()
+    OptionListTestApp().run()
