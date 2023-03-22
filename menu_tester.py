@@ -1,16 +1,28 @@
 from __future__ import annotations
 
 from random import randint
+from typing import Any
 
 from rich.panel           import Panel
 from rich.table           import Table
 from rich.console         import RenderableType
+from rich.repr import Result
 
 from textual.app          import App, ComposeResult
 from textual.widgets      import Header, Footer, Menu, TextLog
 from textual.widgets.menu import MenuOption
 from textual.containers   import Horizontal, Vertical
 from textual.widgets.menu import MenuSeparator
+
+class MyMenuOption( MenuOption ):
+
+    def __init__(self, *args: Any, data: str | None=None, **kwargs: Any) -> None:
+        super().__init__( *args, **kwargs )
+        self.data = data
+
+    def __rich_repr__(self) -> Result:
+        yield from super().__rich_repr__()
+        yield "data", self.data
 
 class MenuTestApp( App[ None ] ):
 
@@ -57,7 +69,7 @@ class MenuTestApp( App[ None ] ):
         table.add_row("Dec 16, 2016", "Rogue One: A Star Wars Story", "$1,332,439,889")
         return table
 
-    def type_of_option( self, n: int, option_type: int ) -> RenderableType | MenuSeparator:
+    def type_of_option( self, n: int, option_type: int ) -> RenderableType | MenuSeparator | None:
         if option_type == 0:
             return f"This is a single line prompt {n}"
         elif option_type == 1:
@@ -67,11 +79,11 @@ class MenuTestApp( App[ None ] ):
         elif option_type == 3:
             return Panel( f"This is a panel.\n\nIt has multiple lines.", title=f"Option {n}" )
         elif option_type == 4:
-            return MenuSeparator()
+            return None
         return f"{n} Yeah, I don't know what happened either"
 
     @property
-    def random_heights( self ) -> list[ RenderableType ]:
+    def random_heights( self ) -> list[ RenderableType | MenuSeparator | None ]:
         return [
             self.type_of_option( n, randint( 0, 5 ) ) for n in range( 1_000 )
         ]
@@ -81,9 +93,10 @@ class MenuTestApp( App[ None ] ):
         with Vertical():
             with Horizontal():
                 yield Menu(
-                    *[ MenuOption(
+                    *[ MyMenuOption(
                         f"This is option {n}", disabled=not bool( n % 3 ),
-                        id=str( n )
+                        id=str( n ),
+                        data=f"{n} DATA!"
                     ) for n in range(1_000) ],
                     id="first"
                 )
@@ -111,7 +124,7 @@ class MenuTestApp( App[ None ] ):
 
     def on_menu_option_selected( self, event: Menu.OptionSelected ) -> None:
         self.query_one( TextLog ).write( f"{event!r}" )
-        self.query_one( TextLog ).write( f"\tThat was option: {event.menu.get_option_at_index( event.option_index )}" )
+        self.query_one( TextLog ).write( event.menu.get_option_at_index( event.option_index ) )
 
     def action_add( self, add_type: int ):
         menu = self.query_one( "#adder", Menu )
