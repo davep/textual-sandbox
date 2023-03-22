@@ -42,6 +42,7 @@ class MenuTestApp( App[ None ] ):
         ("c", "clear", "Clear"),
         ("d", "disable(True)", "Disable"),
         ("e", "disable(False)", "Enable"),
+        ("f1","id_toggle_test", "Toggle")
     ]
 
 
@@ -79,22 +80,26 @@ class MenuTestApp( App[ None ] ):
         yield Header()
         with Vertical():
             with Horizontal():
-                yield Menu[int](
-                    *[ MenuOption( f"This is option {n}", data=n, disabled=not bool( n % 3 ) ) for n in range(1_000) ]
+                yield Menu(
+                    *[ MenuOption(
+                        f"This is option {n}", disabled=not bool( n % 3 ),
+                        id=str( n )
+                    ) for n in range(1_000) ],
+                    id="first"
                 )
-                yield Menu[None](
-                    *[ Panel( f"This is option {n}") for n in range(1_000) ]
+                yield Menu(
+                    *[ Panel( f"This is option {n}" ) for n in range(1_000) ]
                 )
-                yield Menu[None]( id="adder" )
+                yield Menu( id="adder" )
             with Horizontal():
-                yield Menu[None](
+                yield Menu(
                     *[ Panel( f"This is option {n}\nIt has multiple lines\n\n\n\nSee?") for n in range(1_000) ]
                 )
-                yield Menu[None](
+                yield Menu(
                     *[ self.test_table( n ) for n in range(1_000) ]
                 )
             with Horizontal():
-                yield Menu[None]( *self.random_heights )
+                yield Menu( *self.random_heights )
                 yield TextLog()
         yield Footer()
 
@@ -106,7 +111,7 @@ class MenuTestApp( App[ None ] ):
 
     def on_menu_option_selected( self, event: Menu.OptionSelected ) -> None:
         self.query_one( TextLog ).write( f"{event!r}" )
-        self.query_one( TextLog ).write( f"\tThat was option: {event.menu.option_at_index( event.index )}" )
+        self.query_one( TextLog ).write( f"\tThat was option: {event.menu.get_option_at_index( event.option_index )}" )
 
     def action_add( self, add_type: int ):
         menu = self.query_one( "#adder", Menu )
@@ -121,6 +126,13 @@ class MenuTestApp( App[ None ] ):
             self.focused.disable_option_at_index( self.focused.highlighted )
         else:
             self.focused.enable_option_at_index( self.focused.highlighted )
+
+    def action_id_toggle_test( self ) -> None:
+        first = self.query_one( "#first", Menu )
+        if first.get_option("1").disabled:
+            first.enable_option( "1" )
+        else:
+            first.disable_option( "1" )
 
 if __name__ == "__main__":
     MenuTestApp().run()
