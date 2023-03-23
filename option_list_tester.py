@@ -58,7 +58,7 @@ class OptionListTestApp( App[ None ] ):
 
 
     def test_table( self, n: int ) -> Table:
-        table = Table(title=f"Star Wars Movies Example {n}")
+        table = Table(title=f"Star Wars Movies Example {n}", expand=True)
         table.add_column("Released", justify="right", style="cyan", no_wrap=True)
         table.add_column("Title", style="magenta")
         table.add_column("Box Office", justify="right", style="green")
@@ -116,18 +116,18 @@ class OptionListTestApp( App[ None ] ):
         yield Footer()
 
     def on_option_list_debug( self, event: OptionList.Debug ):
-        self.query_one( TextLog ).write( f"{event.cargo!r}" )
+        self.query_one( TextLog ).write( f"{event.sender} - {event.cargo!r}" )
 
     def on_option_list_option_highlighted( self, event: OptionList.OptionHighlighted ) -> None:
         self.query_one( TextLog ).write( f"{event!r}" )
 
     def on_option_list_option_selected( self, event: OptionList.OptionSelected ) -> None:
         self.query_one( TextLog ).write( f"{event!r}" )
-        self.query_one( TextLog ).write( event.menu.get_option_at_index( event.option_index ) )
+        self.query_one( TextLog ).write( event.option_list.get_option_at_index( event.option_index ) )
 
     def action_add( self, add_type: int ):
-        menu = self.query_one( "#adder", OptionList )
-        menu.add( self.type_of_option( menu.option_count, randint( 0, 5 ) if add_type == -1 else add_type ) )
+        option_list = self.query_one( "#adder", OptionList )
+        option_list.add( self.type_of_option( option_list.option_count, randint( 0, 5 ) if add_type == -1 else add_type ) )
 
     def action_clear( self ):
         self.query_one( "#adder", OptionList ).clear()
