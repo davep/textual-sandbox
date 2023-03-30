@@ -17,10 +17,11 @@ class DTLinksApp( App[ None ] ):
     def on_mount( self ) -> None:
         dt = self.query_one( DataTable )
         dt.focus()
-        dt.add_columns( "Title", "URL Markup", "No Markup" )
+        dt.add_columns( "Title", "URL Markup", "URL Markup With Label", "No Markup" )
         dt.add_rows( [ (
             f"Relevant XKCD {n}",
             f"[link]https://xkcd.com/{n}/[/]",
+            f"[link=https://xkcd.com/{n}/]XKCD {n}[/]",
             f"https://xkcd.com/{n}/"
         ) for n in range( 500 ) ] )
 
