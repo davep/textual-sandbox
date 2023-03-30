@@ -53,7 +53,8 @@ class OptionListTestApp( App[ None ] ):
         ("c", "clear", "Clear"),
         ("d", "disable(True)", "Disable"),
         ("e", "disable(False)", "Enable"),
-        ("f1","id_toggle_test", "Toggle")
+        ("f1","id_toggle_test", "Toggle"),
+        ("delete", "delete", "Delete"),
     ]
 
 
@@ -127,7 +128,7 @@ class OptionListTestApp( App[ None ] ):
 
     def action_add( self, add_type: int ):
         option_list = self.query_one( "#adder", OptionList )
-        option_list.add( self.type_of_option( option_list.option_count, randint( 0, 5 ) if add_type == -1 else add_type ) )
+        option_list.add_option( self.type_of_option( option_list.option_count, randint( 0, 5 ) if add_type == -1 else add_type ) )
 
     def action_clear( self ):
         self.query_one( "#adder", OptionList ).clear()
@@ -145,6 +146,10 @@ class OptionListTestApp( App[ None ] ):
             first.enable_option( "1" )
         else:
             first.disable_option( "1" )
+
+    def action_delete(self) -> None:
+        assert isinstance(self.focused, OptionList )
+        self.focused.remove_option_at_index(self.focused.highlighted)
 
 if __name__ == "__main__":
     OptionListTestApp().run()
