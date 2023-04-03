@@ -16,9 +16,9 @@ During the opposition of 1894 a great light was seen on the illuminated part of 
 
 The storm burst upon us six years ago now. As Mars approached opposition, Lavelle of Java set the wires of the astronomical exchange palpitating with the amazing intelligence of a huge outbreak of incandescent gas upon the planet. It had occurred towards midnight of the twelfth; and the spectroscope, to which he had at once resorted, indicated a mass of flaming gas, chiefly hydrogen, moving with an enormous velocity towards this earth. This jet of fire had become invisible about a quarter past twelve. He compared it to a colossal puff of flame suddenly and violently squirted out of the planet, “as flaming gases rushed out of a gun.”"""
 
-from textual.app     import App, ComposeResult
-from textual.widgets import Header, Footer, Label
-from rich.text       import Text
+from textual.app        import App, ComposeResult
+from textual.containers import VerticalScroll
+from textual.widgets    import Header, Footer, Label
 
 class WrappedTextApp( App[ None ] ):
 
@@ -30,16 +30,13 @@ class WrappedTextApp( App[ None ] ):
     Label.wrap {
         width: 1fr;
     }
-
-    Label.no-wrap {
-        overflow-x: auto;
-    }
     """
 
     def compose( self ) -> ComposeResult:
         yield Header()
-        yield Label( TEXT, classes="no-wrap" )
-        yield Label( TEXT, classes="wrap" )
+        with VerticalScroll():
+            yield Label( TEXT )
+            yield Label( TEXT, classes="wrap" )
         yield Footer()
 
 if __name__ == "__main__":
