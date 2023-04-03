@@ -99,8 +99,8 @@ class ToggleTesterApp( App[ None ] ):
             self.query_one( ".grid", RadioSet ).disabled = not self.query_one( ".grid", RadioSet ).disabled
 
     def on_radio_set_changed( self, event: RadioSet.Changed ):
-        if event.input.id:
-            self.query_one( f"Label#{event.input.id}", Label ).update( f"Pressed: {event.input.pressed_index}" )
+        if event.radio_set.id:
+            self.query_one( f"Label#{event.radio_set.id}", Label ).update( f"Pressed: {event.radio_set.pressed_index}" )
 
 if __name__ == "__main__":
     ToggleTesterApp().run()
