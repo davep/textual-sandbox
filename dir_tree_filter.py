@@ -19,7 +19,7 @@ class MDDirectoryTree(DirectoryTree):
         """
         return [
             path for path in paths
-            if not path.name[0] == "." and path.is_dir() or (
+            if not path.name.startswith( "." ) and path.is_dir() or (
                     path.is_file() and path.suffix == ".md"
             )
         ]
