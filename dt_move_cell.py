@@ -8,6 +8,12 @@ from textual.coordinate import Coordinate
 
 class CursorMoveApp( App[ None ] ):
 
+    CSS = """
+    DataTable {
+        height: 1fr;
+    }
+    """
+
     ROWS = 500
 
     def compose( self ) -> ComposeResult:
@@ -32,6 +38,7 @@ class CursorMoveApp( App[ None ] ):
             randint( 0, self.ROWS - 1 ),
             randint( 0, 3 )
         )
+        self.query_one( DataTable )._scroll_cursor_into_view(animate=True)
 
 if __name__ == "__main__":
     CursorMoveApp().run()
