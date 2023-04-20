@@ -18,7 +18,7 @@ class Child( Screen ):
     def on_mount( self ) -> None:
         self.query_one( Button ).focus()
 
-    def on_button_pressed( self, _: Button.Pressed ) -> None:
+    def on_button_pressed( self ) -> None:
         self.app.pop_screen()
 
 class Main( Screen ):
@@ -33,7 +33,7 @@ class Main( Screen ):
     def on_mount( self ) -> None:
         self.query_one( Button ).focus()
 
-    def on_button_pressed( self, _: Button.Pressed ) -> None:
+    def on_button_pressed( self ) -> None:
         self.app.push_screen( Child() )
 
 class DarkToggleTest( App[ None ] ):
