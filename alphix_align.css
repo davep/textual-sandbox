@@ -1,0 +1,27 @@
+QuitScreen {
+    align: center middle;
+}
+
+#dialog {
+    padding: 1 2;
+    width: auto;
+    height: auto;
+    border: thick $background 80%;
+    background: $surface;
+}
+
+#question {
+    content-align: center middle;
+}
+
+#buttons {
+    margin-top: 1;
+    width: 1fr;
+    height: auto;
+    align: right middle;
+}
+
+Button {
+    width: 10;
+    min-width: 10;
+}
