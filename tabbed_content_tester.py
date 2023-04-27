@@ -1,15 +1,16 @@
 from textual.app        import App, ComposeResult
 from textual.binding    import Binding
-from textual.containers import Horizontal, Vertical
-from textual.widgets    import Header, Footer, TabbedContent, TabPane, Tabs, Label
+from textual.containers import Horizontal, VerticalScroll
+from textual.widgets    import Header, Footer, TabbedContent, TabPane, Tabs, Input
 
-class StandardTabs( Vertical ):
+class StandardTabs( VerticalScroll ):
 
     def compose( self ) -> ComposeResult:
         with TabbedContent():
             for n in range( 10 ):
                 with TabPane( f"Tab {n}" ):
-                    yield Label( f"This is tab {n}" )
+                    for m in range(30):
+                        yield Input( placeholder=f"{n:2}:{m:2} - Here's an input to make this more busy" )
 
 class SelfSwitchTabs( StandardTabs ):
 
