@@ -13,20 +13,45 @@ class ImportantBorderApp( App[ None ] ):
 
     Static {
         content-align: center middle;
-        border: round green !important;
         height: 1fr;
     }
 
-    .subsequent {
+    Static.border {
+        border: round green !important;
+    }
+
+    Static.outline {
+        outline: round green !important;
+    }
+
+    Static.both {
+        border: round green !important;
+        outline: round green !important;
+    }
+
+    Static.border.subsequent {
         border: round red;
+    }
+
+    Static.outline.subsequent {
+        outline: round red;
+    }
+
+    Static.both.subsequent {
+        border: round red;
+        outline: round red;
     }
     """
 
     def compose( self ) -> ComposeResult:
         yield Header()
+        options = ["outline", "border", "both"]
         with Grid():
             for n in range( 9 ):
-                yield Static(str(n), classes="subsequent")
+                yield Static(
+                    options[ n % 3 ],
+                    classes=f"{options[ n % 3 ]} subsequent"
+                )
         yield Footer()
 
 if __name__ == "__main__":
