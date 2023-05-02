@@ -318,10 +318,10 @@
         },
         "linkify-it-py": {
             "hashes": [
-                "sha256:1bff43823e24e507a099e328fc54696124423dd6320c75a9da45b4b754b748ad",
-                "sha256:476464480906bed8b2fa3813bf55566282e55214ad7e41b7d1c2b564666caf2f"
+                "sha256:19f3060727842c254c808e99d465c80c49d2c7306788140987a1a7a29b0d6ad2",
+                "sha256:a3a24428f6c96f27370d7fe61d2ac0be09017be5190d68d8658233171f1b6541"
             ],
-            "version": "==2.0.0"
+            "version": "==2.0.2"
         },
         "markdown-it-py": {
             "extras": [
@@ -535,11 +535,11 @@
         },
         "uc-micro-py": {
             "hashes": [
-                "sha256:316cfb8b6862a0f1d03540f0ae6e7b033ff1fa0ddbe60c12cbe0d4cec846a69f",
-                "sha256:b7cdf4ea79433043ddfe2c82210208f26f7962c0cfbe3bacb05ee879a7fdb596"
+                "sha256:30ae2ac9c49f39ac6dce743bd187fcd2b574b16ca095fa74cd9396795c954c54",
+                "sha256:8c9110c309db9d9e87302e2f4ad2c3152770930d88ab385cd544e7a7e75f3de0"
             ],
-            "markers": "python_version >= '3.6'",
-            "version": "==1.0.1"
+            "markers": "python_version >= '3.7'",
+            "version": "==1.0.2"
         },
         "yarl": {
             "hashes": [
