@@ -1,8 +1,13 @@
 from textual.app        import App, ComposeResult
+from textual.binding    import Binding
 from textual.containers import Horizontal, Vertical
 from textual.widgets    import Footer, DirectoryTree, Input, Label
 
 class Browser( Vertical ):
+
+    BINDINGS = [
+        Binding( "r", "reload", "Reload" ),
+    ]
 
     DEFAULT_CSS = """
     Browser DirectoryTree {
@@ -24,12 +29,14 @@ class Browser( Vertical ):
         yield Label( "Hello!" )
 
     def on_input_submitted( self, event: Input.Submitted ) -> None:
-        # TODO: Actually change the directory.
-        self.query_one( Label ).update( event.value )
+        self.query_one( DirectoryTree ).path = event.value
         self.query_one( DirectoryTree ).focus()
 
     def on_directory_tree_file_selected( self, event: DirectoryTree.FileSelected ) -> None:
-        self.query_one( Label ).update( event.path )
+        self.query_one( Label ).update( f"{event.path!r}" )
+
+    def action_reload(self) -> None:
+        self.query_one( DirectoryTree ).reload()
 
 class DirTreeExplorer( App[ None ] ):
 
