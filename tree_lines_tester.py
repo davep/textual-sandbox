@@ -39,5 +39,8 @@ class TreeLinesTestApp( App[ None ] ):
         self.populate( self.query_one( "#no-root", Tree ).root ).root.expand_all()
         self.query_one( "#root", Tree ).focus()
 
+    def on_tree_node_highlighted(self, event: Tree.NodeHighlighted ) -> None:
+        event.node.tree.border_title = f"cursor_line = {event.node.tree.cursor_line}"
+
 if __name__ == "__main__":
     TreeLinesTestApp().run()
