@@ -59,5 +59,8 @@ class TreeLinesTestApp( App[ None ] ):
             self.focused.cursor_node.remove()
             self.focused.border_title = f"{len(self.focused._tree_nodes)}"
 
+    def on_tree_node_highlighted(self, event: Tree.NodeHighlighted ) -> None:
+        event.node.tree.border_title = f"cursor_line = {event.node.tree.cursor_line}"
+
 if __name__ == "__main__":
     TreeLinesTestApp().run()
