@@ -7,6 +7,7 @@ class Browser( Vertical ):
 
     BINDINGS = [
         Binding( "r", "reload", "Reload" ),
+        Binding( "a", "expand_al", "Expand All"),
     ]
 
     DEFAULT_CSS = """
@@ -37,6 +38,9 @@ class Browser( Vertical ):
 
     def action_reload(self) -> None:
         self.query_one( DirectoryTree ).reload()
+
+    def action_expand_all(self) -> None:
+        self.query_one( DirectoryTree ).root.expand_all()
 
 class DirTreeExplorer( App[ None ] ):
 
