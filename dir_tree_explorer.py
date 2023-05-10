@@ -7,7 +7,7 @@ class Browser( Vertical ):
 
     BINDINGS = [
         Binding( "r", "reload", "Reload" ),
-        Binding( "a", "expand_al", "Expand All"),
+        Binding( "a", "expand_all", "Expand All"),
     ]
 
     DEFAULT_CSS = """
