@@ -5,6 +5,7 @@ from textual.app        import App, ComposeResult
 from textual.binding    import Binding
 from textual.screen     import ModalScreen
 from textual.widgets    import Header, Footer, Label, LoadingIndicator
+from textual.worker     import get_current_worker
 
 class LoadingScreen( ModalScreen[ int ] ):
 
@@ -17,8 +18,11 @@ class LoadingScreen( ModalScreen[ int ] ):
 
     @work
     def do_busy_work( self ) -> None:
+        worker = get_current_worker()
         return_value = 0
         for n in range( 10 ):
+            if worker.is_cancelled:
+                return
             return_value += n
             sleep( 1 )
         self.app.call_from_thread( self.dismiss, return_value )
