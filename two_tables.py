@@ -4,6 +4,9 @@ from textual.app        import App, ComposeResult
 from textual.containers import VerticalScroll
 from textual.widgets    import Header, Footer, TabbedContent, TabPane, DataTable
 
+class TableScroll( VerticalScroll, can_focus=False ):
+    pass
+
 class TwoTablesExampleApp( App[ None ] ):
 
     CSS = """
@@ -11,19 +14,29 @@ class TwoTablesExampleApp( App[ None ] ):
         height: 1fr;
     }
 
+    TableScroll {
+        border: solid cornflowerblue 50%;
+    }
+
+    TableScroll:focus-within {
+        border: solid cornflowerblue;
+    }
+
     DataTable {
-        height: 50%;
+        height: 1fr;
     }
     """
 
     def compose( self ) -> ComposeResult:
         yield Header()
         with TabbedContent():
-            with TabPane( "Table 1" ):
-                with VerticalScroll():
+            with TabPane( "Two tables in one tab" ):
+                with TableScroll():
                     yield self.add_test_data( DataTable(), 10 )
-            with TabPane( "Table 2" ):
-                with VerticalScroll():
+                with TableScroll():
+                    yield self.add_test_data( DataTable(), 20 )
+            with TabPane( "One table alone" ):
+                with TableScroll():
                     yield self.add_test_data( DataTable(), 100 )
         yield Footer()
 
