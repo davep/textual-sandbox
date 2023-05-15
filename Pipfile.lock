@@ -519,11 +519,11 @@
                 "dev"
             ],
             "hashes": [
-                "sha256:9eb1284ae312801b12b19668bf84faa2ae226a2ab6269e5f84edff851f2ad371",
-                "sha256:f3e08d7afaf6c8562d2d5d6230fa891b515ebf9813cda4ea1807a639032edbd4"
+                "sha256:4c7e1f4ed12b9615c63fa3eb7cb9df68d29e0ae5b2352997958cd7ee5533f926",
+                "sha256:a7deb7ac5a1502424c754fe165ae13cb3890e47ddc514d3f089cb2984c336d1d"
             ],
             "index": "pypi",
-            "version": "==0.23.0"
+            "version": "==0.24.1"
         },
         "typing-extensions": {
             "hashes": [
