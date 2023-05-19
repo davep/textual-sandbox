@@ -27,7 +27,10 @@ class Browser( Vertical ):
     """
 
     def compose( self ) -> ComposeResult:
-        yield DirectoryTree( Path("~/develop").expanduser() )
+        yield DirectoryTree( Path("~/develop").expanduser(), id=self.id )
+
+    def on_mount( self ) -> None:
+        self.query_one( DirectoryTree ).border_title = self.id
 
     def action_reload(self) -> None:
         self.query_one( DirectoryTree ).reload()
@@ -49,8 +52,8 @@ class DirTreeExplorer( App[ None ] ):
 
     def compose( self ) -> ComposeResult:
         with Grid():
-            for _ in range( 9 ):
-                yield Browser()
+            for n in range( 9 ):
+                yield Browser(id=f"directory-tree-{n}")
         yield Footer()
 
     def on_mount( self ) -> None:
