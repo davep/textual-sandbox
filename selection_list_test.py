@@ -8,7 +8,7 @@ class SelectionListtestApp( App[ None ] ):
         yield Header()
         with Horizontal():
             yield SelectionList[int](*[
-                ( n, f"Selection {n}" ) for n in range( 50 )
+                ( f"Selection {n}", n ) for n in range( 50 )
             ])
             yield TextLog()
         yield Footer()
