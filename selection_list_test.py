@@ -1,7 +1,6 @@
-from textual.app                    import App, ComposeResult
-from textual.containers             import Horizontal
-from textual.widgets                import Header, Footer, SelectionList, TextLog
-from textual.widgets.selection_list import Selection
+from textual.app        import App, ComposeResult
+from textual.containers import Horizontal
+from textual.widgets    import Header, Footer, SelectionList, TextLog
 
 class SelectionListtestApp( App[ None ] ):
 
@@ -9,7 +8,7 @@ class SelectionListtestApp( App[ None ] ):
         yield Header()
         with Horizontal():
             yield SelectionList[int](*[
-                Selection( n, f"Selection {n}" ) for n in range( 50 )
+                ( n, f"Selection {n}" ) for n in range( 50 )
             ])
             yield TextLog()
         yield Footer()
