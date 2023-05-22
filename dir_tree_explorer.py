@@ -3,7 +3,7 @@ from pathlib import Path
 from textual.app        import App, ComposeResult
 from textual.binding    import Binding
 from textual.containers import Grid, Vertical
-from textual.widgets    import Footer, DirectoryTree, Label
+from textual.widgets    import Footer, DirectoryTree
 
 class Browser( Vertical ):
 
@@ -19,10 +19,6 @@ class Browser( Vertical ):
 
     Browser DirectoryTree:focus {
         border: tall $accent;
-    }
-
-    Label {
-        margin-left: 1;
     }
     """
 
