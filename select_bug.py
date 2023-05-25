@@ -1,21 +1,24 @@
 from textual import on
 from textual.app import App, ComposeResult
-from textual.widgets import Select, Button
+from textual.widgets import Header, Select
+
+LINES = """I must not fear.
+Fear is the mind-killer.
+Fear is the little-death that brings total obliteration.
+I will face my fear.
+I will permit it to pass over me and through me.""".splitlines()
 
 
-class SelectBug(App):
-
+class SelectApp(App):
     def compose(self) -> ComposeResult:
-        self.select = Select(options=[("empty", 0)])
-        yield self.select
-        yield Button("Change Options", id="change_options")
+        yield Header()
+        yield Select(((line, line) for line in LINES), id="line")
 
-    @on(Button.Pressed, "#change_options")
-    def change_options(self, event):
-        self.select.set_options([("Four", 4), ("Five", 5), ("Six", 6)])
+    @on(Select.Changed, "#line")
+    def select_changed(self, event: Select.Changed) -> None:
+        self.title = str(event.value)
 
 
 if __name__ == "__main__":
-    app = SelectBug()
+    app = SelectApp()
     app.run()
-
