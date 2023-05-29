@@ -21,7 +21,7 @@ class MessageFamily( Vertical ):
 
     @dataclass
     class PressedParent( Message ):
-        control: "MessageFamily"
+        pass
 
     class PressedChild( PressedParent ):
         pass
@@ -40,19 +40,19 @@ class MessageFamily( Vertical ):
 
     @on( Button.Pressed, "#parent" )
     def post_parent( self ) -> None:
-        self.post_message( self.PressedParent( self ) )
+        self.post_message( self.PressedParent() )
 
     @on( Button.Pressed, "#child" )
     def post_child( self ) -> None:
-        self.post_message( self.PressedChild( self ) )
+        self.post_message( self.PressedChild() )
 
     @on( Button.Pressed, "#grandchild" )
     def post_grandchild( self ) -> None:
-        self.post_message( self.PressedGrandchild( self ) )
+        self.post_message( self.PressedGrandchild() )
 
     @on( Button.Pressed, "#great-grandchild" )
     def post_greatgrandchild( self ) -> None:
-        self.post_message( self.PressedGreatgrandchild( self ) )
+        self.post_message( self.PressedGreatgrandchild() )
 
 class MessageSandboxApp( App[ None ] ):
 
