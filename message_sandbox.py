@@ -84,9 +84,11 @@ class MessageSandboxApp( App[ None ] ):
         yield Footer()
 
     @on( MessageFamily.PressedParent )
-    @on( MessageFamily.PressedChild )
-    @on( MessageFamily.PressedGrandchild )
-    @on( MessageFamily.PressedGreatgrandchild )
+    # Note that originally all of these would be needed; now we can just get
+    # away with the parent message.
+    # @on( MessageFamily.PressedChild )
+    # @on( MessageFamily.PressedGrandchild )
+    # @on( MessageFamily.PressedGreatgrandchild )
     def log_event( self, event: MessageFamily.PressedParent ) -> None:
         self.query_one( TextLog ).write( f"{event!r}" )
 
