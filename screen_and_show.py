@@ -1,7 +1,8 @@
 from textual            import on
 from textual.app        import App, ComposeResult
 from textual.containers import Center, Vertical
-from textual.events     import Show
+from textual.events     import ScreenResume, ScreenSuspend, Show
+from textual.message    import Message
 from textual.screen     import Screen
 from textual.widgets    import Button, Label, TextLog
 
@@ -47,7 +48,10 @@ class TestScreen( Screen[ None ] ):
     def up( self ) -> None:
         self.dismiss( None )
 
-    def on_show( self, event: Show ) -> None:
+    @on( ScreenResume )
+    @on( ScreenSuspend )
+    @on( Show )
+    def message_log( self, event: Message ) -> None:
         self.query_one( TextLog ).write( f"{event!r}" )
 
 class ScreenShowApp( App[ None ] ):
