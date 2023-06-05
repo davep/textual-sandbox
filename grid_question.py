@@ -9,7 +9,6 @@ class Row(Grid):
 
     DEFAULT_CSS = """
     Row {
-        layout: grid;
         grid-size: 2;
     }
     """
