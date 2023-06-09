@@ -16,7 +16,7 @@ class CustomParent( Static ):
 class CustomChild( CustomParent ):
     pass
 
-class CustomGrandChild( CustomChild, isolate_css_type=True ):
+class CustomGrandChild( CustomChild, inherit_css=False ):
     pass
 
 class CSSTypeExplorerApp( App[ None ] ):
