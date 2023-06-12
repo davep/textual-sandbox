@@ -1,0 +1,8 @@
+Screen {
+    align: center middle;
+}
+
+Label {
+    border: solid red;
+    padding: 5;
+}
