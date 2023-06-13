@@ -9,6 +9,7 @@ class TabsTesterApp( App[ None ] ):
     BINDINGS = [
         Binding( "space", "add" ),
         Binding( "delete", "delete" ),
+        Binding( "c", "clear" ),
     ]
 
     def compose( self ) -> ComposeResult:
@@ -28,6 +29,9 @@ class TabsTesterApp( App[ None ] ):
 
     def action_delete( self ) -> None:
         self.query_one( Tabs ).remove_tab( self.query_one( Tabs ).active_tab )
+
+    def action_clear( self ) -> None:
+        self.query_one( Tabs ).clear()
 
     @on( Tabs.TabActivated )
     @on( Tabs.Cleared )
