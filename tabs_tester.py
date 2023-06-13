@@ -2,7 +2,7 @@ from textual            import on
 from textual.app        import App, ComposeResult
 from textual.binding    import Binding
 from textual.containers import Center
-from textual.widgets    import Tab, Tabs, Label
+from textual.widgets    import Tab, Tabs, Label, TextLog
 
 class TabsTesterApp( App[ None ] ):
 
@@ -17,6 +17,7 @@ class TabsTesterApp( App[ None ] ):
         )
         with Center():
             yield Label()
+        yield TextLog()
 
     @on( Tabs.TabActivated )
     def show_current_tab( self, event: Tabs.TabActivated ) -> None:
@@ -27,6 +28,11 @@ class TabsTesterApp( App[ None ] ):
 
     def action_delete( self ) -> None:
         self.query_one( Tabs ).remove_tab( self.query_one( Tabs ).active_tab )
+
+    @on( Tabs.TabActivated )
+    @on( Tabs.Cleared )
+    def log_event( self, event ) -> None:
+        self.query_one( TextLog ).write( f"{event!r}" )
 
 if __name__ == "__main__":
     TabsTesterApp().run()
