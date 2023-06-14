@@ -8,6 +8,8 @@ class TabsTesterApp( App[ None ] ):
 
     BINDINGS = [
         Binding( "space", "add" ),
+        Binding( "i", "insert" ),
+        Binding( "a", "after" ),
         Binding( "delete", "delete" ),
         Binding( "c", "clear" ),
     ]
@@ -24,14 +26,20 @@ class TabsTesterApp( App[ None ] ):
     def show_current_tab( self, event: Tabs.TabActivated ) -> None:
         self.query_one( Label ).update( f"{event.tab!r}" )
 
-    def action_add( self ) -> None:
-        self.query_one( Tabs ).add_tab( "New Tab" )
+    async def action_add( self ) -> None:
+        await self.query_one( Tabs ).add_tab( "New Tab" )
 
-    def action_delete( self ) -> None:
-        self.query_one( Tabs ).remove_tab( self.query_one( Tabs ).active_tab )
+    async def action_insert( self ) -> None:
+        await self.query_one( Tabs ).add_tab( "Inserted Before Tab", before=self.query_one( Tabs ).active_tab )
 
-    def action_clear( self ) -> None:
-        self.query_one( Tabs ).clear()
+    async def action_after( self ) -> None:
+        await self.query_one( Tabs ).add_tab( "Inserted After Tab", after=self.query_one( Tabs ).active_tab )
+
+    async def action_delete( self ) -> None:
+        await self.query_one( Tabs ).remove_tab( self.query_one( Tabs ).active_tab )
+
+    async def action_clear( self ) -> None:
+        await self.query_one( Tabs ).clear()
 
     @on( Tabs.TabActivated )
     @on( Tabs.Cleared )
