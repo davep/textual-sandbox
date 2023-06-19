@@ -28,6 +28,9 @@ class MarkdownExplorerApp(App[None]):
         margin: 0;
     }
 
+    #document {
+        margin-bottom: 1;
+    }
     """
 
     def compose(self) -> ComposeResult:
