@@ -2,7 +2,7 @@ from textual            import on
 from textual.app        import App, ComposeResult
 from textual.reactive   import reactive
 from textual.containers import Horizontal
-from textual.widgets    import TabbedContent, TabPane, Button, TextLog
+from textual.widgets    import TabbedContent, TabPane, Button, TextLog, ContentSwitcher
 
 class TabbedContentTester( App[ None ] ):
 
@@ -16,6 +16,7 @@ class TabbedContentTester( App[ None ] ):
 
     BINDINGS = [
         ( "space", "add_pane" ),
+        ( "i", "insert_pane" ),
         ( "delete", "del_pane" ),
         ( "c", "clear" )
     ]
@@ -24,34 +25,39 @@ class TabbedContentTester( App[ None ] ):
         with Horizontal():
             with TabbedContent():
                 for _ in range( 5 ):
-                    with TabPane( self.next_id ):
+                    with TabPane( f"Tab {self.tab_id}" ):
                         yield Button( f"Button {self.tab_id}" )
+                    self.tab_id += 1
             yield TextLog()
 
-    @property
-    def next_id( self ) -> str:
-        try:
-            return f"Tab {self.tab_id}"
-        finally:
-            self.tab_id += 1
-
-    def action_add_pane( self ) -> None:
-        self.query_one( TabbedContent ).add_pane(
+    async def action_add_pane( self ) -> None:
+        await self.query_one( TabbedContent ).add_pane(
             TabPane(
-                self.next_id,
-                Button( f"New Button {self.tab_id}" ),
-                id=f"added-later-{self.tab_id}"
+                f"Tab {self.tab_id}",
+                Button( f"New Button {self.tab_id}" )
             )
         )
+        self.tab_id += 1
 
-    def action_del_pane( self ) -> None:
+    async def action_insert_pane( self ) -> None:
+        await self.query_one( TabbedContent ).add_pane(
+            TabPane(
+                f"Inserted Tab {self.tab_id}",
+                Button( f"New Inserted Button {self.tab_id}" )
+            ),
+            before=self.query_one( ContentSwitcher ).children[0]
+        )
+        self.tab_id += 1
+
+
+    async def action_del_pane( self ) -> None:
         if self.query_one( TabbedContent ).tab_count:
-            self.query_one( TabbedContent ).remove_pane(
+            await self.query_one( TabbedContent ).remove_pane(
                 self.query_one( TabbedContent ).active
             )
 
-    def action_clear( self ) -> None:
-        self.query_one( TabbedContent ).clear_panes()
+    async def action_clear( self ) -> None:
+        await self.query_one( TabbedContent ).clear_panes()
 
     @on(TabbedContent.TabActivated)
     @on(TabbedContent.Cleared)
