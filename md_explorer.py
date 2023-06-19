@@ -1,4 +1,5 @@
 from textual.app import App, ComposeResult
+from textual.binding import Binding
 from textual.containers import Horizontal, Vertical, VerticalScroll
 from textual.events import Paste
 from textual.widgets import Static, Markdown
@@ -36,6 +37,11 @@ class MarkdownExplorerApp(App[None]):
     }
     """
 
+    BINDINGS = [
+        Binding("r", "refresh"),
+    ]
+
+
     def compose(self) -> ComposeResult:
         with Vertical():
             with ExplorerPane(id="document"):
@@ -57,6 +63,11 @@ class MarkdownExplorerApp(App[None]):
         self.query_one(Markdown).update(event.text)
         self.call_after_refresh(
             self.query_one(Tree).update,
+            self.query_one(Markdown).tree
+        )
+
+    def action_refresh(self) -> None:
+        self.query_one(Tree).update(
             self.query_one(Markdown).tree
         )
 
