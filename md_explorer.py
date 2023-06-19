@@ -5,6 +5,9 @@ from textual.widgets import Static, Markdown
 
 from rich.markup import escape
 
+class ExplorerPane(VerticalScroll):
+    pass
+
 class Document(Static):
     pass
 
@@ -14,11 +17,11 @@ class Tree(Static):
 class MarkdownExplorerApp(App[None]):
 
     CSS = """
-    VerticalScroll {
+    ExplorerPane {
         border: panel $accent-darken-2;
     }
 
-    VerticalScroll:focus {
+    ExplorerPane:focus {
         border: panel $accent;
     }
 
@@ -35,12 +38,12 @@ class MarkdownExplorerApp(App[None]):
 
     def compose(self) -> ComposeResult:
         with Vertical():
-            with VerticalScroll(id="document"):
+            with ExplorerPane(id="document"):
                 yield Document()
             with Horizontal():
-                with VerticalScroll(id="markdown"):
+                with ExplorerPane(id="markdown"):
                     yield Markdown()
-                with VerticalScroll(id="tree"):
+                with ExplorerPane(id="tree"):
                     yield Tree()
 
     def on_mount(self) -> None:
