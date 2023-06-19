@@ -62,8 +62,7 @@ class MarkdownExplorerApp(App[None]):
         self.query_one(Document).update(escape(event.text))
         self.query_one(Markdown).update(event.text)
         self.call_after_refresh(
-            self.query_one(Tree).update,
-            self.query_one(Markdown).tree
+            lambda: self.query_one(Tree).update(self.query_one(Markdown).tree)
         )
 
     def action_refresh(self) -> None:
