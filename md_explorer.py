@@ -56,7 +56,6 @@ class MarkdownExplorerApp(App[None]):
         self.query_one("#document").border_title = "Markdown Document"
         self.query_one("#markdown").border_title = "Markdown Output"
         self.query_one("#tree").border_title = "Markdown Tree"
-        self.query_one(Markdown).can_focus_children = False
 
     def on_paste(self, event: Paste) -> None:
         self.query_one(Document).update(escape(event.text))
