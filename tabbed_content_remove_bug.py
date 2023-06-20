@@ -11,6 +11,8 @@ class TabbedContentRemoveBug(App[None]):
         with TabbedContent():
             with TabPane("Keep me", id="keep-me"):
                 yield Label("Keep me")
+            with TabPane("Keep me", id="keep-me-too"):
+                yield Label("Keep me too")
             with TabPane("Remove me", id="remove-me"):
                 yield Label("Remove me")
         yield Footer()
