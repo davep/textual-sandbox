@@ -21,7 +21,7 @@ class NotificationTesterApp(App[None]):
 
     def compose(self) -> ComposeResult:
         with Grid():
-            for n in range(25):
+            for _ in range(25):
                 yield Button("Press for a \nnotification")
 
     def on_mount(self) -> None:
