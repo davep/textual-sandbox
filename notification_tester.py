@@ -2,8 +2,7 @@ from textual import on
 from textual.app import App, ComposeResult
 from textual.containers import Grid
 from textual.reactive import var
-from textual.widgets import Button, Toast
-from textual.widgets._toast import Rack
+from textual.widgets import Button
 
 class NotificationTesterApp(App[None]):
 
@@ -21,15 +20,21 @@ class NotificationTesterApp(App[None]):
     notification: var[int] = var(0)
 
     def compose(self) -> ComposeResult:
-        yield Rack()
         with Grid():
             for n in range(25):
                 yield Button("Press for a \nnotification")
 
+    def on_mount(self) -> None:
+        for button in self.query(Button):
+            button.tooltip = "Look at this! This is a tooltip for this button!\nCool huh?"
+
     @on(Button.Pressed)
-    def show_toast(self, event: Button.Pressed) -> None:
-        level = ["information", "warning", "error"][self.notification % 3]
-        self.query_one(Rack).add_toast(f"This is test notification {self.notification}", level=level)
+    def show_toast(self) -> None:
+        self.notify(
+            f"This is [i]test[/] [b]notification[/] {self.notification} :smile:\n\n:poop: :poop: :poop: :poop: :poop: :poop: :poop: :poop:",
+            level=["information", "warning", "error"][self.notification % 3],
+            timeout=10
+        )
         self.notification += 1
 
 if __name__ == "__main__":
