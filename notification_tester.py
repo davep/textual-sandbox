@@ -38,6 +38,7 @@ class NotificationScreen(Screen):
                 "But there's no sense crying over every mistake",
                 "Anyway, this cake is great"
             ][self.notification % 3],
+            timeout=5
         )
         self.notification += 1
 
