@@ -11,7 +11,8 @@ class NotificationScreen(Screen):
 
     BINDINGS = [
         ("down", "push", "Push new screen"),
-        ("up", "pop", "Pop this screen")
+        ("up", "pop", "Pop this screen"),
+        ("delete", "clear")
     ]
 
     notification: var[int] = var(0)
@@ -38,7 +39,7 @@ class NotificationScreen(Screen):
                 "But there's no sense crying over every mistake",
                 "Anyway, this cake is great"
             ][self.notification % 3],
-            timeout=5
+            timeout=60
         )
         self.notification += 1
 
@@ -50,6 +51,9 @@ class NotificationScreen(Screen):
             self.app.pop_screen()
         else:
             self.app.bell()
+
+    def action_clear(self) -> None:
+        self.app.clear_notifications()
 
 class NotificationTesterApp(App[None]):
 

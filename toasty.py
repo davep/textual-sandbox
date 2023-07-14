@@ -51,20 +51,15 @@ class ToastyApp(App[None]):
     async def on_mount(self) -> None:
         await self.query_one(Markdown).load(Path("/Users/davep/develop/python/textual/README.md"))
 
-    def notify(
-        self,
-        message: str,
-        *,
-        title: str | None = None,
-        severity: SeverityLevel = "information",
-        timeout: float = Notification.timeout,
-    ) -> None:
-        title = severity.capitalize() if title is None else title
-        run([
-            "osascript",
-            "-e",
-            f'display notification \"{message}\" with title \"{title}\"'
-        ])
+    def _refresh_notifications(self) -> None:
+        for notification in self._notifications:
+            title = notification.severity.capitalize() if notification.title is None else notification.title
+            run([
+                "osascript",
+                "-e",
+                f'display notification \"{notification.message}\" with title \"{title}\"'
+            ])
+        self._notifications.clear()
 
     @on(Button.Pressed)
     def yell(self, event: Button.Pressed) -> None:
