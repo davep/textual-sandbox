@@ -1,6 +1,6 @@
 from textual.app import App, ComposeResult, RenderResult
 from textual.reactive import reactive
-from textual.widgets import Static
+from textual.widgets import Static, Pretty
 
 class Counter(Static):
 
@@ -26,8 +26,10 @@ class Counter(Static):
             )
         else:
             # This is where we should stop the animation.
-            self.counter1 = 0
-            self.count1()
+            try:
+                del self.app._animator._animations[(id(self), "counter1")]
+            except KeyError:
+                self.counter1 = 0
 
     def count2(self) -> None:
         if self.counter2 in (0, self.TARGET):
@@ -37,9 +39,10 @@ class Counter(Static):
                 duration = 10
             )
         else:
-            # This is where we should stop the animation.
-            self.counter2 = 0
-            self.count2()
+            try:
+                del self.app._animator._animations[(id(self), "counter2")]
+            except KeyError:
+                self.counter2 = 0
 
 class AnimationExplorerExample(App[None]):
 
@@ -48,8 +51,15 @@ class AnimationExplorerExample(App[None]):
         ("2", "count2"),
     ]
 
+    def on_mount(self) -> None:
+        self.set_interval(0.2, self.show_animations)
+
+    def show_animations(self) -> None:
+        self.query_one(Pretty).update(self._animator._animations)
+
     def compose(self) -> ComposeResult:
         yield Counter()
+        yield Pretty({})
 
     def action_count1(self) -> None:
         self.query_one(Counter).count1()
