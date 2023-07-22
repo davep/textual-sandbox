@@ -8,6 +8,8 @@ textual = {extras = ["dev"], version = "*"}
 textual-dev = "*"
 
 [dev-packages]
+mypy = "*"
+tomli = "*"
 
 [requires]
 python_version = "3.10"
