@@ -1,6 +1,8 @@
 run     := pipenv run
 python  := $(run) python
 textual := $(run) textual
+pyright := $(run) pyright
+mypy    := $(run) mypy --strict
 
 .PHONY: all
 all:
@@ -32,6 +34,14 @@ repl:
 
 %::
 	@$(python) $@.py
+
+.PHONY: pyright
+pyright:
+	$(pyright) *.py
+
+.PHONY: mypy
+mypy:
+	$(mypy) *.py
 
 .PHONY: setup
 setup:				# Install all dependencies
