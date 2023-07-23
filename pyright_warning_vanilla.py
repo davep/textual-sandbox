@@ -3,11 +3,29 @@
 So far I'm failing.
 """
 
-from typing import Generic, TypeVar
+from typing import Generic, TypeVar, ClassVar, Any
 
 T = TypeVar("T")
 
-class ParentClass(Generic[T]):
+class WeWentDeeper(type):
+    def __new__(
+        cls,
+        name: str,
+        bases: tuple[type, ...],
+        class_dict: dict[str, Any],
+        **kwargs,
+    ):
+        return super().__new__(cls, name, bases, class_dict, **kwargs)
+
+class VeryBaseMuchClass(metaclass=WeWentDeeper):
+
+    VERY_BASSE: ClassVar[int] = 0
+
+class ParentClass(Generic[T], VeryBaseMuchClass):
+
+    @property
+    def this_thing(self) -> "ParentClass[Any]":
+        return self
 
     @staticmethod
     def static_passthrough(value: T) -> T:
