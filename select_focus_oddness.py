@@ -121,7 +121,8 @@ class DemoApp(App[None]):
                         SectionTitle("Example Section Title"),
                         Markdown(WIDGETS_MD),
                         Placeholder("-- Example space of n+ other widgets and their children --"),
-                        Select([("Example Selectable Option", 1)],
+                        Select(
+                            [(f"Example Selectable Option {n}", n) for n in range(20)],
                                prompt="Please choose an option.. (And watch it scroll)"),
                         Markdown(__ISSUE_MD__, id="issue-markdown"),
                         id="bugged-section"
