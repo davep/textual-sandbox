@@ -25,11 +25,8 @@ class Counter(Static):
                 duration = 10
             )
         else:
-            # This is where we should stop the animation.
-            try:
-                del self.app._animator._animations[(id(self), "counter1")]
-            except KeyError:
-                self.counter1 = 0
+            self.stop_animation("counter1")
+            self.counter1 = 0
 
     def count2(self) -> None:
         if self.counter2 in (0, self.TARGET):
@@ -39,10 +36,8 @@ class Counter(Static):
                 duration = 10
             )
         else:
-            try:
-                del self.app._animator._animations[(id(self), "counter2")]
-            except KeyError:
-                self.counter2 = 0
+            self.stop_animation("counter2")
+            self.counter2 = 0
 
 class AnimationExplorerExample(App[None]):
 
