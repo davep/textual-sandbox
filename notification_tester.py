@@ -31,7 +31,7 @@ class NotificationScreen(Screen):
 
     @on(Button.Pressed)
     def show_toast(self) -> None:
-        self.app.notify(
+        self.notify(
             f"This is test notification {len(self.app._screen_stack)}-{self.notification} :smile: " * ((self.notification % 2)+1),
             severity=["information", "warning", "error"][self.notification % 3],
             title=[
