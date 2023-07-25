@@ -95,6 +95,7 @@ class DemoApp(App[None]):
     TITLE = "Question - Is this a bug?"
     BINDINGS = [
         ("f1", "app.toggle_class('TextLog', '-hidden')", "Notes"),
+        ("f2", "check_select_visible"),
         Binding("ctrl+c,ctrl+q", "app.quit", "Quit", show=True),
     ]
 
@@ -137,6 +138,9 @@ class DemoApp(App[None]):
         self.add_note("?? Question ?? is running")
         self.query_one("Welcome Button", Button).focus()
 
+    def action_check_select_visible(self) -> None:
+        self.notify(str(self.screen.can_view(self.query_one("SelectOverlay"))), title="SelectOverlay")
+        self.notify(str(self.screen.can_view(self.query_one("Select"))), title="Select")
 
 app = DemoApp()
 if __name__ == "__main__":
