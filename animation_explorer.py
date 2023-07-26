@@ -25,8 +25,7 @@ class Counter(Static):
                 duration = 10
             )
         else:
-            self.stop_animation("counter1")
-            self.counter1 = 0
+            self.call_next(self.stop_animation, "counter1")
 
     def count2(self) -> None:
         if self.counter2 in (0, self.TARGET):
@@ -37,7 +36,6 @@ class Counter(Static):
             )
         else:
             self.stop_animation("counter2")
-            self.counter2 = 0
 
 class AnimationExplorerExample(App[None]):
 
