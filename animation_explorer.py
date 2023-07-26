@@ -17,22 +17,31 @@ class Counter(Static):
             f"{'=' * int((self.size.width / self.TARGET) * self.counter2)}"
         )
 
+    def count1_complete(self) -> None:
+        self.notify("TADA!", title="counter1")
+
     def count1(self) -> None:
         if self.counter1 in (0, self.TARGET):
             self.animate(
                 "counter1",
                 value = 0 if self.counter1 else self.TARGET,
-                duration = 10
+                duration = 10,
+                on_complete=self.count1_complete
             )
         else:
             self.call_next(self.stop_animation, "counter1")
+
+    def count2_complete(self) -> None:
+        self.notify("TADA!", title="counter2")
 
     def count2(self) -> None:
         if self.counter2 in (0, self.TARGET):
             self.animate(
                 "counter2",
                 value = 0 if self.counter2 else self.TARGET,
-                duration = 10
+                duration = 10,
+                delay = 10,
+                on_complete=self.count2_complete
             )
         else:
             self.stop_animation("counter2")
@@ -48,7 +57,13 @@ class AnimationExplorerExample(App[None]):
         self.set_interval(0.2, self.show_animations)
 
     def show_animations(self) -> None:
-        self.query_one(Pretty).update(self._animator._animations)
+        self.query_one(Pretty).update(
+            {
+                "_animations": self._animator._animations,
+                "_scheduled": self._animator._scheduled
+            }
+
+        )
 
     def compose(self) -> ComposeResult:
         yield Counter()
