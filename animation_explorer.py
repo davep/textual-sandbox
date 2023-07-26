@@ -35,7 +35,7 @@ class Counter(Static):
         self.notify("TADA!", title="counter2")
 
     def count2(self) -> None:
-        if self.counter2 in (0, self.TARGET):
+        if not self.app._animator._scheduled:
             self.animate(
                 "counter2",
                 value = 0 if self.counter2 else self.TARGET,
@@ -44,7 +44,7 @@ class Counter(Static):
                 on_complete=self.count2_complete
             )
         else:
-            self.stop_animation("counter2")
+            self.call_next(self.stop_animation, "counter2")
 
 class AnimationExplorerExample(App[None]):
 
