@@ -120,4 +120,5 @@ Placeholder {
 
 Select {
     /* Nothing done in this section - I've tried various fixes with no luck */
+    border: panel red;
 }

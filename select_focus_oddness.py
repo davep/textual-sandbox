@@ -5,6 +5,7 @@ from rich.console import RenderableType
 from textual.app import App, ComposeResult
 from textual.binding import Binding
 from textual.containers import Container, ScrollableContainer
+from textual.widget import Widget
 from textual.widgets import Button, Footer, Header, Select, Static, TextLog, Placeholder, Markdown
 
 __ISSUE_MD__ = """
@@ -123,7 +124,7 @@ class DemoApp(App[None]):
                         Markdown(WIDGETS_MD),
                         Placeholder("-- Example space of n+ other widgets and their children --"),
                         Select(
-                            [(f"Example Selectable Option {n}", n) for n in range(20)],
+                            [(f"Example Selectable Option {n}", n) for n in range(200)],
                                prompt="Please choose an option.. (And watch it scroll)"),
                         Markdown(__ISSUE_MD__, id="issue-markdown"),
                         id="bugged-section"
@@ -138,9 +139,19 @@ class DemoApp(App[None]):
         self.add_note("?? Question ?? is running")
         self.query_one("Welcome Button", Button).focus()
 
+    def widget_info(self, widget: Widget) -> None:
+        self.notify(
+            f"Can view: {self.screen.can_view(widget)}\n"
+            f"Parent: {widget.parent!r}\n"
+            f"Region: {widget.region!r}\n",
+            title=f"{widget!r}",
+            timeout=10
+        )
+        pass
+
     def action_check_select_visible(self) -> None:
-        self.notify(str(self.screen.can_view(self.query_one("SelectOverlay"))), title="SelectOverlay")
-        self.notify(str(self.screen.can_view(self.query_one("Select"))), title="Select")
+        self.widget_info(self.query_one("SelectOverlay"))
+        self.widget_info(self.query_one("Select"))
 
 app = DemoApp()
 if __name__ == "__main__":
