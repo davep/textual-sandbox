@@ -10,13 +10,14 @@ class MinibufferApp(App[None]):
 
     CSS = """
     Grid {
-        grid-size: 10;
+        grid-size: 11;
     }
 
     Label {
         width: 1fr;
         height: 1fr;
         content-align: center middle;
+        transition: background 200ms linear;
     }
 
     Label.colour-0 {
@@ -75,8 +76,8 @@ class MinibufferApp(App[None]):
     def compose(self) -> ComposeResult:
         with Grid():
             colours = cycle(range(12))
-            for _ in range(10 * 10):
-                yield Label("It's a minibuffer!", classes=f"colour-{next(colours)}")
+            for _ in range(11 * 11):
+                yield Label("M-x", classes=f"colour-{next(colours)}")
 
     def cycle_background(self) -> None:
         for label in self.query(Label):
@@ -84,7 +85,7 @@ class MinibufferApp(App[None]):
             label.classes = f"colour-{(int(number)+1) % 12}"
 
     def on_mount(self) -> None:
-        self.app.set_interval(0.5, self.cycle_background)
+        self.app.set_interval(0.25, self.cycle_background)
 
     def action_minibuffer(self) -> None:
         self.push_screen(CommandPalette())
