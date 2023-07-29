@@ -2,7 +2,10 @@ from textual.app import App, ComposeResult
 from textual.containers import VerticalScroll
 from textual.events import Key
 from textual.screen import Screen
-from textual.widgets import Static
+from textual.widgets import Static, Button
+
+class FocusStatic(Static, can_focus=True):
+    pass
 
 class TheScreen(Screen):
 
@@ -12,7 +15,8 @@ class TheScreen(Screen):
             self.app.pop_screen()
 
     def compose(self) -> ComposeResult:
-        yield VerticalScroll(Static(
+        yield Button("I'm just here to grab focus first")
+        yield VerticalScroll(FocusStatic(
             "\n".join(
                 f"This is line number {n}" for n in range(1000)
             )
