@@ -1,5 +1,5 @@
 from asyncio import run, sleep, Queue, create_task, wait_for, TimeoutError
-from typing import AsyncIterator, AsyncIterable, Callable
+from typing import AsyncIterator, AsyncIterable
 from random import random
 
 async def provider(prefix: str, count: int) -> AsyncIterator[str]:
