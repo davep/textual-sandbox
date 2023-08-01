@@ -6,7 +6,7 @@ from textual.containers import Grid
 from textual._fuzzy import Matcher
 from textual.widgets import Label
 
-from textual._command_palette import CommandPalette, CommandSource, CommandSourceHit
+from textual.command_palette import CommandPalette, CommandSource, CommandSourceHit
 
 class TotallyFakeCommandSource(CommandSource):
     """Really, this isn't going to be the UI. Not even close."""
