@@ -1,4 +1,5 @@
 from typing import AsyncIterator
+from functools import partial
 from itertools import cycle
 
 from textual.app import App, ComposeResult
@@ -6,7 +7,9 @@ from textual.containers import Grid
 from textual._fuzzy import Matcher
 from textual.widgets import Label
 
-from textual.command_palette import CommandPalette, CommandSource, CommandSourceHit
+from textual.command_palette import CommandPalette, CommandSource, CommandSourceHit, CommandPaletteCallable
+
+from rich.text import Text
 
 class TotallyFakeCommandSource(CommandSource):
     """Really, this isn't going to be the UI. Not even close."""
@@ -111,6 +114,10 @@ You can't have your cake and eat it too.
 You can't teach an old dog new tricks.
     """.strip().splitlines()
 
+    @staticmethod
+    def gndn() -> None:
+        pass
+
     async def hunt_for(self, user_input: str) -> AsyncIterator[CommandSourceHit]:
         """A request to hunt for commands relevant to the given user input.
 
@@ -122,13 +129,18 @@ You can't teach an old dog new tricks.
 
         matcher = Matcher(user_input)
         for candidate in self.DATA:
-            await sleep(random() / 10)
+            # await sleep(random() / 10)
             if matcher.match(candidate):
                 yield CommandSourceHit(
                     matcher.match(candidate),
-                    matcher.highlight(candidate),
+                    Text.assemble(
+                        Text.from_markup("[italic green]notify('[/]"),
+                        matcher.highlight(candidate),
+                        Text.from_markup("[italic green]')[/]")
+                    ),
+                    partial(self.screen.notify, candidate),
                     candidate,
-                    "This is some help; this could be more interesting really",
+                    "Show the selected text as a notification",
                 )
 
 
@@ -214,8 +226,11 @@ class MinibufferApp(App[None]):
         CommandPalette.register_source(TotallyFakeCommandSource)
         self.app.set_interval(0.25, self.cycle_background)
 
+    def minibuffer_callback(self, command: CommandPaletteCallable) -> None:
+        command()
+
     def action_minibuffer(self) -> None:
-        self.push_screen(CommandPalette())
+        self.push_screen(CommandPalette(), callback=self.minibuffer_callback)
 
 if __name__ == "__main__":
     MinibufferApp().run()
