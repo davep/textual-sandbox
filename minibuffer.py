@@ -129,7 +129,7 @@ You can't teach an old dog new tricks.
 
         matcher = Matcher(user_input)
         for candidate in self.DATA:
-            # await sleep(random() / 10)
+            await sleep(random() / 10)
             if matcher.match(candidate):
                 yield CommandSourceHit(
                     matcher.match(candidate),
