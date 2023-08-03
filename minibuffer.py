@@ -114,10 +114,6 @@ You can't have your cake and eat it too.
 You can't teach an old dog new tricks.
     """.strip().splitlines()
 
-    @staticmethod
-    def gndn() -> None:
-        pass
-
     async def hunt_for(self, user_input: str) -> AsyncIterator[CommandSourceHit]:
         """A request to hunt for commands relevant to the given user input.
 
@@ -140,7 +136,9 @@ You can't teach an old dog new tricks.
                     ),
                     partial(self.screen.notify, candidate),
                     candidate,
-                    "Show the selected text as a notification",
+                    "Show the selected text as a notification\n"
+                    f"I think the current screen is {self.screen!r}\n"
+                    f"I think the focused widget is {self.focused!r}",
                 )
 
 
@@ -223,6 +221,7 @@ class MinibufferApp(App[None]):
             label.classes = f"colour-{(int(number)+1) % 12}"
 
     def on_mount(self) -> None:
+        CommandPalette.run_on_select = False
         CommandPalette.register_source(TotallyFakeCommandSource)
         self.app.set_interval(0.25, self.cycle_background)
 
