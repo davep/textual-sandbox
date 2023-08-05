@@ -4,6 +4,7 @@ from itertools import cycle
 
 from textual.app import App, ComposeResult
 from textual.containers import Grid
+from textual.screen import Screen
 from textual._fuzzy import Matcher
 from textual.widgets import Label
 
@@ -211,15 +212,15 @@ class MinibufferApp(App[None]):
             for _ in range(11 * 11):
                 yield Label("M-x", classes=f"colour-{next(colours)}")
 
-    def cycle_background(self) -> None:
-        for label in self.query(Label):
+    async def cycle_background(self, screen: Screen) -> None:
+        for label in screen.query(Label):
             _, number = list(label.classes)[0].split("-")
             label.classes = f"colour-{(int(number)+1) % 12}"
 
     def on_mount(self) -> None:
         CommandPalette.run_on_select = False
         CommandPalette.register_source(TotallyFakeCommandSource)
-        self.app.set_interval(0.25, self.cycle_background)
+        self.app.set_interval(0.25, partial(self.cycle_background, self.screen))
 
 if __name__ == "__main__":
     MinibufferApp().run()

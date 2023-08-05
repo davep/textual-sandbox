@@ -40,10 +40,18 @@ class Time(Label):
         background: darkred;
         border: round red;
     }
+
+    Time.green {
+        background: green;
+    }
     """
+
+    def swap_colour(self) -> None:
+        self.toggle_class("green")
 
     def on_mount(self) -> None:
         self.auto_refresh = 0.2
+        self.set_interval(1.0, self.swap_colour)
 
     def render(self) -> RenderResult:
         return str(datetime.now())
