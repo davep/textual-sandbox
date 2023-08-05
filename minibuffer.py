@@ -8,7 +8,7 @@ from textual.screen import Screen
 from textual._fuzzy import Matcher
 from textual.widgets import Label
 
-from textual.command_palette import CommandPalette, CommandSource, CommandSourceHit, CommandPaletteCallable
+from textual.command_palette import CommandPalette, CommandSource, CommandSourceHit
 
 from rich.text import Text
 
