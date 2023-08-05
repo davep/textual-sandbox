@@ -205,10 +205,6 @@ class MinibufferApp(App[None]):
     }
     """
 
-    BINDINGS = [
-        ("ctrl+p", "minibuffer"),
-    ]
-
     def compose(self) -> ComposeResult:
         with Grid():
             colours = cycle(range(12))
@@ -224,12 +220,6 @@ class MinibufferApp(App[None]):
         CommandPalette.run_on_select = False
         CommandPalette.register_source(TotallyFakeCommandSource)
         self.app.set_interval(0.25, self.cycle_background)
-
-    def minibuffer_callback(self, command: CommandPaletteCallable) -> None:
-        command()
-
-    def action_minibuffer(self) -> None:
-        self.push_screen(CommandPalette(), callback=self.minibuffer_callback)
 
 if __name__ == "__main__":
     MinibufferApp().run()
