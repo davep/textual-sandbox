@@ -1,11 +1,13 @@
+from asyncio import sleep
 from typing import AsyncIterator
 from functools import partial
 from itertools import cycle
+from random import random
+
 
 from textual.app import App, ComposeResult
 from textual.containers import Grid
 from textual.screen import Screen
-from textual._fuzzy import Matcher
 from textual.widgets import Label
 
 from textual.command_palette import CommandPalette, CommandSource, CommandSourceHit
@@ -121,10 +123,7 @@ You can't teach an old dog new tricks.
         Args:
             user_input: The user input to be matched.
         """
-        from asyncio import sleep
-        from random import random
-
-        matcher = Matcher(user_input)
+        matcher = self.matcher(user_input, True)
         for candidate in self.DATA:
             await sleep(random() / 10)
             if matcher.match(candidate):
@@ -139,7 +138,8 @@ You can't teach an old dog new tricks.
                     candidate,
                     "Show the selected text as a notification\n"
                     f"I think the current screen is {self.screen!r}\n"
-                    f"I think the focused widget is {self.focused!r}",
+                    f"I think the focused widget is {self.focused!r}\n"
+                    f"Match score: {matcher.match(candidate):0.5f}"
                 )
 
 
@@ -148,6 +148,11 @@ class MinibufferApp(App[None]):
     CSS = """
     Grid {
         grid-size: 11;
+    }
+
+    CommandPalette > .command-palette--highlight {
+        text-style: reverse;
+        color: yellow;
     }
 
     Label {
@@ -215,7 +220,7 @@ class MinibufferApp(App[None]):
     async def cycle_background(self, screen: Screen) -> None:
         for label in screen.query(Label):
             _, number = list(label.classes)[0].split("-")
-            label.classes = f"colour-{(int(number)+1) % 12}"
+            label.set_classes(f"colour-{(int(number)+1) % 12}")
 
     def on_mount(self) -> None:
         CommandPalette.run_on_select = False
