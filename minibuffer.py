@@ -123,7 +123,7 @@ You can't teach an old dog new tricks.
         Args:
             user_input: The user input to be matched.
         """
-        matcher = self.matcher(user_input, True)
+        matcher = self.matcher(user_input)
         for candidate in self.DATA:
             await sleep(random() / 10)
             if matcher.match(candidate):
