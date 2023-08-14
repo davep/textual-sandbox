@@ -211,6 +211,8 @@ class MinibufferApp(App[None]):
     }
     """
 
+    COMMAND_SOURCES = {TotallyFakeCommandSource}
+
     def compose(self) -> ComposeResult:
         with Grid():
             colours = cycle(range(12))
@@ -224,7 +226,6 @@ class MinibufferApp(App[None]):
 
     def on_mount(self) -> None:
         CommandPalette.run_on_select = False
-        CommandPalette.register_source(TotallyFakeCommandSource)
         self.app.set_interval(0.25, partial(self.cycle_background, self.screen))
 
 if __name__ == "__main__":
