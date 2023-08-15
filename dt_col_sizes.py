@@ -25,6 +25,7 @@ class DataTableColumnSizesApp(App[None]):
             table.add_row(str(n), f"Second {n}",f"Final {n}")
 
     def action_show_column_sizes(self) -> None:
+        self.notify(f"The table's width is: {self.query_one(DataTable).size.width}")
         for column in self.query_one(DataTable).columns.values():
             self.notify(
                 f"Width: {column.width}\nRender width: {column.render_width}",
