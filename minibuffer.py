@@ -133,7 +133,7 @@ You can't teach an old dog new tricks.
                         matcher.highlight(candidate),
                         Text.from_markup("[italic green]')[/]")
                     ),
-                    partial(self.screen.notify, candidate),
+                    self.run(self.screen.notify, candidate),
                     candidate,
                     "Show the selected text as a notification\n"
                     f"I think the current screen is {self.screen!r}\n"
