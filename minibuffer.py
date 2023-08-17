@@ -1,5 +1,4 @@
 from asyncio import sleep
-from typing import AsyncIterator
 from functools import partial
 from itertools import cycle
 from random import random
@@ -10,7 +9,7 @@ from textual.containers import Grid
 from textual.screen import Screen
 from textual.widgets import Label
 
-from textual.command_palette import CommandPalette, CommandSource, CommandSourceHit
+from textual.command_palette import CommandPalette, CommandSource, CommandSourceHit, CommandMatches
 
 from rich.text import Text
 
@@ -117,7 +116,7 @@ You can't have your cake and eat it too.
 You can't teach an old dog new tricks.
     """.strip().splitlines()
 
-    async def hunt_for(self, user_input: str) -> AsyncIterator[CommandSourceHit]:
+    async def hunt_for(self, user_input: str) -> CommandMatches:
         """A request to hunt for commands relevant to the given user input.
 
         Args:
