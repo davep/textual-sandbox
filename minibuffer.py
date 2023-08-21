@@ -116,7 +116,7 @@ You can't have your cake and eat it too.
 You can't teach an old dog new tricks.
     """.strip().splitlines()
 
-    async def hunt_for(self, user_input: str) -> CommandMatches:
+    async def search_for(self, user_input: str) -> CommandMatches:
         """A request to hunt for commands relevant to the given user input.
 
         Args:
@@ -154,7 +154,7 @@ class MinibufferApp(App[None]):
         color: yellow;
     }
 
-    Label {
+    Screen Label {
         width: 1fr;
         height: 1fr;
         content-align: center middle;
