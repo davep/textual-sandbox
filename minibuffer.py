@@ -133,7 +133,7 @@ You can't teach an old dog new tricks.
                         matcher.highlight(candidate),
                         Text.from_markup("[italic green]')[/]")
                     ),
-                    self.run(self.screen.notify, candidate),
+                    partial(self.screen.notify, candidate),
                     candidate,
                     "Show the selected text as a notification\n"
                     f"I think the current screen is {self.screen!r}\n"
@@ -210,7 +210,7 @@ class MinibufferApp(App[None]):
     }
     """
 
-    COMMAND_SOURCES = {TotallyFakeCommandSource}
+    COMMAND_SOURCES = App.COMMAND_SOURCES | {TotallyFakeCommandSource}
 
     def compose(self) -> ComposeResult:
         with Grid():
