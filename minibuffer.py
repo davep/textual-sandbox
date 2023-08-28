@@ -116,13 +116,13 @@ You can't have your cake and eat it too.
 You can't teach an old dog new tricks.
     """.strip().splitlines()
 
-    async def search_for(self, user_input: str) -> CommandMatches:
+    async def search(self, query: str) -> CommandMatches:
         """A request to hunt for commands relevant to the given user input.
 
         Args:
             user_input: The user input to be matched.
         """
-        matcher = self.matcher(user_input)
+        matcher = self.matcher(query)
         for candidate in self.DATA:
             await sleep(random() / 10)
             if matcher.match(candidate):
