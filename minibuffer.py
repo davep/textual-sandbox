@@ -1,4 +1,4 @@
-from asyncio import sleep
+from asyncio import CancelledError, sleep
 from functools import partial
 from itertools import cycle
 from random import random
@@ -122,24 +122,30 @@ You can't teach an old dog new tricks.
         Args:
             user_input: The user input to be matched.
         """
-        matcher = self.matcher(query)
-        for candidate in self.DATA:
-            await sleep(random() / 10)
-            if matcher.match(candidate):
-                yield CommandSourceHit(
-                    matcher.match(candidate),
-                    Text.assemble(
-                        Text.from_markup("[italic green]notify('[/]"),
-                        matcher.highlight(candidate),
-                        Text.from_markup("[italic green]')[/]")
-                    ),
-                    partial(self.screen.notify, candidate),
-                    candidate,
-                    "Show the selected text as a notification\n"
-                    f"I think the current screen is {self.screen!r}\n"
-                    f"I think the focused widget is {self.focused!r}\n"
-                    f"Match score: {matcher.match(candidate):0.5f}"
-                )
+        print(f"begin search(\"{query}\")")
+        try:
+            matcher = self.matcher(query)
+            for candidate in self.DATA:
+                #await sleep(random() / 10)
+                if matcher.match(candidate):
+                    yield CommandSourceHit(
+                        matcher.match(candidate),
+                        Text.assemble(
+                            Text.from_markup("[italic green]notify('[/]"),
+                            matcher.highlight(candidate),
+                            Text.from_markup("[italic green]')[/]")
+                        ),
+                        partial(self.screen.notify, candidate),
+                        candidate,
+                        "Show the selected text as a notification\n"
+                        f"I think the current screen is {self.screen!r}\n"
+                        f"I think the focused widget is {self.focused!r}\n"
+                        f"Match score: {matcher.match(candidate):0.5f}"
+                    )
+        except CancelledError:
+            print(f"cancelled search(\"{query}\")")
+        finally:
+            print(f"end search(\"{query}\")")
 
 
 class MinibufferApp(App[None]):
