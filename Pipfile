@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 textual = {extras = ["dev"], version = "*"}
 textual-dev = "*"
+pyinstrument = "*"
 
 [dev-packages]
 mypy = "*"
