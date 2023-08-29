@@ -120,23 +120,39 @@ You can't teach an old dog new tricks.
         """A request to hunt for commands relevant to the given user input.
 
         Args:
-            user_input: The user input to be matched.
+            query: The user input to be matched.
         """
         print(f"begin search(\"{query}\")")
         try:
+            # Get a Textual fuzzy matcher.
             matcher = self.matcher(query)
+            # For each line in the data source...
             for candidate in self.DATA:
-                #await sleep(random() / 10)
+                # Sleep some random amount of time, just so we can pretend
+                # to be a slow source.
+                await sleep(random() / 10)
+                # If the match is above zero...
                 if matcher.match(candidate):
+                    # ...create a hit object and pass it back up to the
+                    # command palette for use there.
                     yield CommandSourceHit(
+                        # The match score -- used for sorting.
                         matcher.match(candidate),
+                        # The Rich Text object for showing the command and
+                        # how it matched.
                         Text.assemble(
                             Text.from_markup("[italic green]notify('[/]"),
                             matcher.highlight(candidate),
                             Text.from_markup("[italic green]')[/]")
                         ),
+                        # The code to run this if this match is picked by
+                        # the user.
                         partial(self.screen.notify, candidate),
+                        # The original text of the command itself.
                         candidate,
+                        # Some optional help text for the command; here used
+                        # to help show easy access to key information about
+                        # the environment.
                         "Show the selected text as a notification\n"
                         f"I think the current screen is {self.screen!r}\n"
                         f"I think the focused widget is {self.focused!r}\n"
