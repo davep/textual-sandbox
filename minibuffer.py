@@ -12,6 +12,7 @@ from textual.widgets import Label
 from textual.command_palette import CommandPalette, CommandSource, CommandSourceHit, CommandMatches
 
 from rich.text import Text
+from rich.emoji import EMOJI
 
 class TotallyFakeCommandSource(CommandSource):
     """Really, this isn't going to be the UI. Not even close."""
@@ -163,17 +164,35 @@ You can't teach an old dog new tricks.
         finally:
             print(f"end search(\"{query}\")")
 
+class EmojiSource(CommandSource):
+
+    async def search(self, query: str) -> CommandMatches:
+        try:
+            matcher = self.matcher(query)
+            query = query.casefold()
+            for name, emoji in EMOJI.items():
+                try:
+                    location = name.casefold().index(query)
+                except ValueError:
+                    pass
+                else:
+                    yield CommandSourceHit(
+                        100/len(name) * (len(name) - location),
+                        Text.assemble(
+                            matcher.highlight(name),
+                            f"   {emoji}"
+                        ),
+                        partial(self.screen.notify, f"You selected: {emoji}"),
+                        name,
+                    )
+        except CancelledError:
+            pass
 
 class MinibufferApp(App[None]):
 
     CSS = """
     Grid {
         grid-size: 11;
-    }
-
-    CommandPalette > .command-palette--highlight {
-        text-style: reverse;
-        color: yellow;
     }
 
     Screen Label {
@@ -232,7 +251,7 @@ class MinibufferApp(App[None]):
     }
     """
 
-    COMMAND_SOURCES = App.COMMAND_SOURCES | {TotallyFakeCommandSource}
+    COMMAND_SOURCES = App.COMMAND_SOURCES | {TotallyFakeCommandSource, EmojiSource}
 
     def compose(self) -> ComposeResult:
         with Grid():
@@ -247,7 +266,7 @@ class MinibufferApp(App[None]):
 
     def on_mount(self) -> None:
         CommandPalette.run_on_select = False
-        self.app.set_interval(0.25, partial(self.cycle_background, self.screen))
+        #self.app.set_interval(0.25, partial(self.cycle_background, self.screen))
 
 if __name__ == "__main__":
     MinibufferApp().run()
