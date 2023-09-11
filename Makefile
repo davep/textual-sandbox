@@ -20,6 +20,10 @@ console:
 easing:
 	$(textual) easing
 
+.PHONY: keys
+keys:
+	$(textual) keys
+
 .PHONY: demo
 demo:
 	$(python) -m textual
