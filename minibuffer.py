@@ -9,12 +9,12 @@ from textual.containers import Grid
 from textual.screen import Screen
 from textual.widgets import Label
 
-from textual.command_palette import CommandPalette, CommandSource, CommandSourceHit, CommandMatches
+from textual.command import CommandPalette, Source, Hit, Hits
 
 from rich.text import Text
 from rich.emoji import EMOJI
 
-class TotallyFakeCommandSource(CommandSource):
+class TotallyFakeCommandSource(Source):
     """Really, this isn't going to be the UI. Not even close."""
 
     DATA = """\
@@ -117,7 +117,7 @@ You can't have your cake and eat it too.
 You can't teach an old dog new tricks.
     """.strip().splitlines()
 
-    async def search(self, query: str) -> CommandMatches:
+    async def search(self, query: str) -> Hits:
         """A request to hunt for commands relevant to the given user input.
 
         Args:
@@ -136,7 +136,7 @@ You can't teach an old dog new tricks.
                 if matcher.match(candidate):
                     # ...create a hit object and pass it back up to the
                     # command palette for use there.
-                    yield CommandSourceHit(
+                    yield Hit(
                         # The match score -- used for sorting.
                         matcher.match(candidate),
                         # The Rich Text object for showing the command and
@@ -164,9 +164,9 @@ You can't teach an old dog new tricks.
         finally:
             print(f"end search(\"{query}\")")
 
-class EmojiSource(CommandSource):
+class EmojiSource(Source):
 
-    async def search(self, query: str) -> CommandMatches:
+    async def search(self, query: str) -> Hits:
         try:
             matcher = self.matcher(query)
             query = query.casefold()
@@ -176,7 +176,7 @@ class EmojiSource(CommandSource):
                 except ValueError:
                     pass
                 else:
-                    yield CommandSourceHit(
+                    yield Hit(
                         100/len(name) * (len(name) - location),
                         Text.assemble(
                             matcher.highlight(name),
