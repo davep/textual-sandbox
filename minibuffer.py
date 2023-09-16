@@ -9,12 +9,12 @@ from textual.containers import Grid
 from textual.screen import Screen
 from textual.widgets import Label
 
-from textual.command import CommandPalette, Source, Hit, Hits
+from textual.command import CommandPalette, Provider, Hit, Hits
 
 from rich.text import Text
 from rich.emoji import EMOJI
 
-class TotallyFakeCommandSource(Source):
+class TotallyFakeCommandSource(Provider):
     """Really, this isn't going to be the UI. Not even close."""
 
     DATA = """\
@@ -164,7 +164,7 @@ You can't teach an old dog new tricks.
         finally:
             print(f"end search(\"{query}\")")
 
-class EmojiSource(Source):
+class EmojiSource(Provider):
 
     async def search(self, query: str) -> Hits:
         try:
@@ -251,7 +251,7 @@ class MinibufferApp(App[None]):
     }
     """
 
-    COMMAND_SOURCES = App.COMMAND_SOURCES | {TotallyFakeCommandSource, EmojiSource}
+    COMMANDS = App.COMMANDS | {TotallyFakeCommandSource, EmojiSource}
 
     def compose(self) -> ComposeResult:
         with Grid():
