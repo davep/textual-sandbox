@@ -22,9 +22,9 @@ class ShowHideExampleApp(App[None]):
         with Vertical():
             yield Select(
                 (("Show", "show"), ("Hide", "hide")),
-                value="show", allow_blank=False
+                value="hide", allow_blank=False
             )
-            yield Static("Show/hide me")
+            yield Static("Show/hide me", classes="hidden")
             yield Input(placeholder="This comes after")
 
     @on(Select.Changed)
