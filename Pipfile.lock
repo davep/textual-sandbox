@@ -584,12 +584,12 @@
                 "dev"
             ],
             "hashes": [
-                "sha256:0fd014f9fab7f6d88167c82f90e115b118b3016b8597281d14c9257967f7812e",
-                "sha256:3e98f0c9c9a9361d3077c00e3fc5a708f927dd1ce45a1149eb1ba6945ce9d71c"
+                "sha256:73fb675a90ddded17d59ebd864dedaf82a3e7377e68ba1601581281dfd47ea86",
+                "sha256:ebf5f04a96721adb8685aae32a98d4a4098dafbfef59b1fb43ca7ac2c1ed5049"
             ],
             "index": "pypi",
             "markers": "python_version >= '3.7' and python_version < '4.0'",
-            "version": "==0.40.0"
+            "version": "==0.41.0"
         },
         "textual-dev": {
             "hashes": [
