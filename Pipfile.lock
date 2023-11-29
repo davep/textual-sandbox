@@ -477,11 +477,11 @@
                 "syntax"
             ],
             "hashes": [
-                "sha256:81574dc8ce7ea1b4b90307a0c7dc7b2a1fe769b66358be99a8cff66bf2596861",
-                "sha256:fc10365bb74ab3e6183aa9604848721ad21b8a8542434bacb0663ebc732fe31d"
+                "sha256:7f4f84f1ae753aa39290659dc0bb0aab06abb7e37aa3041349c86940698c6b54",
+                "sha256:b6a3340738e3c2223049bb6a4fbce059e4f942a4480b8fd146b816ce5228a8ec"
             ],
             "markers": "python_version >= '3.7' and python_version < '4.0'",
-            "version": "==0.43.0"
+            "version": "==0.43.2"
         },
         "textual-dev": {
             "hashes": [
