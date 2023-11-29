@@ -4,9 +4,9 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-textual = "*"
 textual-dev = "*"
 pyinstrument = "*"
+textual = {extras = ["syntax"], version = "*"}
 
 [dev-packages]
 mypy = "*"
