@@ -33,6 +33,7 @@ class TabbedDiscontentApp(App[None]):
         self.notify(
             f"{self.query_one('#test-1')!r}"
         )
+        self.query_one(TabbedContent).active = "test-1"
 
     @on(TabbedContent.TabActivated)
     def logger(self, event: TabbedContent.TabActivated) -> None:
