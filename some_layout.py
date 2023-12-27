@@ -4,6 +4,23 @@ from textual.app import App, ComposeResult
 from textual.containers import Horizontal, Vertical
 from textual.widgets import Placeholder
 
+class LeftColumn(Vertical):
+
+    def compose(self) -> ComposeResult:
+        yield Placeholder()
+        yield Placeholder()
+        yield Placeholder()
+
+class MainData(Vertical):
+
+    def compose(self) -> ComposeResult:
+        yield Placeholder()
+        with Horizontal():
+            yield Placeholder()
+            yield Placeholder()
+            yield Placeholder()
+        yield Placeholder()
+
 class SomeLayoutApp(App[None]):
 
     CSS = """
@@ -12,28 +29,19 @@ class SomeLayoutApp(App[None]):
         width: 1fr;
     }
 
-    #left-column {
+    LeftColumn {
         width: 3fr;
     }
 
-    #main {
+    MainData {
         width: 8fr;
     }
     """
 
     def compose(self) -> ComposeResult:
         with Horizontal():
-            with Vertical(id="left-column"):
-                yield Placeholder()
-                yield Placeholder()
-                yield Placeholder()
-            with Vertical(id="main"):
-                yield Placeholder()
-                with Horizontal(id="central-belt"):
-                    yield Placeholder()
-                    yield Placeholder()
-                    yield Placeholder()
-                yield Placeholder()
+            yield LeftColumn()
+            yield MainData()
 
 if __name__ == "__main__":
     SomeLayoutApp().run()
