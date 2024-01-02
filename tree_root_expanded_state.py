@@ -29,12 +29,12 @@ class TreeRootExpandedStateApp(App[None]):
             yield self._populate(Tree(name.capitalize(), id=name))
 
     def action_clear(self) -> None:
-        for tree in self.query(Tree):
-            tree.clear()
+        if isinstance(self.screen.focused, Tree):
+            self.screen.focused.clear()
 
     def action_repopulate(self) -> None:
-        for tree in self.query(Tree):
-            self._populate(tree.clear())
+        if isinstance(self.screen.focused, Tree):
+            self._populate(self.screen.focused.clear())
 
 if __name__ == "__main__":
     TreeRootExpandedStateApp().run()
