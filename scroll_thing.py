@@ -4,8 +4,9 @@ from rich.text import Text
 
 from textual.app import App, ComposeResult, RenderResult
 from textual.reactive import reactive
-from textual.containers import VerticalScroll
+from textual.containers import Vertical, VerticalScroll
 from textual.widget import Widget
+from textual.widgets import Input
 
 class TextDisplayWidget(Widget):
 
@@ -23,6 +24,16 @@ class TextDisplayWidget(Widget):
 
 class ScrollTextThingApp(App[None]):
 
+    CSS = """
+    Screen {
+        layout: horizontal;
+    }
+
+    #display, #controls {
+        width: 1fr;
+    }
+    """
+
     BINDINGS = [
         ("1", "lines(1)"),
         ("2", "lines(2)"),
@@ -38,8 +49,11 @@ class ScrollTextThingApp(App[None]):
     ]
 
     def compose(self) -> ComposeResult:
-        with VerticalScroll():
+        with VerticalScroll(id="display"):
             yield TextDisplayWidget()
+        with Vertical(id="controls"):
+            for n in range(10):
+                yield Input(placeholder=f"This is input {n}")
 
     def action_lines(self, lines: int) -> None:
         self.query_one(TextDisplayWidget).line_count = 10 * lines
