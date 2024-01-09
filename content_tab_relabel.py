@@ -1,5 +1,15 @@
+from itertools import cycle
 from textual.app import App, ComposeResult
-from textual.widgets import TabbedContent, TabPane, Label, Tabs
+from textual.widgets import TabbedContent, TabPane, Label
+
+LABELS = cycle((
+    "Johnny Silverhand",
+    "Kerry Eurodyne",
+    "Nancy Hartley",
+    "Denny",
+    "Henry",
+    "V",
+))
 
 class TCRenameApp(App[None]):
 
@@ -9,15 +19,13 @@ class TCRenameApp(App[None]):
 
     def compose(self) -> ComposeResult:
         with TabbedContent():
-            with TabPane("One", id="one"):
+            with TabPane(next(LABELS), id="one"):
                 yield Label("Press space to change my Tab's label")
             with TabPane("Two", id="two"):
                 yield Label("This one won't rename")
 
     def action_rename(self) -> None:
-        tabbed_content = self.query_one(TabbedContent)
-        tabbed_content.get_tab("one").update("Renamed!")
-        tabbed_content.query_one(Tabs).show("one")
+        self.query_one(TabbedContent).get_tab("one").label = next(LABELS)
 
 if __name__ == "__main__":
     TCRenameApp().run()
