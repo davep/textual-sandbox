@@ -69,6 +69,26 @@ class BigDialog(ModalDialog):
     def on_mount(self) -> None:
         self.set_interval(1, partial(self.new_title))
 
+class YesNo(ModalDialog):
+
+    DEFAULT_CSS = """
+    YesNo Body Label {
+        height: auto;
+        border: solid red;
+    }
+    """
+
+    def __init__(self, question: str) -> None:
+        super().__init__()
+        self._question = question
+
+    def compose(self) -> ComposeResult:
+        with Dialog(title="Well?"):
+            yield Label(self._question)
+            with Dialog.ActionArea():
+                yield Button("Yes")
+                yield Button("No")
+
 class DialogTesterApp(App[None]):
 
     CSS = """
@@ -90,7 +110,7 @@ class DialogTesterApp(App[None]):
         }
     }
 
-    Grid {
+    #_default Grid {
         layer: background;
         grid-size: 11;
 
@@ -158,11 +178,15 @@ class DialogTesterApp(App[None]):
                 yield Label("Woot Dialog!", classes=f"colour-{next(colours)}")
         with Vertical():
             yield Button("Big Dialog", id="big")
+            yield Button("Yes/No Dialog", id="yes-no")
 
     @on(Button.Pressed)
     def test(self, event: Button.Pressed) -> None:
         if event.button.id is not None:
-            self.push_screen({"big": BigDialog}[event.button.id]())
+            self.push_screen({
+                "big": BigDialog,
+                "yes-no": partial(YesNo, "Working?"),
+            }[event.button.id]())
 
 if __name__ == "__main__":
     DialogTesterApp().run()
