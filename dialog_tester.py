@@ -1,12 +1,26 @@
 from functools import partial
 from itertools import cycle
 
+from textual import on
 from textual.app import App, ComposeResult
-from textual.containers import Grid
-from textual.screen import ModalScreen, Screen
-from textual.widgets import Button, Dialog, Label, Input, Select, OptionList
+from textual.containers import Grid, Vertical
+from textual.screen import ModalScreen
+from textual.widgets import Button, Dialog, Label, Input, Select, OptionList, Checkbox
 
-class DialogTest(ModalScreen):
+class ModalDialog(ModalScreen):
+
+    DEFAULT_CSS = """
+    ModalDialog {
+        align: center middle;
+    }
+    """
+
+    BINDINGS = [
+        ("escape", "pop_screen"),
+    ]
+
+
+class BigDialog(ModalDialog):
 
     _NAMES =[
         "Edison Carter",
@@ -22,11 +36,13 @@ class DialogTest(ModalScreen):
     NAMES = cycle(_NAMES)
 
     DEFAULT_CSS = """
-    DialogTest {
+    BigDialog {
         align: center middle;
 
-        ActionArea Input {
-            width: 30;
+        ActionArea {
+            Input {
+                width: 30;
+            }
         }
     }
     """
@@ -42,6 +58,7 @@ class DialogTest(ModalScreen):
                 with Dialog.ActionArea.GroupLeft():
                     yield Label("Input:")
                     yield Input()
+                    yield Checkbox("Checked?")
                 yield Button("Yes")
                 yield Button("No")
                 yield Button("Cancel")
@@ -57,7 +74,26 @@ class DialogTest(ModalScreen):
 class DialogTesterApp(App[None]):
 
     CSS = """
+    #_default {
+        layers: background buttons;
+        align: center middle;
+
+        &> Vertical {
+            width: auto;
+            height: auto;
+            visibility: hidden;
+            &> * {
+                visibility: visible;
+            }
+            Button {
+                margin-bottom: 1;
+                width: 50vw;
+            }
+        }
+    }
+
     Grid {
+        layer: background;
         grid-size: 11;
 
         Label {
@@ -122,9 +158,13 @@ class DialogTesterApp(App[None]):
             colours = cycle(range(12))
             for _ in range(11 * 11):
                 yield Label("Woot Dialog!", classes=f"colour-{next(colours)}")
+        with Vertical():
+            yield Button("Big Dialog", id="big")
 
-    def on_mount(self) -> None:
-        self.push_screen(DialogTest())
+    @on(Button.Pressed)
+    def test(self, event: Button.Pressed) -> None:
+        if event.button.id is not None:
+            self.push_screen({"big": BigDialog}[event.button.id]())
 
 if __name__ == "__main__":
     DialogTesterApp().run()
