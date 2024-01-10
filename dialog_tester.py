@@ -37,8 +37,6 @@ class BigDialog(ModalDialog):
 
     DEFAULT_CSS = """
     BigDialog {
-        align: center middle;
-
         ActionArea {
             Input {
                 width: 30;
