@@ -92,6 +92,10 @@ class YesNo(ModalDialog):
 class DialogTesterApp(App[None]):
 
     CSS = """
+    Tooltip {
+        max-width: 100%;
+    }
+
     #_default {
         layers: background buttons;
         align: center middle;
