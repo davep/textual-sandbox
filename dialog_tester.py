@@ -1,5 +1,6 @@
 from functools import partial
 from itertools import cycle
+from typing import get_args
 
 from textual import on
 from textual.app import App, ComposeResult
@@ -7,6 +8,7 @@ from textual.containers import Grid, Vertical
 from textual.reactive import var
 from textual.screen import ModalScreen
 from textual.widgets import Button, Dialog, Label, Input, Select, OptionList, Checkbox
+from textual.widgets.dialog import DialogVariant
 
 class ModalDialog(ModalScreen):
 
@@ -101,6 +103,65 @@ class YesNoCheckbox(ModalDialog):
                     yield Checkbox("Seriously though?")
                 yield Button("Yes")
                 yield Button("No")
+
+class BadVariant(ModalDialog):
+
+    def compose(self) -> ComposeResult:
+        with Dialog(variant="Loki"):
+            yield Label("I am burdened with glorious purpose!")
+
+class SuccessDialog(ModalDialog):
+
+    def compose(self) -> ComposeResult:
+        with Dialog.success(title="It worked!"):
+            yield Label("That thing we did worked!")
+            with Dialog.ActionArea():
+                yield Button("Woot!")
+                yield Button("Yay!")
+                yield Button("Awesome!")
+
+class WarningDialog(ModalDialog):
+
+    def compose(self) -> ComposeResult:
+        with Dialog.warning(title="Be aware"):
+            yield Label("Be aware of this thing you need to be aware of!")
+            with Dialog.ActionArea():
+                yield Button("Oh!")
+                yield Button("Hmm")
+                yield Button("Intensify anxiety")
+
+class ErrorDialog(ModalDialog):
+
+    def compose(self) -> ComposeResult:
+        with Dialog.error(title="OH NOES BAD THINGS!"):
+            yield Label("Bad things! Bad things are happening!")
+            with Dialog.ActionArea():
+                yield Button("Eeep!")
+                yield Button("Run away!")
+                yield Button("Yeah I think I will nope out!")
+
+class UndecidedDialog(ModalDialog):
+
+    def compose(self) -> ComposeResult:
+        with Dialog(title="I can't decide what I am"):
+            yield Label("What type of dialog shall I be today?!?!?")
+            with Dialog.ActionArea():
+                for variant in get_args(DialogVariant):
+                    yield Button(variant.capitalize(), id=variant)
+
+    def on_button_pressed(self, event: Button.Pressed) -> None:
+        event.stop()
+        assert isinstance(event.button.id, str)
+        self.query_one(Dialog).variant = event.button.id
+
+class ManyButtons(ModalDialog):
+
+    def compose(self) -> ComposeResult:
+        with Dialog():
+            yield Label("Check out these buttons!")
+            with Dialog.ActionArea():
+                for n in range(5):
+                    yield Button(f"This is button {str(n) * max(1, n)} oh yes it is")
 
 class DialogTesterApp(App[None]):
 
@@ -197,6 +258,12 @@ class DialogTesterApp(App[None]):
             yield Button("Big Dialog", id="big")
             yield Button("Yes/No Dialog", id="yes-no")
             yield Button("Seriously Yes/No Dialog", id="seriously-yes-no")
+            yield Button("Bad Variant", id="bad-variant")
+            yield Button("Success Variant", id="success-variant")
+            yield Button("Warning Variant", id="warning-variant")
+            yield Button("Error Variant", id="error-variant")
+            yield Button("Undecided Variant", id="undecided-variant")
+            yield Button("Many Buttons", id="many-buttons")
 
     @on(Button.Pressed)
     def test(self, event: Button.Pressed) -> None:
@@ -205,6 +272,12 @@ class DialogTesterApp(App[None]):
                 "big": BigDialog,
                 "yes-no": partial(YesNo, "Working?"),
                 "seriously-yes-no": partial(YesNoCheckbox, "Working?"),
+                "bad-variant": BadVariant,
+                "success-variant": SuccessDialog,
+                "warning-variant": WarningDialog,
+                "error-variant": ErrorDialog,
+                "undecided-variant": UndecidedDialog,
+                "many-buttons": ManyButtons,
             }[event.button.id]())
 
 if __name__ == "__main__":
