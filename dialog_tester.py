@@ -4,6 +4,7 @@ from itertools import cycle
 from textual import on
 from textual.app import App, ComposeResult
 from textual.containers import Grid, Vertical
+from textual.reactive import var
 from textual.screen import ModalScreen
 from textual.widgets import Button, Dialog, Label, Input, Select, OptionList, Checkbox
 
@@ -19,10 +20,26 @@ class ModalDialog(ModalScreen):
         ("escape", "pop_screen"),
     ]
 
+    counter: var[int] = var(0)
+
+    def bump(self) -> None:
+        self.counter += 1
+
+    def on_mount(self) -> None:
+        if not self.query_one(Dialog).title:
+            self.set_interval(1, self.bump)
+
+    def _watch_counter(self) -> None:
+        if self.is_mounted:
+            self.query_one(Dialog).title = (
+                f"This is a test dialog ({self.counter}) "
+                f"{'=' * ((self.counter // 5) + 1)}"
+            )
+
 
 class BigDialog(ModalDialog):
 
-    _NAMES =[
+    NAMES =[
         "Edison Carter",
         "Max Headroom",
         "Theora Jones",
@@ -33,25 +50,19 @@ class BigDialog(ModalDialog):
         "Ned Grossberg"
     ]
 
-    NAMES = cycle(_NAMES)
-
     DEFAULT_CSS = """
-    BigDialog {
-        ActionArea {
-            Input {
-                width: 30;
-            }
-        }
+    BigDialog ActionArea Input {
+        width: 30;
     }
     """
 
     def compose(self) -> ComposeResult:
-        with Dialog(title=next(self.NAMES)):
+        with Dialog():
             for _ in range(10):
                 yield Label("Hello, World!")
-                yield Select[str]((name, name) for name in self._NAMES)
+                yield Select[str]((name, name) for name in self.NAMES)
                 yield Label("Hello, World!")
-                yield OptionList(*self._NAMES)
+                yield OptionList(*self.NAMES)
             with Dialog.ActionArea():
                 with Dialog.ActionArea.GroupLeft():
                     yield Label("Input:")
@@ -63,20 +74,7 @@ class BigDialog(ModalDialog):
                 yield Button("Guess")
                 yield Button("Whatever")
 
-    def new_title(self) -> None:
-        self.query_one(Dialog).title = next(self.NAMES)
-
-    def on_mount(self) -> None:
-        self.set_interval(1, partial(self.new_title))
-
 class YesNo(ModalDialog):
-
-    DEFAULT_CSS = """
-    YesNo Body Label {
-        height: auto;
-        border: solid red;
-    }
-    """
 
     def __init__(self, question: str) -> None:
         super().__init__()
@@ -86,6 +84,21 @@ class YesNo(ModalDialog):
         with Dialog(title="Well?"):
             yield Label(self._question)
             with Dialog.ActionArea():
+                yield Button("Yes")
+                yield Button("No")
+
+class YesNoCheckbox(ModalDialog):
+
+    def __init__(self, question: str) -> None:
+        super().__init__()
+        self._question = question
+
+    def compose(self) -> ComposeResult:
+        with Dialog(title="Well?"):
+            yield Label(self._question)
+            with Dialog.ActionArea():
+                with Dialog.ActionArea.GroupLeft():
+                    yield Checkbox("Seriously though?")
                 yield Button("Yes")
                 yield Button("No")
 
@@ -183,6 +196,7 @@ class DialogTesterApp(App[None]):
         with Vertical():
             yield Button("Big Dialog", id="big")
             yield Button("Yes/No Dialog", id="yes-no")
+            yield Button("Seriously Yes/No Dialog", id="seriously-yes-no")
 
     @on(Button.Pressed)
     def test(self, event: Button.Pressed) -> None:
@@ -190,6 +204,7 @@ class DialogTesterApp(App[None]):
             self.push_screen({
                 "big": BigDialog,
                 "yes-no": partial(YesNo, "Working?"),
+                "seriously-yes-no": partial(YesNoCheckbox, "Working?"),
             }[event.button.id]())
 
 if __name__ == "__main__":
