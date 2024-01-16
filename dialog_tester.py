@@ -4,7 +4,7 @@ from typing import get_args
 
 from textual import on
 from textual.app import App, ComposeResult
-from textual.containers import Grid, Vertical
+from textual.containers import Grid, Horizontal, Vertical
 from textual.reactive import var
 from textual.screen import ModalScreen
 from textual.widgets import Button, Dialog, Label, Input, Select, OptionList, Checkbox
@@ -28,8 +28,11 @@ class ModalDialog(ModalScreen):
         self.counter += 1
 
     def on_mount(self) -> None:
-        if not self.query_one(Dialog).title:
-            self.set_interval(1, self.bump)
+        try:
+            if not self.query_one(Dialog).title:
+                self.set_interval(1, self.bump)
+        except:
+            pass
 
     def _watch_counter(self) -> None:
         if self.is_mounted:
@@ -163,6 +166,32 @@ class ManyButtons(ModalDialog):
                 for n in range(5):
                     yield Button(f"This is button {str(n) * max(1, n)} oh yes it is")
 
+class DialogDialog(ModalDialog):
+
+    DEFAULT_CSS = """
+    DialogDialog > Horizontal {
+        align: center middle;
+        width: 1fr;
+        height: 1fr;
+        visibility: hidden;
+
+        &> Dialog {
+            visibility: visible;
+        }
+    }
+    """
+
+    def compose(self) -> ComposeResult:
+        with Horizontal():
+            with Dialog(title="Left dialog"):
+                yield Label("As you look at me, I'm on the left.")
+                with Dialog.ActionArea():
+                    yield Button("Okay")
+            with Dialog(title="Right dialog"):
+                yield Label("As you look at me, I'm on the right.")
+                with Dialog.ActionArea():
+                    yield Button("Okay")
+
 class DialogTesterApp(App[None]):
 
     CSS = """
@@ -264,6 +293,7 @@ class DialogTesterApp(App[None]):
             yield Button("Error Variant", id="error-variant")
             yield Button("Undecided Variant", id="undecided-variant")
             yield Button("Many Buttons", id="many-buttons")
+            yield Button("Dialog Dialog", id="dialog-dialog")
 
     @on(Button.Pressed)
     def test(self, event: Button.Pressed) -> None:
@@ -278,6 +308,7 @@ class DialogTesterApp(App[None]):
                 "error-variant": ErrorDialog,
                 "undecided-variant": UndecidedDialog,
                 "many-buttons": ManyButtons,
+                "dialog-dialog": DialogDialog,
             }[event.button.id]())
 
 if __name__ == "__main__":
