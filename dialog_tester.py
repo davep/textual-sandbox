@@ -192,6 +192,36 @@ class DialogDialog(ModalDialog):
                 with Dialog.ActionArea():
                     yield Button("Okay")
 
+class DialogCeption(ModalDialog):
+
+    DEFAULT_CSS = """
+    DialogCeption > Dialog {
+
+        &> Body {
+            width: 1fr;
+        }
+
+        Dialog {
+            width: auto;
+            border: panel yellow;
+        }
+    }
+    """
+
+    def compose(self) -> ComposeResult:
+        with Dialog(title="Outer"):
+            yield Label("We need to go deeper.")
+            with Dialog(title="Inner"):
+                yield Label("This dialog is inside another dialog, for some reason.")
+                with Dialog.ActionArea():
+                    yield Button("But")
+                    yield Button("Y")
+                    yield Button("Tho?")
+            with Dialog.ActionArea():
+                yield Button("Just")
+                yield Button("Because")
+
+
 class DialogTesterApp(App[None]):
 
     CSS = """
@@ -294,6 +324,7 @@ class DialogTesterApp(App[None]):
             yield Button("Undecided Variant", id="undecided-variant")
             yield Button("Many Buttons", id="many-buttons")
             yield Button("Dialog Dialog", id="dialog-dialog")
+            yield Button("Dialogception", id="dialogception")
 
     @on(Button.Pressed)
     def test(self, event: Button.Pressed) -> None:
@@ -309,6 +340,7 @@ class DialogTesterApp(App[None]):
                 "undecided-variant": UndecidedDialog,
                 "many-buttons": ManyButtons,
                 "dialog-dialog": DialogDialog,
+                "dialogception": DialogCeption,
             }[event.button.id]())
 
 if __name__ == "__main__":
