@@ -221,6 +221,44 @@ class DialogCeption(ModalDialog):
                 yield Button("Just")
                 yield Button("Because")
 
+class StyledBody(ModalDialog):
+
+    DEFAULT_CSS = """
+    *:hover {
+        outline: solid red;
+    }
+    StyledBody {
+        align: center middle;
+        Dialog {
+            Body {
+                border: thick red;
+                background: red 40%;
+                color: $text;
+                padding: 1 2;
+            }
+            Label {
+                width: 1fr;
+            }
+        }
+    }
+    """
+
+    def compose(self) -> ComposeResult:
+        with Dialog.error(title="Emergency Transmission"):
+            yield Label(
+                "This is the President of the United Federation of "
+                "Planets. Do not approach the Earth. The transmissions of an "
+                "orbiting probe are causing critical damage to this planet. "
+                "It has almost totally ionized our atmosphere. All power "
+                "sources have failed. All Earth-orbiting starships are "
+                "powerless. The probe is vaporizing our oceans. We cannot "
+                "survive unless a way can be found to respond to the probe. "
+                "Further communications may not be possible. Save your "
+                "energy."
+            )
+            with Dialog.ActionArea():
+                yield Button("Obey")
+                yield Button("Ignore")
 
 class DialogTesterApp(App[None]):
 
@@ -325,6 +363,7 @@ class DialogTesterApp(App[None]):
             yield Button("Many Buttons", id="many-buttons")
             yield Button("Dialog Dialog", id="dialog-dialog")
             yield Button("Dialogception", id="dialogception")
+            yield Button("Styled Body", id="styled-body")
 
     @on(Button.Pressed)
     def test(self, event: Button.Pressed) -> None:
@@ -341,6 +380,7 @@ class DialogTesterApp(App[None]):
                 "many-buttons": ManyButtons,
                 "dialog-dialog": DialogDialog,
                 "dialogception": DialogCeption,
+                "styled-body": StyledBody,
             }[event.button.id]())
 
 if __name__ == "__main__":
