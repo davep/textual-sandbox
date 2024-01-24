@@ -80,6 +80,16 @@ class SplashApp(App):
     def compose(self) -> ComposeResult:
         yield Splash()
 
+    def on_suspend(self) -> None:
+        self.bell()
+
+    def on_resume(self) -> None:
+        self.notify("WELCOME BACK!")
+
+    def on_mount(self) -> None:
+        self.app_suspend_signal.subscribe(self, self.on_suspend)
+        self.app_resume_signal.subscribe(self, self.on_resume)
+
 
 if __name__ == "__main__":
     SplashApp().run()
