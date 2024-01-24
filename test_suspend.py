@@ -1,29 +1,85 @@
+from os import system
 from code import InteractiveConsole
+from time import time
 
 from textual import on
-from textual.app import App, ComposeResult
-from textual.reactive import var
-from textual.widgets import Button, Label
+from textual.app import App, ComposeResult, RenderResult, SuspendNotSupported
+from textual.containers import Container
+from textual.renderables.gradient import LinearGradient
+from textual.widgets import Button
 
-class SuspendingApp(App[None]):
+COLORS = [
+    "#881177",
+    "#aa3355",
+    "#cc6666",
+    "#ee9944",
+    "#eedd00",
+    "#99dd55",
+    "#44dd88",
+    "#22ccbb",
+    "#00bbcc",
+    "#0099cc",
+    "#3366bb",
+    "#663399",
+]
+STOPS = [(i / (len(COLORS) - 1), color) for i, color in enumerate(COLORS)]
 
-    counter: var[int] = var(0)
 
-    def compose(self) -> ComposeResult:
-        yield Label()
-        yield Button("Suspend")
+class Splash(Container):
 
-    def update_count(self) -> None:
-        self.counter += 1
-        self.query_one(Label).update(str(self.counter))
+    DEFAULT_CSS = """
+    Splash {
+        layout: vertical;
+        align: center middle;
+
+        Button {
+            width: 70%;
+            margin-bottom: 2;
+        }
+    }
+    """
 
     def on_mount(self) -> None:
-        self.set_interval(0.5, self.update_count)
+        self.auto_refresh = 1 / 30
 
-    @on(Button.Pressed)
-    def test_suspend(self) -> None:
-        with self.suspend():
-            InteractiveConsole().interact()
+    def compose(self) -> ComposeResult:
+        yield Button("REPL", id="repl")
+        yield Button("Emacs", id="emacs")
+        yield Button("vim", id="vim")
+
+    def render(self) -> RenderResult:
+        return LinearGradient(time() * 90, STOPS)
+
+    @on(Button.Pressed, "#repl")
+    def repl(self) -> None:
+        try:
+            with self.app.suspend():
+                InteractiveConsole().interact()
+        except SuspendNotSupported:
+            self.notify("I'm sorry Dave, I'm afraid I can't do that", severity="error")
+
+    @on(Button.Pressed, "#emacs")
+    def emacs(self) -> None:
+        try:
+            with self.app.suspend():
+                system("emacs -nw")
+        except SuspendNotSupported:
+            self.notify("I'm sorry Dave, I'm afraid I can't do that", severity="error")
+
+    @on(Button.Pressed, "#vim")
+    def vim(self) -> None:
+        try:
+            with self.app.suspend():
+                system("vim")
+        except SuspendNotSupported:
+            self.notify("I'm sorry Dave, I'm afraid I can't do that", severity="error")
+
+
+class SplashApp(App):
+
+    def compose(self) -> ComposeResult:
+        yield Splash()
+
 
 if __name__ == "__main__":
-    SuspendingApp().run()
+    SplashApp().run()
