@@ -1,6 +1,6 @@
 from os import system
 from code import InteractiveConsole
-from time import time
+from time import time, sleep
 
 from textual import on
 from textual.app import App, ComposeResult, RenderResult, SuspendNotSupported
@@ -43,12 +43,37 @@ class Splash(Container):
         self.auto_refresh = 1 / 30
 
     def compose(self) -> ComposeResult:
+        yield Button("Countdown", id="countdown")
+        yield Button("Inputs", id="inputs")
         yield Button("REPL", id="repl")
         yield Button("Emacs", id="emacs")
         yield Button("vim", id="vim")
 
     def render(self) -> RenderResult:
         return LinearGradient(time() * 90, STOPS)
+
+    @on(Button.Pressed, "#countdown")
+    def countdown(self) -> None:
+        try:
+            with self.app.suspend():
+                for n in reversed(range(10)):
+                    print(n)
+                    sleep(1)
+        except SuspendNotSupported:
+            self.notify("I'm sorry Dave, I'm afraid I can't do that", severity="error")
+
+    @on(Button.Pressed, "#inputs")
+    def inputs(self) -> None:
+        try:
+            with self.app.suspend():
+                while True:
+                    try:
+                        data = input("Enter something (^D to quit): ")
+                    except EOFError:
+                        break
+                    print(data)
+        except SuspendNotSupported:
+            self.notify("I'm sorry Dave, I'm afraid I can't do that", severity="error")
 
     @on(Button.Pressed, "#repl")
     def repl(self) -> None:
@@ -80,14 +105,10 @@ class SplashApp(App):
     def compose(self) -> ComposeResult:
         yield Splash()
 
-    def on_suspend(self) -> None:
-        self.bell()
-
     def on_resume(self) -> None:
         self.notify("WELCOME BACK!")
 
     def on_mount(self) -> None:
-        self.app_suspend_signal.subscribe(self, self.on_suspend)
         self.app_resume_signal.subscribe(self, self.on_resume)
 
 
