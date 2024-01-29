@@ -16,6 +16,7 @@ NAMES = [
     "Swansea",
     "Aberdare",
     "Llanfairpwllgwyngyllgogerychwyrndrobwllllantysiliogogogoch",
+    "Llanfair­pwllgwyngyll­gogery­chwyrn­drobwll­llan­tysilio­gogo­goch",
     "Mountain Ash",
     "Hirwaun"
 ]
