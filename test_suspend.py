@@ -112,6 +112,10 @@ class Splash(Container):
 
 class SplashApp(App):
 
+    BINDINGS = [
+        ("ctrl+z", "suspend_process")
+    ]
+
     def compose(self) -> ComposeResult:
         yield Splash()
 
