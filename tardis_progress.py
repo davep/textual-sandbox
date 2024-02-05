@@ -61,7 +61,7 @@ class TardisProgressApp(App[None]):
             self.timers[progress].stop()
         progress.progress += 1
         if progress.progress != 100:
-            self.set_timer(
+            self.timers[progress] = self.set_timer(
                 tardis(time_step),
                 partial(self.update_progress, progress, tardis(time_step), tardis)
             )
