@@ -55,6 +55,9 @@ class TardisProgressApp(App[None]):
         with Horizontal():
             yield Button("Decelerating", classes="decelerating")
             yield ProgressBar(classes="decelerating")
+        with Horizontal():
+            yield Button("Just sit at 1", classes="just-sits-there")
+            yield ProgressBar(classes="just-sits-there")
 
     def update_progress(self, progress: ProgressBar, time_step: float, tardis: Callable[[float], float]) -> None:
         if progress in self.timers:
@@ -76,8 +79,10 @@ class TardisProgressApp(App[None]):
         bar = self.query_one(f"ProgressBar.{progress}", ProgressBar)
         if bar in self.timers:
             self.timers[bar].stop()
-        bar.total = 100
-        bar.progress = 0
+        try:
+            bar.update(total=100, progress=0, reset_eta=True)
+        except TypeError:
+            bar.update(total=100, progress=0)
         return bar
 
     @on(Button.Pressed, "#all, .constant-1")
@@ -115,6 +120,10 @@ class TardisProgressApp(App[None]):
                 return time_now / 0.9
             return step
         self.update_progress(self.progress("decelerating"), 0.1, decelerating_tardis(0))
+
+    @on(Button.Pressed, "#all, .just-sits-there")
+    def start_still_progress(self) -> None:
+        self.progress("just-sits-there").progress = 1
 
 if __name__ == "__main__":
     TardisProgressApp().run()
