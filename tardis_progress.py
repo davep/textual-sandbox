@@ -41,24 +41,31 @@ class TardisProgressApp(App[None]):
         yield Button("All", id="all")
         with Horizontal():
             yield Button("Constant 0.1", classes="constant-1")
+            yield Button("Reset", id="constant-1", classes="reset")
             yield ProgressBar(classes="constant-1")
         with Horizontal():
             yield Button("Constant 0.2", classes="constant-2")
+            yield Button("Reset", id="constant-2", classes="reset")
             yield ProgressBar(classes="constant-2")
         with Horizontal():
             yield Button("Constant 0.5", classes="constant-5")
+            yield Button("Reset", id="constant-5", classes="reset")
             yield ProgressBar(classes="constant-5")
         with Horizontal():
             yield Button("Random", classes="random")
+            yield Button("Reset", id="random", classes="reset")
             yield ProgressBar(classes="random")
         with Horizontal():
             yield Button("Accelerating", classes="accelerating")
+            yield Button("Reset", id="accelerating", classes="reset")
             yield ProgressBar(classes="accelerating")
         with Horizontal():
             yield Button("Decelerating", classes="decelerating")
+            yield Button("Reset", id="decelerating", classes="reset")
             yield ProgressBar(classes="decelerating")
         with Horizontal():
             yield Button("Just sit at 1", classes="just-sits-there")
+            yield Button("Reset", id="just-sits-there", classes="reset")
             yield ProgressBar(classes="just-sits-there")
 
     def update_progress(self, progress: ProgressBar, time_step: float, tardis: Callable[[float], float]) -> None:
@@ -86,6 +93,12 @@ class TardisProgressApp(App[None]):
         except TypeError:
             bar.update(total=100, progress=0)
         return bar
+
+    @on(Button.Pressed, ".reset")
+    def set_total_to_none(self, event: Button.Pressed) -> None:
+        if (progress := self.query_one(f"ProgressBar.{event.button.id}", ProgressBar)) in self.timers:
+            self.timers[progress].stop()
+        progress.total = None
 
     @on(Button.Pressed, "#all, .constant-1")
     def start_constant_progress_1(self) -> None:
