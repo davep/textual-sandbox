@@ -1,5 +1,7 @@
 """Code for testing non-linear time progress."""
 
+from __future__ import annotations
+
 from functools import partial
 from random import random
 from typing import Callable
