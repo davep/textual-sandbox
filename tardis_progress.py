@@ -138,7 +138,9 @@ class TardisProgressApp(App[None]):
 
     @on(Button.Pressed, "#all, .just-sits-there")
     def start_still_progress(self) -> None:
-        self.progress("just-sits-there").progress = 1
+        progress = self.progress("just-sits-there")
+        progress.progress = 0
+        self.set_timer(1.0, partial(progress.update, progress=1))
 
 if __name__ == "__main__":
     TardisProgressApp().run()
