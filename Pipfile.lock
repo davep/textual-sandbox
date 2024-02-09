@@ -501,11 +501,11 @@
                 "syntax"
             ],
             "hashes": [
-                "sha256:a9d2f225584afb28a6c05b7f7d06d41b54cd02822020f11711d788e5098161db",
-                "sha256:e092dffa5311f3381cb5f51d56c506143f5c1ee3b1c67f57bb1929cfa73fee07"
+                "sha256:4ddbadddc6b7b9bf625b80396d7206bb7fa6645dc5e32cfde31fdadf8f03d110",
+                "sha256:d809741a86a19fe3d88108ae500d744248bf2daf7eac8b440079a49b4b981680"
             ],
             "markers": "python_version >= '3.8' and python_version < '4.0'",
-            "version": "==0.48.2"
+            "version": "==0.50.0"
         },
         "textual-dev": {
             "hashes": [
