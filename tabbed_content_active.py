@@ -1,5 +1,7 @@
 """https://github.com/Textualize/textual/issues/4150"""
 
+from __future__ import annotations
+
 from textual import on
 from textual.app import App, ComposeResult
 from textual.containers import Vertical
