@@ -2,7 +2,7 @@
 
 from textual import on
 from textual.app import App, ComposeResult
-from textual.containers import Grid, VerticalScroll
+from textual.containers import Container, Grid, Horizontal, VerticalScroll
 from textual.widget import Widget
 from textual.widgets import Button, Label
 
@@ -47,6 +47,30 @@ class Buttonatron(Grid, GoodTipper, can_focus=True):
     def remove_button(self, event: Button.Pressed) -> None:
         event.control.remove()
 
+class HideAndShow(Container, GoodTipper, can_focus=True):
+
+    DEFAULT_CSS = """
+    HideAndShow {
+        Label {
+            width: 1fr;
+            height: 1fr;
+            border: solid yellow;
+            color: $text;
+            background: red;
+            content-align: center middle;
+        }
+    }
+    """
+
+    BINDINGS = [("space", "toggle_label")]
+
+
+    def compose(self) -> ComposeResult:
+        yield self.tip(Label("Press space to hide/show me!"))
+
+    def action_toggle_label(self) -> None:
+        self.query_one(Label).visible = not self.query_one(Label).visible
+
 class LabelsAllTheWayDown(VerticalScroll, GoodTipper, can_focus=True):
 
     DEFAULT_CSS = """
@@ -74,7 +98,7 @@ class LabelsAllTheWayDown(VerticalScroll, GoodTipper, can_focus=True):
 class TooltipHellApp(App[None]):
 
     CSS = """
-    Screen > * {
+    Buttonatron, LabelsAllTheWayDown, HideAndShow {
         border: blank;
         &:focus {
             border: thick green;
@@ -84,7 +108,9 @@ class TooltipHellApp(App[None]):
 
     def compose(self) -> ComposeResult:
         yield Buttonatron()
-        yield LabelsAllTheWayDown()
+        with Horizontal():
+            yield LabelsAllTheWayDown()
+            yield HideAndShow()
 
 if __name__ == "__main__":
     TooltipHellApp().run()
