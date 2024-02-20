@@ -28,7 +28,7 @@ class Buttonatron(Grid, GoodTipper, can_focus=True):
         Button {
            width: 1fr;
            height: 1fr;
-           margin: 0 1 0 1;
+           margin: 0 1 1 1;
         }
     }
     """
@@ -46,6 +46,7 @@ class Buttonatron(Grid, GoodTipper, can_focus=True):
     @on(Button.Pressed)
     def remove_button(self, event: Button.Pressed) -> None:
         event.control.remove()
+
 
 class VisibleToggle(Container, GoodTipper, can_focus=True):
 
