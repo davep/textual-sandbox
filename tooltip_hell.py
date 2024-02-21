@@ -7,7 +7,19 @@ from textual.screen import ModalScreen
 from textual.widget import Widget
 from textual.widgets import Button, Label
 
-class PopupScreen(ModalScreen):
+class GoodTipper:
+
+    @staticmethod
+    def tip(widget: Widget) -> Widget:
+        widget.tooltip = (
+            f"[bold]This is a tooltip![/]\n\n"
+            f"[italic]The widget's ID is {widget.id}\n\n"
+            "It has a bunch of text. Cool huh?"
+        )
+        return widget
+
+
+class PopupScreen(ModalScreen, GoodTipper):
 
     DEFAULT_CSS = """
     PopupScreen {
@@ -24,18 +36,8 @@ class PopupScreen(ModalScreen):
     ]
 
     def compose(self) -> ComposeResult:
-        yield Label("Press escape to make this go away again")
+        yield self.tip(Label("Press escape to make this go away again"))
 
-class GoodTipper:
-
-    @staticmethod
-    def tip(widget: Widget) -> Widget:
-        widget.tooltip = (
-            f"[bold]This is a tooltip![/]\n\n"
-            f"[italic]The widget's ID is {widget.id}\n\n"
-            "It has a bunch of text. Cool huh?"
-        )
-        return widget
 
 class Buttonatron(Grid, GoodTipper, can_focus=True):
 
