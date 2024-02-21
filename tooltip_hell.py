@@ -3,8 +3,28 @@
 from textual import on
 from textual.app import App, ComposeResult
 from textual.containers import Container, Grid, Horizontal, VerticalScroll
+from textual.screen import ModalScreen
 from textual.widget import Widget
 from textual.widgets import Button, Label
+
+class PopupScreen(ModalScreen):
+
+    DEFAULT_CSS = """
+    PopupScreen {
+        align: center middle;
+        Label {
+            border: solid cornflowerblue;
+            padding: 1 2 1 2;
+        }
+    }
+    """
+
+    BINDINGS = [
+        ("escape", "dismiss"),
+    ]
+
+    def compose(self) -> ComposeResult:
+        yield Label("Press escape to make this go away again")
 
 class GoodTipper:
 
@@ -132,6 +152,10 @@ class TooltipHellApp(App[None]):
     }
     """
 
+    BINDINGS = [
+        ("s", "screen"),
+    ]
+
     def compose(self) -> ComposeResult:
         with Horizontal():
             yield Buttonatron()
@@ -139,6 +163,9 @@ class TooltipHellApp(App[None]):
         with Horizontal():
             yield VisibleToggle()
             yield DisplayToggle()
+
+    def action_screen(self) -> None:
+        self.push_screen(PopupScreen())
 
 if __name__ == "__main__":
     TooltipHellApp().run()
