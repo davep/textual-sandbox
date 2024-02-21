@@ -61,6 +61,7 @@ setup:				# Install all dependencies
 resetup:			# Recreate the virtual environment from scratch
 	rm -rf $(shell pipenv --venv)
 	pipenv sync --dev
+	$(run) pre-commit install
 
 .PHONY: depsoutdated
 depsoutdated:			# Show a list of outdated dependencies
