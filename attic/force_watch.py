@@ -5,10 +5,12 @@ from textual.app import App, ComposeResult
 from textual.reactive import var
 from textual.widgets import Button, RichLog
 
+
 @dataclass
 class ComplexThing:
 
     value: int = 0
+
 
 class ForceWatchApp(App[None]):
 
@@ -25,6 +27,7 @@ class ForceWatchApp(App[None]):
     def update_thing(self) -> None:
         self.thing.value += 1
         self.thing = self.thing
+
 
 if __name__ == "__main__":
     ForceWatchApp().run()

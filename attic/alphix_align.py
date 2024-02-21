@@ -49,4 +49,3 @@ class ModalApp(App):
 if __name__ == "__main__":
     app = ModalApp()
     app.run()
-

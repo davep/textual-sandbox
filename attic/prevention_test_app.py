@@ -9,6 +9,7 @@ from textual.reactive import var
 from textual.message import Message
 from textual.widgets import Label, Log
 
+
 class PreventionTestApp(App[None]):
 
     @dataclass
@@ -39,6 +40,7 @@ class PreventionTestApp(App[None]):
             await sleep(5)
         self.set_timer(5.0, self.unping)
         self.query_one(Label).update("Not prevented")
+
 
 if __name__ == "__main__":
     PreventionTestApp().run()

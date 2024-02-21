@@ -1,6 +1,7 @@
 from textual.app import App, ComposeResult
 from textual.widgets import Select
 
+
 class DemoApp(App[None]):
 
     DEFAULT_CSS = """
@@ -19,6 +20,7 @@ class DemoApp(App[None]):
 
     def compose(self) -> ComposeResult:
         yield Select([("First", 1), ("Second", 2)], id="selector")
+
 
 if __name__ == "__main__":
     DemoApp().run()

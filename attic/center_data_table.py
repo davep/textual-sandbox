@@ -3,7 +3,7 @@
 import csv
 import io
 
-from textual.app     import App, ComposeResult
+from textual.app import App, ComposeResult
 from textual.widgets import Header, Footer, DataTable
 
 CSV = """lane,swimmer,country,time
@@ -16,7 +16,8 @@ CSV = """lane,swimmer,country,time
 7,Tom Shields,United States,51.73
 1,Aleksandr Sadovnikov,Russia,51.84"""
 
-class CenterDataTable( App[ None ] ):
+
+class CenterDataTable(App[None]):
 
     CSS = """
     Screen {
@@ -31,12 +32,12 @@ class CenterDataTable( App[ None ] ):
 
     """
 
-    def compose( self ) -> ComposeResult:
+    def compose(self) -> ComposeResult:
         yield Header()
         yield DataTable[str]()
         yield Footer()
 
-    def on_mount( self ) -> None:
+    def on_mount(self) -> None:
         """"""
         table = self.query_one(DataTable[str])
         rows = csv.reader(io.StringIO(CSV))

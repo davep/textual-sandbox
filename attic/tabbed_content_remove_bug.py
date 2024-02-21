@@ -1,6 +1,7 @@
 from textual.app import App, ComposeResult
 from textual.widgets import TabbedContent, TabPane, Label, Footer
 
+
 class TabbedContentRemoveBug(App[None]):
 
     BINDINGS = [
@@ -19,6 +20,7 @@ class TabbedContentRemoveBug(App[None]):
 
     def action_delete(self) -> None:
         self.query_one(TabbedContent).remove_pane("remove-me")
+
 
 if __name__ == "__main__":
     TabbedContentRemoveBug().run()

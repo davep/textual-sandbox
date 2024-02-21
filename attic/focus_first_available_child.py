@@ -6,6 +6,7 @@ from textual.widget import Widget
 from textual.widgets import Label, Input, Button
 from textual.walk import walk_depth_first
 
+
 def focus_first_child(widget: Widget) -> None:
     """Focus the first focusable child of the given widget.
 
@@ -16,6 +17,7 @@ def focus_first_child(widget: Widget) -> None:
         if child.can_focus:
             child.focus()
             break
+
 
 class FocusFirstAvailableChildApp(App[None]):
 
@@ -38,6 +40,7 @@ class FocusFirstAvailableChildApp(App[None]):
 
     def on_mount(self) -> None:
         focus_first_child(self.query_one("#in-here"))
+
 
 if __name__ == "__main__":
     FocusFirstAvailableChildApp().run()

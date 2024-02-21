@@ -15,10 +15,11 @@ from textual.widgets import Static, Footer
 @dataclass
 class State:
     msg: str = "Hello!"
-    style: Style = Style(color = "red")
+    style: Style = Style(color="red")
 
     def __rich__(self):
         return self.msg
+
 
 class DisplayWidget(Widget):
 
@@ -38,6 +39,7 @@ class ScreenA(Screen):
         yield DisplayWidget()
         yield Footer()
 
+
 class ScreenB(Screen):
     def compose(self) -> ComposeResult:
         yield Static(Text("B"))
@@ -48,24 +50,32 @@ class ScreenB(Screen):
 class StateApp(App[None]):
     state = reactive(State)
 
-    SCREENS = {
-        "a": ScreenA(),
-        "b": ScreenB()
-    }
+    SCREENS = {"a": ScreenA(), "b": ScreenB()}
 
     BINDINGS = [
-        Binding("a", "switch_screen('a')", "Screen A",),
-        Binding("b", "switch_screen('b')", "Screen B",),
+        Binding(
+            "a",
+            "switch_screen('a')",
+            "Screen A",
+        ),
+        Binding(
+            "b",
+            "switch_screen('b')",
+            "Screen B",
+        ),
         Binding("s", "change_state", "Change State"),
     ]
 
     def action_change_state(self) -> None:
-        self.state = State(msg = self.state.msg.swapcase(), style=Style(underline=not self.state.style.underline))
+        self.state = State(
+            msg=self.state.msg.swapcase(),
+            style=Style(underline=not self.state.style.underline),
+        )
         self.log(f"{self.state}")
 
     def on_mount(self) -> None:
         self.switch_screen("a")
 
+
 if __name__ == "__main__":
     StateApp().run()
-

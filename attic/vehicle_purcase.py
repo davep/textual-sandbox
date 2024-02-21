@@ -8,6 +8,7 @@ from textual.widgets import Button, OptionList, Label, Checkbox, Pretty
 from textual.widgets.option_list import Option
 from textual.screen import ModalScreen
 
+
 class SubScreen(ModalScreen):
 
     DEFAULT_CSS = """
@@ -16,6 +17,7 @@ class SubScreen(ModalScreen):
         border: solid $boost;
     }
     """
+
 
 class CarScreen(SubScreen):
 
@@ -27,13 +29,12 @@ class CarScreen(SubScreen):
 
     @on(Button.Pressed, "#buy")
     def buy_it(self) -> None:
-        self.dismiss({
-            "options": "everything -- really we'd ask"
-        })
+        self.dismiss({"options": "everything -- really we'd ask"})
 
     @on(Button.Pressed, "#cancel")
     def cancel_purchase(self) -> None:
         self.dismiss({})
+
 
 class BikeScreen(SubScreen):
 
@@ -53,17 +54,18 @@ class BikeScreen(SubScreen):
         # has a key/value mapping of the answers for all the questions. Here
         # I'm just using the Checkbox; in a full application you'd want to
         # take more types of widgets into account.
-        self.dismiss({
-            **{"type": "bike"},
-            **{
-                question.id: question.value for question in self.query(Checkbox)
+        self.dismiss(
+            {
+                **{"type": "bike"},
+                **{question.id: question.value for question in self.query(Checkbox)},
             }
-        })
+        )
 
     @on(Button.Pressed, "#cancel")
     def cancel_purchase(self) -> None:
         # Cancel was pressed. So here we'll return no-data.
         self.dismiss({})
+
 
 class VehiclePurchaseApp(App[None]):
 
@@ -71,13 +73,16 @@ class VehiclePurchaseApp(App[None]):
     # their names and the screen that asks the questions.
     VEHCILES: dict[str, tuple[str, type[ModalScreen]]] = {
         "car": ("Car", CarScreen),
-        "bike": ("Bike", BikeScreen)
+        "bike": ("Bike", BikeScreen),
     }
 
     def compose(self) -> ComposeResult:
         # This builds the initial option list from the vehicles listed above.
         yield OptionList(
-            *[Option(name, identifier) for identifier, (name, _) in self.VEHCILES.items()]
+            *[
+                Option(name, identifier)
+                for identifier, (name, _) in self.VEHCILES.items()
+            ]
         )
         # The `Pretty` is just somewhere to show the result. See
         # selection_made below.
@@ -95,7 +100,10 @@ class VehiclePurchaseApp(App[None]):
         if event.option_id in self.VEHCILES:
             # ...create an instance of the screen associated with it, push
             # it and set up the callback.
-            self.push_screen(self.VEHCILES[event.option_id][1](), callback=self.selection_made)
+            self.push_screen(
+                self.VEHCILES[event.option_id][1](), callback=self.selection_made
+            )
+
 
 if __name__ == "__main__":
     VehiclePurchaseApp().run()

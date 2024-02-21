@@ -2,6 +2,7 @@ from textual.app import App, ComposeResult, RenderResult
 from textual.reactive import reactive
 from textual.widgets import Static, Pretty
 
+
 class Counter(Static):
 
     TARGET = 100
@@ -24,9 +25,9 @@ class Counter(Static):
         if self.counter1 in (0, self.TARGET):
             self.animate(
                 "counter1",
-                value = 0 if self.counter1 else self.TARGET,
-                duration = 10,
-                on_complete=self.count1_complete
+                value=0 if self.counter1 else self.TARGET,
+                duration=10,
+                on_complete=self.count1_complete,
             )
         else:
             self.call_next(self.stop_animation, "counter1")
@@ -38,13 +39,14 @@ class Counter(Static):
         if not self.app._animator._scheduled:
             self.animate(
                 "counter2",
-                value = 0 if self.counter2 else self.TARGET,
-                duration = 10,
-                delay = 10,
-                on_complete=self.count2_complete
+                value=0 if self.counter2 else self.TARGET,
+                duration=10,
+                delay=10,
+                on_complete=self.count2_complete,
             )
         else:
             self.call_next(self.stop_animation, "counter2")
+
 
 class AnimationExplorerExample(App[None]):
 
@@ -60,9 +62,8 @@ class AnimationExplorerExample(App[None]):
         self.query_one(Pretty).update(
             {
                 "_animations": self._animator._animations,
-                "_scheduled": self._animator._scheduled
+                "_scheduled": self._animator._scheduled,
             }
-
         )
 
     def compose(self) -> ComposeResult:
@@ -74,6 +75,7 @@ class AnimationExplorerExample(App[None]):
 
     def action_count2(self) -> None:
         self.query_one(Counter).count2()
+
 
 if __name__ == "__main__":
     AnimationExplorerExample().run()

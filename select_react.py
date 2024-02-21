@@ -4,6 +4,7 @@ from textual import on
 from textual.app import App, ComposeResult
 from textual.widgets import Label, Select
 
+
 class SelectSomethingApp(App[None]):
 
     def compose(self) -> ComposeResult:
@@ -17,6 +18,7 @@ class SelectSomethingApp(App[None]):
         if isinstance(event.value, str):
             self.screen.styles.background = event.value
             self.query_one(Label).update(event.value)
+
 
 if __name__ == "__main__":
     SelectSomethingApp().run()

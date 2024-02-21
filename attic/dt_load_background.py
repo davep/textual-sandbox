@@ -5,6 +5,7 @@ from textual.containers import Vertical
 from textual.widgets import DataTable, Label, LoadingIndicator
 from textual import work
 
+
 class BackgroundLoad(App[None]):
 
     CSS = """
@@ -34,8 +35,9 @@ class BackgroundLoad(App[None]):
             t.add_row(i, key=str(i))
             await asyncio.sleep(0.01)
         t.set_class(False, "hidden")
-        self.query_one("#loader", Vertical).set_class(True,"hidden")
+        self.query_one("#loader", Vertical).set_class(True, "hidden")
         self.call_after_refresh(t.action_scroll_end)
+
 
 if __name__ == "__main__":
     BackgroundLoad().run()

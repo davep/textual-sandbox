@@ -5,14 +5,16 @@ from textual import work
 from textual.app import App, ComposeResult
 from textual.widgets import RichLog
 
+
 class Test(App):
-    CSS = '''
+    CSS = """
     RichLog {
         height: 100%;
     }
-    '''
+    """
+
     def compose(self) -> ComposeResult:
-        yield RichLog(id = 'log')
+        yield RichLog(id="log")
 
     def on_mount(self) -> None:
         self.my_worker()
@@ -21,11 +23,12 @@ class Test(App):
     async def my_worker(self):
         counter = 1
 
-        log = self.query_one('#log', RichLog)
+        log = self.query_one("#log", RichLog)
         while True:
-            log.write(f'test {counter}')
+            log.write(f"test {counter}")
             counter += 1
             await asyncio.sleep(1)
+
 
 if __name__ == "__main__":
     Test().run()

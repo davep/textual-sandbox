@@ -2,6 +2,7 @@ from textual import on
 from textual.app import App, ComposeResult
 from textual.widgets import Button
 
+
 class TheBestGameEver(App[None]):
 
     CSS = """
@@ -26,6 +27,7 @@ class TheBestGameEver(App[None]):
     def clicker(self) -> None:
         self.score += 1
         self.query_one(Button).label = str(self.score)
+
 
 if __name__ == "__main__":
     TheBestGameEver().run()

@@ -1,6 +1,7 @@
 from textual.app import App, ComposeResult
 from textual.widgets import DataTable
 
+
 class DataTableColumnSizesApp(App[None]):
 
     CSS = """
@@ -22,7 +23,7 @@ class DataTableColumnSizesApp(App[None]):
         table.add_column("Also not fixed but with a long title")
         table.add_column("This one is fixed", width=50)
         for n in range(1_000):
-            table.add_row(str(n), f"Second {n}",f"Final {n}")
+            table.add_row(str(n), f"Second {n}", f"Final {n}")
 
     def action_show_column_sizes(self) -> None:
         self.notify(f"The table's width is: {self.query_one(DataTable).size.width}")
@@ -30,8 +31,9 @@ class DataTableColumnSizesApp(App[None]):
             self.notify(
                 f"Width: {column.width}\nRender width: {column.render_width}",
                 title=f"Column: {column.label}",
-                timeout=10
+                timeout=10,
             )
+
 
 if __name__ == "__main__":
     DataTableColumnSizesApp().run()

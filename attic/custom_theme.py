@@ -3,6 +3,7 @@ from textual.widgets import Static
 
 from rich.theme import Theme
 
+
 class CustomThemeApp(App[None]):
 
     def on_mount(self) -> None:
@@ -10,6 +11,7 @@ class CustomThemeApp(App[None]):
 
     def compose(self) -> ComposeResult:
         yield Static("This is [red]red[/] [dim red]and[/] this is [davep]davep[/]")
+
 
 if __name__ == "__main__":
     CustomThemeApp().run()

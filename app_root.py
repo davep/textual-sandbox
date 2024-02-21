@@ -3,6 +3,7 @@
 from textual.app import App, ComposeResult
 from textual.containers import Container
 
+
 class AppRootApp(App[None]):
 
     CSS = """
@@ -18,6 +19,7 @@ class AppRootApp(App[None]):
 
     def compose(self) -> ComposeResult:
         yield Container()
+
 
 if __name__ == "__main__":
     AppRootApp().run()

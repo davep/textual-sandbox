@@ -9,6 +9,7 @@ from textual.message import Message
 from textual.containers import Vertical, Horizontal
 from textual.widgets import Button, Label, Input
 
+
 class PretendLoginApp(App[None]):
 
     CSS = """
@@ -64,11 +65,11 @@ class PretendLoginApp(App[None]):
 
     @work(thread=True)
     def perform_login(self) -> None:
-        sleep(2)                # Let's pretend to be busy!
+        sleep(2)  # Let's pretend to be busy!
         self.post_message(
             self.LoginResult(
-                self.query_one("#name", Input).value == "davep" and
-                self.query_one("#password", Input).value == "setecastronomy"
+                self.query_one("#name", Input).value == "davep"
+                and self.query_one("#password", Input).value == "setecastronomy"
             )
         )
 
@@ -81,6 +82,7 @@ class PretendLoginApp(App[None]):
             self.notify("YAY WE LOGGED IN!")
         else:
             self.notify("You forgot your password dummy!", severity="error")
+
 
 if __name__ == "__main__":
     PretendLoginApp().run()

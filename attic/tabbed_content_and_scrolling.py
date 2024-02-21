@@ -2,8 +2,10 @@ from textual.app import App, ComposeResult
 from textual.containers import VerticalScroll
 from textual.widgets import TabbedContent, Input, LoadingIndicator, TabPane, Markdown
 
+
 class TabPaneScrollableContent(VerticalScroll, can_focus=False):
     pass
+
 
 class TabbedContentWithScrollApp(App[None]):
 
@@ -48,6 +50,7 @@ class TabbedContentWithScrollApp(App[None]):
                     for n in range(50):
                         yield Markdown(f"# Here is some markdown before input {n}!")
                         yield Input(placeholder=f"This is input {n}")
+
 
 if __name__ == "__main__":
     TabbedContentWithScrollApp().run()

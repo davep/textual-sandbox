@@ -1,12 +1,13 @@
 from dataclasses import dataclass
 
-from textual            import on
-from textual.app        import App, ComposeResult
+from textual import on
+from textual.app import App, ComposeResult
 from textual.containers import Horizontal, Vertical
-from textual.message    import Message
-from textual.widgets    import Header, Footer, TextLog, Button
+from textual.message import Message
+from textual.widgets import Header, Footer, TextLog, Button
 
-class MessageFamily( Vertical ):
+
+class MessageFamily(Vertical):
 
     DEFAULT_CSS = """
     MessageFamily {
@@ -20,41 +21,44 @@ class MessageFamily( Vertical ):
     """
 
     @dataclass
-    class PressedParent( Message ):
+    class PressedParent(Message):
         pass
 
-    class PressedChild( PressedParent ):
+    class PressedChild(PressedParent):
         pass
 
-    class PressedGrandchild( PressedChild ):
+    class PressedGrandchild(PressedChild):
         pass
 
-    class PressedGreatgrandchild( PressedGrandchild ):
+    class PressedGreatgrandchild(PressedGrandchild):
         pass
 
-    def compose( self ) -> ComposeResult:
-        yield Button( "Press this to post the parent message", id="parent" )
-        yield Button( "Press this to post the child message", id="child" )
-        yield Button( "Press this to post the grandchild message", id="grandchild" )
-        yield Button( "Press this to post the great-grandchild message", id="great-grandchild" )
+    def compose(self) -> ComposeResult:
+        yield Button("Press this to post the parent message", id="parent")
+        yield Button("Press this to post the child message", id="child")
+        yield Button("Press this to post the grandchild message", id="grandchild")
+        yield Button(
+            "Press this to post the great-grandchild message", id="great-grandchild"
+        )
 
-    @on( Button.Pressed, "#parent" )
-    def post_parent( self ) -> None:
-        self.post_message( self.PressedParent() )
+    @on(Button.Pressed, "#parent")
+    def post_parent(self) -> None:
+        self.post_message(self.PressedParent())
 
-    @on( Button.Pressed, "#child" )
-    def post_child( self ) -> None:
-        self.post_message( self.PressedChild() )
+    @on(Button.Pressed, "#child")
+    def post_child(self) -> None:
+        self.post_message(self.PressedChild())
 
-    @on( Button.Pressed, "#grandchild" )
-    def post_grandchild( self ) -> None:
-        self.post_message( self.PressedGrandchild() )
+    @on(Button.Pressed, "#grandchild")
+    def post_grandchild(self) -> None:
+        self.post_message(self.PressedGrandchild())
 
-    @on( Button.Pressed, "#great-grandchild" )
-    def post_greatgrandchild( self ) -> None:
-        self.post_message( self.PressedGreatgrandchild() )
+    @on(Button.Pressed, "#great-grandchild")
+    def post_greatgrandchild(self) -> None:
+        self.post_message(self.PressedGreatgrandchild())
 
-class MessageSandboxApp( App[ None ] ):
+
+class MessageSandboxApp(App[None]):
 
     CSS = """
     TextLog {
@@ -76,21 +80,22 @@ class MessageSandboxApp( App[ None ] ):
     }
     """
 
-    def compose( self ) -> ComposeResult:
+    def compose(self) -> ComposeResult:
         yield Header()
         with Horizontal():
             yield MessageFamily()
             yield TextLog()
         yield Footer()
 
-    @on( MessageFamily.PressedParent )
+    @on(MessageFamily.PressedParent)
     # Note that originally all of these would be needed; now we can just get
     # away with the parent message.
     # @on( MessageFamily.PressedChild )
     # @on( MessageFamily.PressedGrandchild )
     # @on( MessageFamily.PressedGreatgrandchild )
-    def log_event( self, event: MessageFamily.PressedParent ) -> None:
-        self.query_one( TextLog ).write( f"{event!r}" )
+    def log_event(self, event: MessageFamily.PressedParent) -> None:
+        self.query_one(TextLog).write(f"{event!r}")
+
 
 if __name__ == "__main__":
     MessageSandboxApp().run()

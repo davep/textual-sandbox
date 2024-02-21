@@ -5,10 +5,12 @@ from textual.app import App, ComposeResult
 from textual.containers import Vertical, VerticalScroll
 from textual.widgets import Button, Label
 
+
 class SelfRemovingLabel(Label):
 
     def on_mount(self) -> None:
         self.set_timer(2, self.remove)
+
 
 class RemoveOnTimerApp(App[None]):
 
@@ -29,6 +31,7 @@ class RemoveOnTimerApp(App[None]):
     @on(Button.Pressed)
     def add_ephemeral_label(self):
         self.query_one(VerticalScroll).mount(SelfRemovingLabel("I will remove myself!"))
+
 
 if __name__ == "__main__":
     RemoveOnTimerApp().run()

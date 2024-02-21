@@ -4,12 +4,14 @@ from textual.app import App, ComposeResult
 from textual.containers import Horizontal, Vertical
 from textual.widgets import Placeholder
 
+
 class LeftColumn(Vertical):
 
     def compose(self) -> ComposeResult:
         yield Placeholder()
         yield Placeholder()
         yield Placeholder()
+
 
 class MainData(Vertical):
 
@@ -20,6 +22,7 @@ class MainData(Vertical):
             yield Placeholder()
             yield Placeholder()
         yield Placeholder()
+
 
 class SomeLayoutApp(App[None]):
 
@@ -42,6 +45,7 @@ class SomeLayoutApp(App[None]):
         with Horizontal():
             yield LeftColumn()
             yield MainData()
+
 
 if __name__ == "__main__":
     SomeLayoutApp().run()

@@ -5,6 +5,7 @@ from textual.message import Message
 from textual.widget import Widget
 from textual.widgets import Log
 
+
 class TestWidget(Widget):
 
     value: reactive[str] = reactive("Hello, World!")
@@ -15,6 +16,7 @@ class TestWidget(Widget):
     def compute_value(self) -> str:
         self.post_message(self.Computed())
         return "Wat?"
+
 
 class ComputeTestApp(App[None]):
 
@@ -32,6 +34,7 @@ class ComputeTestApp(App[None]):
     @on(TestWidget.Computed)
     def log_message(self, event: TestWidget.Computed) -> None:
         self.query_one(Log).write_line(f"{event!r}")
+
 
 if __name__ == "__main__":
     ComputeTestApp().run()

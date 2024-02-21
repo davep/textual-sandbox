@@ -1,6 +1,7 @@
 from textual.app import App, ComposeResult
 from textual.widgets import Label
 
+
 class ColSpanApp(App[None]):
 
     CSS = """
@@ -22,6 +23,7 @@ class ColSpanApp(App[None]):
     def compose(self) -> ComposeResult:
         yield Label("Label 1", id="label1")
         yield Label("Label 2", id="label2")
+
 
 if __name__ == "__main__":
     ColSpanApp().run()

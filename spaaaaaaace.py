@@ -3,6 +3,7 @@
 from textual.app import App, ComposeResult
 from textual.widgets import Tree, Static, Footer
 
+
 class SpaceWidget(Static, can_focus=True):
 
     DEFAULT_CSS = """

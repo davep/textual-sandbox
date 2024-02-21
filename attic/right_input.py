@@ -2,6 +2,7 @@ from textual.app import App, ComposeResult
 from textual.widget import Widget
 from textual.widgets import Input
 
+
 class RightInput(Widget):
 
     DEFAULT_CSS = """
@@ -27,6 +28,7 @@ class RightAlignInput(App[None]):
         yield RightInput()
         yield RightInput()
         yield RightInput()
+
 
 if __name__ == "__main__":
     RightAlignInput().run()

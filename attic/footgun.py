@@ -3,14 +3,15 @@ from textual.widgets import Label, Header, Footer
 from textual.containers import Vertical
 from textual.binding import Binding
 
-class BorkFooter( App[ None ] ):
+
+class BorkFooter(App[None]):
 
     TITLE = "Footer Borker"
 
     BINDINGS = [
-        Binding( "a", "a", "The A key" ),
-        Binding( "backspace", "backspace", "Backspace!" ),
-        Binding( "delete", "delete", "Delete!" )
+        Binding("a", "a", "The A key"),
+        Binding("backspace", "backspace", "Backspace!"),
+        Binding("delete", "delete", "Delete!"),
     ]
 
     def compose(self) -> ComposeResult:
@@ -18,18 +19,18 @@ class BorkFooter( App[ None ] ):
         yield Vertical()
         yield Footer()
 
-    def gndn( self ):
-        self.query_one( Vertical ).mount( Label( "You pressed a key" ) )
+    def gndn(self):
+        self.query_one(Vertical).mount(Label("You pressed a key"))
 
-    def action_a( self ):
+    def action_a(self):
         self.gndn()
 
-    def action_backspace( self ):
+    def action_backspace(self):
         self.gndn()
 
-    def action_delete( self ):
+    def action_delete(self):
         self.gndn()
+
 
 if __name__ == "__main__":
     BorkFooter().run()
-

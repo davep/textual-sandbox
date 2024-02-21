@@ -5,18 +5,26 @@ from textual.containers import Vertical
 from textual.screen import Screen
 from textual.widgets import Label
 
+
 class ClickLabel(Label):
 
     def action_click(self) -> None:
         self.notify("ClickLabel.action_click reporting in!")
 
+
 class Clicker(Vertical):
 
     def compose(self) -> ComposeResult:
         yield Label("1: [@click=app.click]Click on this for an app action to fire[/]")
-        yield Label("2: [@click=screen.click]Click on this for a screen action to fire[/]")
-        yield Label("3: [@click=click]Click on this for this container's action to fire[/]")
-        yield ClickLabel("4: [@click=click]Click on this for the custom widget's action to fire[/]")
+        yield Label(
+            "2: [@click=screen.click]Click on this for a screen action to fire[/]"
+        )
+        yield Label(
+            "3: [@click=click]Click on this for this container's action to fire[/]"
+        )
+        yield ClickLabel(
+            "4: [@click=click]Click on this for the custom widget's action to fire[/]"
+        )
 
     def action_click(self) -> None:
         self.notify("Clicker.action_click reporting in!")

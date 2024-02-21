@@ -7,6 +7,7 @@ from textual.app import App, ComposeResult
 from textual.containers import Horizontal, VerticalScroll
 from textual.widgets import RichLog, Label
 
+
 class Scroller(VerticalScroll):
 
     BORDER_TITLE = "Scroller"
@@ -32,6 +33,7 @@ class TrackScrollApp(App[None]):
         with Horizontal():
             yield Scroller()
             yield RichLog()
+
 
 if __name__ == "__main__":
     TrackScrollApp().run()

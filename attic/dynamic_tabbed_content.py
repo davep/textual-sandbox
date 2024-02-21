@@ -3,6 +3,7 @@
 from textual.app import App, ComposeResult
 from textual.widgets import TabbedContent, TabPane, Label, Input, Footer
 
+
 class TestPane(TabPane):
 
     def compose(self) -> ComposeResult:
@@ -10,11 +11,12 @@ class TestPane(TabPane):
             yield Label(f"Example input {n}")
             yield Input(placeholder=f"Example input {n}")
 
+
 class DynamicTabbedContentApp(App[None]):
 
     BINDINGS = [
         ("a", "add", "Add a new test pane"),
-        ("c", "clear", "Clear all the panes")
+        ("c", "clear", "Clear all the panes"),
     ]
 
     def compose(self) -> ComposeResult:
@@ -27,6 +29,7 @@ class DynamicTabbedContentApp(App[None]):
 
     def action_clear(self) -> None:
         self.query_one(TabbedContent).clear_panes()
+
 
 if __name__ == "__main__":
     DynamicTabbedContentApp().run()

@@ -3,6 +3,7 @@ from textual.containers import Vertical
 from textual.css.query import NoMatches
 from textual.widgets import Button, Label
 
+
 class ButtonApp(App[None]):
 
     BINDINGS = [
@@ -30,6 +31,7 @@ class ButtonApp(App[None]):
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
         self.query_one(Label).update(f"Pressed {event.button.id}")
+
 
 if __name__ == "__main__":
     ButtonApp().run()

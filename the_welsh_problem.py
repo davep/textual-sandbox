@@ -18,8 +18,9 @@ NAMES = [
     "Llanfairpwllgwyngyllgogerychwyrndrobwllllantysiliogogogoch",
     "Llanfair­pwllgwyngyll­gogery­chwyrn­drobwll­llan­tysilio­gogo­goch",
     "Mountain Ash",
-    "Hirwaun"
+    "Hirwaun",
 ]
+
 
 class Names(ModalScreen[None]):
 
@@ -53,7 +54,7 @@ class Names(ModalScreen[None]):
         question.add_column(width=3, justify="right")
         question.add_column(width=1)
         question.add_column(ratio=1)
-        question.add_row(str(n), "", f"{name} is the name of a place in Wales." )
+        question.add_row(str(n), "", f"{name} is the name of a place in Wales.")
         answer = Table.grid()
         answer.add_column(width=4)
         answer.add_column(ratio=1)
@@ -63,6 +64,7 @@ class Names(ModalScreen[None]):
     def compose(self) -> ComposeResult:
         with Vertical():
             yield OptionList(*[self.gridify(n, name) for n, name in enumerate(NAMES)])
+
 
 class TruncatedTextOptionApp(App[None]):
 
@@ -74,6 +76,7 @@ class TruncatedTextOptionApp(App[None]):
 
     def on_mount(self) -> None:
         self.push_screen(Names())
+
 
 if __name__ == "__main__":
     TruncatedTextOptionApp().run()

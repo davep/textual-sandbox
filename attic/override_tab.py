@@ -4,6 +4,7 @@ from textual.app import App, ComposeResult
 from textual.binding import Binding
 from textual.widgets import Button
 
+
 class OverrideTabApp(App[None]):
 
     BINDINGS = [
@@ -16,6 +17,7 @@ class OverrideTabApp(App[None]):
 
     def action_nope(self) -> None:
         self.notify("Nope")
+
 
 if __name__ == "__main__":
     OverrideTabApp().run()

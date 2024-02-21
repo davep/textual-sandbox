@@ -4,6 +4,7 @@ from textual.app import App, ComposeResult
 from textual.containers import Container
 from textual.widgets import Input
 
+
 class MiddleInput(Container):
 
     DEFAULT_CSS = """
@@ -32,6 +33,7 @@ class MiddleInput(Container):
     }
     """
 
+
 class MiddleInputApp(App[None]):
 
     CSS = """
@@ -46,6 +48,7 @@ class MiddleInputApp(App[None]):
         yield MiddleInput(Input())
         yield MiddleInput(Input())
         yield MiddleInput(Input())
+
 
 if __name__ == "__main__":
     MiddleInputApp().run()

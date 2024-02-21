@@ -1,10 +1,11 @@
 """https://github.com/Textualize/textual/issues/2420"""
 
-from textual.app        import App, ComposeResult
+from textual.app import App, ComposeResult
 from textual.containers import Grid
-from textual.widgets    import Header, Footer, Static
+from textual.widgets import Header, Footer, Static
 
-class ImportantBorderApp( App[ None ] ):
+
+class ImportantBorderApp(App[None]):
 
     CSS = """
     Grid {
@@ -43,16 +44,14 @@ class ImportantBorderApp( App[ None ] ):
     }
     """
 
-    def compose( self ) -> ComposeResult:
+    def compose(self) -> ComposeResult:
         yield Header()
         options = ["outline", "border", "both"]
         with Grid():
-            for n in range( 9 ):
-                yield Static(
-                    options[ n % 3 ],
-                    classes=f"{options[ n % 3 ]} subsequent"
-                )
+            for n in range(9):
+                yield Static(options[n % 3], classes=f"{options[ n % 3 ]} subsequent")
         yield Footer()
+
 
 if __name__ == "__main__":
     ImportantBorderApp().run()

@@ -3,6 +3,7 @@
 from textual.app import App, ComposeResult
 from textual.widgets import Tree
 
+
 class TreeRootExpandedStateApp(App[None]):
 
     CSS = """
@@ -35,6 +36,7 @@ class TreeRootExpandedStateApp(App[None]):
     def action_repopulate(self) -> None:
         if isinstance(self.screen.focused, Tree):
             self._populate(self.screen.focused.clear())
+
 
 if __name__ == "__main__":
     TreeRootExpandedStateApp().run()

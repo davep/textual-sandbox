@@ -13,6 +13,7 @@ from textual.command import CommandPalette, DiscoveryHit, Provider, Hit, Hits
 
 from rich.text import Text
 
+
 class TotallyFakeCommandSource(Provider):
     """Really, this isn't going to be the UI. Not even close."""
 
@@ -128,7 +129,7 @@ You can't teach an old dog new tricks.
         Args:
             query: The user input to be matched.
         """
-        print(f"begin search(\"{query}\")")
+        print(f'begin search("{query}")')
         try:
             # Get a Textual fuzzy matcher.
             matcher = self.matcher(query)
@@ -149,7 +150,7 @@ You can't teach an old dog new tricks.
                         Text.assemble(
                             Text.from_markup("[italic green]notify('[/]"),
                             matcher.highlight(candidate),
-                            Text.from_markup("[italic green]')[/]")
+                            Text.from_markup("[italic green]')[/]"),
                         ),
                         # The code to run this if this match is picked by
                         # the user.
@@ -162,12 +163,12 @@ You can't teach an old dog new tricks.
                         "Show the selected text as a notification\n"
                         f"I think the current screen is {self.screen!r}\n"
                         f"I think the focused widget is {self.focused!r}\n"
-                        f"Match score: {matcher.match(candidate):0.5f}"
+                        f"Match score: {matcher.match(candidate):0.5f}",
                     )
         except CancelledError:
-            print(f"cancelled search(\"{query}\")")
+            print(f'cancelled search("{query}")')
         finally:
-            print(f"end search(\"{query}\")")
+            print(f'end search("{query}")')
 
 
 class MinibufferApp(App[None]):
@@ -245,6 +246,7 @@ class MinibufferApp(App[None]):
         for label in screen.query(Label):
             _, number = list(label.classes)[0].split("-")
             label.set_classes(f"colour-{(int(number)+1) % 12}")
+
 
 if __name__ == "__main__":
     MinibufferApp().run()

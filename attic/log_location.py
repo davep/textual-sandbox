@@ -2,6 +2,7 @@ from textual import on
 from textual.app import App, ComposeResult
 from textual.widgets import Button
 
+
 class LogLocationApp(App[None]):
 
     def compose(self) -> ComposeResult:
@@ -15,6 +16,7 @@ class LogLocationApp(App[None]):
     @on(Button.Pressed, "#log")
     def log_to_console(self) -> None:
         self.log.debug("This was from a log")
+
 
 if __name__ == "__main__":
     LogLocationApp().run()

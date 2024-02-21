@@ -7,6 +7,7 @@ from textual.screen import ModalScreen
 from textual.widget import Widget
 from textual.widgets import Button, Label
 
+
 class GoodTipper:
 
     @staticmethod
@@ -61,7 +62,10 @@ class Buttonatron(Grid, GoodTipper, can_focus=True):
         button_id = str(len(self.children))
         self.mount(
             self.tip(
-                Button(f"Button #{button_id}\n\nPress me to remove me", id=f"button-{button_id}")
+                Button(
+                    f"Button #{button_id}\n\nPress me to remove me",
+                    id=f"button-{button_id}",
+                )
             )
         )
 
@@ -92,6 +96,7 @@ class VisibleToggle(Container, GoodTipper, can_focus=True):
 
     def action_toggle_label(self) -> None:
         self.query_one(Label).visible = not self.query_one(Label).visible
+
 
 class DisplayToggle(Container, GoodTipper, can_focus=True):
 
@@ -143,6 +148,7 @@ class LabelsAllTheWayDown(VerticalScroll, GoodTipper, can_focus=True):
             for n in range(200):
                 yield self.tip(Label(f"Here is label #{n}", id=f"label-{n}"))
 
+
 class TooltipHellApp(App[None]):
 
     CSS = """
@@ -168,6 +174,7 @@ class TooltipHellApp(App[None]):
 
     def action_screen(self) -> None:
         self.push_screen(PopupScreen())
+
 
 if __name__ == "__main__":
     TooltipHellApp().run()

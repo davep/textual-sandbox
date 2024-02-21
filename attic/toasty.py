@@ -13,14 +13,14 @@ from textual.notifications import SeverityLevel, Notification
 QUOTES = [
     "Are either of you paleontologists? I'm in desperate need of a paleontologist.",
     "I should reach Defcon 1 and release my missiles in 28 hours. Would you like to see some projected kill ratios?",
-    "A strange game."
-    "The only winning move is not to play.",
+    "A strange game." "The only winning move is not to play.",
     "How about a nice game of chess?",
     "Joshua called me.",
     "The WOPR spends all it's time thinking about World War III.",
     "Did you ever play tic-tac-toe?",
-    "I loved it when you nuked Las Vegas."
+    "I loved it when you nuked Las Vegas.",
 ]
+
 
 class ToastyApp(App[None]):
 
@@ -49,16 +49,24 @@ class ToastyApp(App[None]):
                 yield Markdown()
 
     async def on_mount(self) -> None:
-        await self.query_one(Markdown).load(Path("/Users/davep/develop/python/textual/README.md"))
+        await self.query_one(Markdown).load(
+            Path("/Users/davep/develop/python/textual/README.md")
+        )
 
     def _refresh_notifications(self) -> None:
         for notification in self._notifications:
-            title = notification.severity.capitalize() if notification.title is None else notification.title
-            run([
-                "osascript",
-                "-e",
-                f'display notification \"{notification.message}\" with title \"{title}\"'
-            ])
+            title = (
+                notification.severity.capitalize()
+                if notification.title is None
+                else notification.title
+            )
+            run(
+                [
+                    "osascript",
+                    "-e",
+                    f'display notification "{notification.message}" with title "{title}"',
+                ]
+            )
         self._notifications.clear()
 
     @on(Button.Pressed)
@@ -71,8 +79,9 @@ class ToastyApp(App[None]):
             choice(QUOTES),
             severity=event.button.id,
             title=None if self.query_one(Checkbox).value else "",
-            timeout=timeout
+            timeout=timeout,
         )
+
 
 if __name__ == "__main__":
     ToastyApp().run()

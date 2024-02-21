@@ -5,6 +5,7 @@ from textual import on
 from textual.app import App, ComposeResult
 from textual.widgets import Button
 
+
 class OpenCloseFileApp(App[None]):
 
     def __init__(self, my_file: TextIOWrapper) -> None:
@@ -18,6 +19,7 @@ class OpenCloseFileApp(App[None]):
     def write_and_close(self) -> None:
         self.my_file.write("And we're done!\n")
         self.exit()
+
 
 if __name__ == "__main__":
     with open("foo.txt", "a", encoding="utf-8") as my_file:

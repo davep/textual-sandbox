@@ -2,27 +2,22 @@ from textual.app import App, ComposeResult
 from textual.screen import Screen
 from textual.widgets import Header, Footer, Label
 
-class First( Screen ):
 
-    BINDINGS = [
-        ( "n", "switch_screen( 'second' )", "Second Screen" )
-    ]
+class First(Screen):
 
-    def compose( self ) -> ComposeResult:
+    BINDINGS = [("n", "switch_screen( 'second' )", "Second Screen")]
+
+    def compose(self) -> ComposeResult:
         yield Header()
-        yield Label(
-            "This is the first screen\n"
-            "Notice the app title in the header."
-        )
+        yield Label("This is the first screen\n" "Notice the app title in the header.")
         yield Footer()
 
-class Second( Screen ):
 
-    BINDINGS = [
-        ( "n", "switch_screen( 'first' )", "First Screen" )
-    ]
+class Second(Screen):
 
-    def compose( self ) -> ComposeResult:
+    BINDINGS = [("n", "switch_screen( 'first' )", "First Screen")]
+
+    def compose(self) -> ComposeResult:
         yield Header()
         yield Label(
             "This is the second screen\n"
@@ -30,7 +25,8 @@ class Second( Screen ):
         )
         yield Footer()
 
-class MultiScreen( App[ None ] ):
+
+class MultiScreen(App[None]):
 
     CSS = """
     Screen {
@@ -44,14 +40,11 @@ class MultiScreen( App[ None ] ):
 
     SUB_TITLE = "These titles show off how proud I am about it"
 
-    SCREENS = {
-        "first": First,
-        "second": Second
-    }
+    SCREENS = {"first": First, "second": Second}
 
-    def on_compose( self ) -> None:
-        self.push_screen( "first" )
+    def on_compose(self) -> None:
+        self.push_screen("first")
+
 
 if __name__ == "__main__":
     MultiScreen().run()
-

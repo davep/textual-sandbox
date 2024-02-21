@@ -3,13 +3,14 @@
 from textual.app import App, ComposeResult
 from textual.widgets import ListView, ListItem, Label, Footer
 
+
 class LabelItem(ListItem):
 
     def __init__(self, label: str) -> None:
         super().__init__()
         self.label = label
 
-    def compose( self ) -> ComposeResult:
+    def compose(self) -> ComposeResult:
         yield Label(self.label)
 
 
@@ -23,14 +24,13 @@ class ListViewExample(App):
             LabelItem("Two"),
             LabelItem("Three"),
         )
-        yield Label("Nothing chosen",id="chosen")
+        yield Label("Nothing chosen", id="chosen")
         yield Footer()
 
     def on_list_view_selected(self, event: ListView.Selected):
-        self.query_one("#chosen",Label).update(event.item.label)
+        self.query_one("#chosen", Label).update(event.item.label)
 
 
 if __name__ == "__main__":
     app = ListViewExample()
     app.run()
-

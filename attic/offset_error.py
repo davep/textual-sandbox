@@ -4,7 +4,8 @@ from textual.app import App, ComposeResult
 from textual.containers import Vertical
 from textual.widgets import Label
 
-class HH( Label ):
+
+class HH(Label):
 
     DEFAULT_CSS = """
     HH {
@@ -13,7 +14,8 @@ class HH( Label ):
     }
     """
 
-class H( HH ):
+
+class H(HH):
 
     DEFAULT_CSS = """
     H {
@@ -21,18 +23,20 @@ class H( HH ):
     }
     """
 
-class PopOver( Vertical ):
 
-    def compose( self ) -> ComposeResult:
-        yield H( "This Is The Title" )
-        yield HH( "This is a sub-title" )
-        yield Label( "This is some test under that sub-title." )
-        yield HH( "This is a sub-title" )
-        yield Label( "This is some test under that sub-title." )
-        yield HH( "This is a sub-title" )
-        yield Label( "This is some test under that sub-title." )
+class PopOver(Vertical):
 
-class OffsetError( App[ None ] ):
+    def compose(self) -> ComposeResult:
+        yield H("This Is The Title")
+        yield HH("This is a sub-title")
+        yield Label("This is some test under that sub-title.")
+        yield HH("This is a sub-title")
+        yield Label("This is some test under that sub-title.")
+        yield HH("This is a sub-title")
+        yield Label("This is some test under that sub-title.")
+
+
+class OffsetError(App[None]):
 
     CSS = """
     Screen {
@@ -55,19 +59,14 @@ class OffsetError( App[ None ] ):
     }
     """
 
-    BINDINGS = [
-        ( "p", "popover", "Toggle the popover" )
-    ]
+    BINDINGS = [("p", "popover", "Toggle the popover")]
 
-    def compose( self ) -> ComposeResult:
-        yield Vertical(
-            H( "Press P to show the popover" ),
-            PopOver( classes="hidden" )
-        )
+    def compose(self) -> ComposeResult:
+        yield Vertical(H("Press P to show the popover"), PopOver(classes="hidden"))
 
-    def action_popover( self ) -> None:
-        self.query_one( PopOver ).toggle_class( "hidden" )
+    def action_popover(self) -> None:
+        self.query_one(PopOver).toggle_class("hidden")
+
 
 if __name__ == "__main__":
     OffsetError().run()
-

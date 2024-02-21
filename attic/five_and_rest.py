@@ -1,8 +1,9 @@
-from textual.app        import App, ComposeResult
+from textual.app import App, ComposeResult
 from textual.containers import Horizontal, Vertical
-from textual.widgets    import Header, Footer
+from textual.widgets import Header, Footer
 
-class FiveAndRestApp( App[ None ] ):
+
+class FiveAndRestApp(App[None]):
 
     CSS = """
     Vertical {
@@ -18,12 +19,11 @@ class FiveAndRestApp( App[ None ] ):
     }
     """
 
-    def compose( self ) -> ComposeResult:
+    def compose(self) -> ComposeResult:
         yield Header()
-        yield Horizontal(
-            Vertical( id="left" ), Vertical( id="right" )
-        )
+        yield Horizontal(Vertical(id="left"), Vertical(id="right"))
         yield Footer()
+
 
 if __name__ == "__main__":
     FiveAndRestApp().run()

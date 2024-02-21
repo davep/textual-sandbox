@@ -4,6 +4,7 @@ from textual.app import App, ComposeResult
 from textual.widgets import SelectionList
 from textual.widgets.selection_list import Selection
 
+
 class SelectionListError(App[None]):
 
     def compose(self) -> ComposeResult:
@@ -11,6 +12,7 @@ class SelectionListError(App[None]):
 
     def on_mount(self) -> None:
         self.query_one(SelectionList).remove_option("test")
+
 
 if __name__ == "__main__":
     SelectionListError().run()

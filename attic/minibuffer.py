@@ -14,6 +14,7 @@ from textual.command import CommandPalette, Provider, Hit, Hits
 from rich.text import Text
 from rich.emoji import EMOJI
 
+
 class TotallyFakeCommandSource(Provider):
     """Really, this isn't going to be the UI. Not even close."""
 
@@ -123,7 +124,7 @@ You can't teach an old dog new tricks.
         Args:
             query: The user input to be matched.
         """
-        print(f"begin search(\"{query}\")")
+        print(f'begin search("{query}")')
         try:
             # Get a Textual fuzzy matcher.
             matcher = self.matcher(query)
@@ -144,7 +145,7 @@ You can't teach an old dog new tricks.
                         Text.assemble(
                             Text.from_markup("[italic green]notify('[/]"),
                             matcher.highlight(candidate),
-                            Text.from_markup("[italic green]')[/]")
+                            Text.from_markup("[italic green]')[/]"),
                         ),
                         # The code to run this if this match is picked by
                         # the user.
@@ -157,12 +158,13 @@ You can't teach an old dog new tricks.
                         "Show the selected text as a notification\n"
                         f"I think the current screen is {self.screen!r}\n"
                         f"I think the focused widget is {self.focused!r}\n"
-                        f"Match score: {matcher.match(candidate):0.5f}"
+                        f"Match score: {matcher.match(candidate):0.5f}",
                     )
         except CancelledError:
-            print(f"cancelled search(\"{query}\")")
+            print(f'cancelled search("{query}")')
         finally:
-            print(f"end search(\"{query}\")")
+            print(f'end search("{query}")')
+
 
 class EmojiSource(Provider):
 
@@ -177,16 +179,14 @@ class EmojiSource(Provider):
                     pass
                 else:
                     yield Hit(
-                        100/len(name) * (len(name) - location),
-                        Text.assemble(
-                            matcher.highlight(name),
-                            f"   {emoji}"
-                        ),
+                        100 / len(name) * (len(name) - location),
+                        Text.assemble(matcher.highlight(name), f"   {emoji}"),
                         partial(self.screen.notify, f"You selected: {emoji}"),
                         name,
                     )
         except CancelledError:
             pass
+
 
 class MinibufferApp(App[None]):
 
@@ -266,7 +266,8 @@ class MinibufferApp(App[None]):
 
     def on_mount(self) -> None:
         CommandPalette.run_on_select = False
-        #self.app.set_interval(0.25, partial(self.cycle_background, self.screen))
+        # self.app.set_interval(0.25, partial(self.cycle_background, self.screen))
+
 
 if __name__ == "__main__":
     MinibufferApp().run()

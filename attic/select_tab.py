@@ -3,6 +3,7 @@
 from textual.app import App, ComposeResult
 from textual.widgets import TabbedContent, TabPane
 
+
 class SelectTabbedContent(App[None]):
 
     def compose(self) -> ComposeResult:
@@ -11,6 +12,7 @@ class SelectTabbedContent(App[None]):
 
     def on_mount(self) -> None:
         _ = self.query_one("TabPane#hello", TabPane)
+
 
 if __name__ == "__main__":
     SelectTabbedContent().run()

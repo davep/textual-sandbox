@@ -4,6 +4,7 @@ from textual.app import App, ComposeResult
 from textual.events import Key
 from textual.widgets import Input, TextArea
 
+
 class TabbyTextArea(TextArea):
 
     DEFAULT_CSS = """
@@ -27,12 +28,14 @@ class TabbyTextArea(TextArea):
             event.prevent_default()
             self.screen.focus_next()
 
+
 class CursorApp(App[None]):
 
     def compose(self) -> ComposeResult:
         for _ in range(5):
             yield Input()
             yield TabbyTextArea()
+
 
 if __name__ == "__main__":
     CursorApp().run()

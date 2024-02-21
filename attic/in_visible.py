@@ -4,7 +4,8 @@ from textual.app import App, ComposeResult
 from textual.widgets import Header, Footer, Label, Button
 from textual.containers import Vertical
 
-class ShowHideApp( App[ None ] ):
+
+class ShowHideApp(App[None]):
 
     CSS = """
     Horizontal {
@@ -32,23 +33,30 @@ class ShowHideApp( App[ None ] ):
         yield Header()
         yield Vertical(
             Vertical(
-                Button( "Toggle show/hide via code", id="via-code" ),
-                Label( "I can be toggled via code; press the button", id="via-code-label" )
+                Button("Toggle show/hide via code", id="via-code"),
+                Label(
+                    "I can be toggled via code; press the button", id="via-code-label"
+                ),
             ),
             Vertical(
-                Button( "Toggle show/hide via classes", id="via-classes" ),
-                Label( "I can be toggled via classes; press the button", id="via-classes-label" )
-            )
+                Button("Toggle show/hide via classes", id="via-classes"),
+                Label(
+                    "I can be toggled via classes; press the button",
+                    id="via-classes-label",
+                ),
+            ),
         )
         yield Footer()
 
-    def on_button_pressed( self, event: Button.Pressed ) -> None:
+    def on_button_pressed(self, event: Button.Pressed) -> None:
         if event.button.id == "via-code":
-            label = self.query_one( "#via-code-label" )
-            label.styles.visibility = "visible" if label.styles.visibility == "hidden" else "hidden"
+            label = self.query_one("#via-code-label")
+            label.styles.visibility = (
+                "visible" if label.styles.visibility == "hidden" else "hidden"
+            )
         elif event.button.id == "via-classes":
-            self.query_one( "#via-classes-label" ).toggle_class( "hidden" )
+            self.query_one("#via-classes-label").toggle_class("hidden")
+
 
 if __name__ == "__main__":
     ShowHideApp().run()
-

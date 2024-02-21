@@ -11,6 +11,7 @@ from textual.app import App, ComposeResult, RenderResult
 from textual.containers import Grid, Vertical
 from textual.widgets import Label, Button
 
+
 class PopUp(Vertical):
 
     DEFAULT_CSS = """
@@ -32,6 +33,7 @@ class PopUp(Vertical):
     def on_button_pressed(self) -> None:
         self.remove()
 
+
 class Time(Label):
 
     DEFAULT_CSS = """
@@ -49,6 +51,7 @@ class Time(Label):
 
     def render(self) -> RenderResult:
         return str(datetime.now())
+
 
 class BackgroundRefreshApp(App[None]):
 
@@ -78,6 +81,7 @@ class BackgroundRefreshApp(App[None]):
 
     def action_popup(self) -> None:
         self.mount(PopUp())
+
 
 if __name__ == "__main__":
     BackgroundRefreshApp().run()

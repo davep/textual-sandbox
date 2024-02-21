@@ -4,6 +4,7 @@ from textual import on
 from textual.app import App, ComposeResult
 from textual.widgets import Label, Select, Rule
 
+
 class ExampleThemeApp(App[None]):
 
     CSS = """
@@ -44,6 +45,7 @@ class ExampleThemeApp(App[None]):
     def change_theme(self, event: Select.Changed) -> None:
         for theme in self.THEMES:
             self.set_class(event.value == theme, f"theme-{theme}")
+
 
 if __name__ == "__main__":
     ExampleThemeApp().run()

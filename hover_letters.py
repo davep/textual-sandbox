@@ -6,6 +6,7 @@ from string import ascii_uppercase
 from textual.app import App, ComposeResult
 from textual.widgets import Static
 
+
 class HoverLettersApp(App[None]):
 
     CSS = """

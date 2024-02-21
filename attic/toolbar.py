@@ -2,6 +2,7 @@ from textual.app import App, ComposeResult
 from textual.widget import Widget
 from textual.widgets import Button
 
+
 class ToolbarButton(Button):
 
     DEFAULT_CSS = """
@@ -17,6 +18,7 @@ class ToolbarButton(Button):
     }
     """
 
+
 class Toolbar(Widget):
 
     DEFAULT_CSS = """
@@ -27,6 +29,7 @@ class Toolbar(Widget):
     }
     """
 
+
 class ExampleToolbarApp(App[None]):
 
     def compose(self) -> ComposeResult:
@@ -35,6 +38,7 @@ class ExampleToolbarApp(App[None]):
             yield ToolbarButton("Is")
             yield ToolbarButton("An")
             yield ToolbarButton("Example")
+
 
 if __name__ == "__main__":
     ExampleToolbarApp().run()

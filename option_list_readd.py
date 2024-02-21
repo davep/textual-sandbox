@@ -7,6 +7,7 @@ from textual.reactive import var
 from textual.widgets import Button, OptionList, Pretty
 from textual.widgets.option_list import Option
 
+
 class OptionListReAdd(App[None]):
 
     CSS = """
@@ -37,12 +38,9 @@ class OptionListReAdd(App[None]):
         self.query_one(OptionList).add_option(
             Option(f"Option {self.count}", id=str(self.count))
         )
-        self.query_one("#options", Pretty).update(
-            self.query_one(OptionList)._options
-        )
-        self.query_one("#ids", Pretty).update(
-            self.query_one(OptionList)._option_ids
-        )
+        self.query_one("#options", Pretty).update(self.query_one(OptionList)._options)
+        self.query_one("#ids", Pretty).update(self.query_one(OptionList)._option_ids)
+
 
 if __name__ == "__main__":
     OptionListReAdd().run()

@@ -4,6 +4,7 @@ from textual import on
 from textual.app import App, ComposeResult
 from textual.widgets import ListView, ListItem, Label
 
+
 class ListViewMessageExampleApp(App[None]):
 
     def compose(self) -> ComposeResult:
@@ -21,6 +22,7 @@ class ListViewMessageExampleApp(App[None]):
     @on(ListView.Selected)
     def show_chosen(self, event: ListView.Selected) -> None:
         self.query_one("#chosen", Label).update(f"{event.item}")
+
 
 if __name__ == "__main__":
     ListViewMessageExampleApp().run()

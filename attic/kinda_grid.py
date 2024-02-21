@@ -5,6 +5,7 @@ from textual.app import App, ComposeResult
 from textual.containers import Grid
 from textual.widgets import Label, Input, Log
 
+
 class TitledInput(Grid):
 
     DEFAULT_CSS = """
@@ -26,6 +27,7 @@ class TitledInput(Grid):
         yield Label(self.title)
         yield Input()
 
+
 class KindaGridApp(App[None]):
 
     def compose(self) -> ComposeResult:
@@ -35,7 +37,10 @@ class KindaGridApp(App[None]):
 
     @on(Input.Changed)
     def update_logs(self, event: Input.Changed) -> None:
-        self.query_one(Log).write_line(f"{event.control.parent.title} changed: {event.value}")
+        self.query_one(Log).write_line(
+            f"{event.control.parent.title} changed: {event.value}"
+        )
+
 
 if __name__ == "__main__":
     KindaGridApp().run()

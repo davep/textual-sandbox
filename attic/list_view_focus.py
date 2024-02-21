@@ -4,11 +4,10 @@ from textual.app import App, ComposeResult
 from textual.containers import Vertical
 from textual.widgets import ListView, ListItem, Label, Footer
 
+
 class ListViewFocusApp(App[None]):
 
-    BINDINGS = [
-        ("f", "show_focused", "Show which widget is focused")
-    ]
+    BINDINGS = [("f", "show_focused", "Show which widget is focused")]
 
     def compose(self) -> ComposeResult:
         with Vertical():
@@ -20,6 +19,7 @@ class ListViewFocusApp(App[None]):
 
     def action_show_focused(self) -> None:
         self.query_one("Vertical > Label", Label).update(f"It's a {self.focused!r}!")
+
 
 if __name__ == "__main__":
     ListViewFocusApp().run()

@@ -1,6 +1,7 @@
 from textual.app import App, ComposeResult
 from textual.widgets import Input, TextArea, Static, Button
 
+
 class InputVsTextArea(App[None]):
 
     CSS = """
@@ -16,6 +17,7 @@ class InputVsTextArea(App[None]):
         yield TextArea()
         yield Static()
         yield Button()
+
 
 if __name__ == "__main__":
     InputVsTextArea().run()

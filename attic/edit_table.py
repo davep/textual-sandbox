@@ -55,11 +55,14 @@ class TableApp(App):
         table.add_rows(ROWS[1:])
 
     def update_cell(self, event: DataTable.CellSelected, new_value: str) -> None:
-        self.query_one(DataTable).update_cell(event.cell_key.row_key, event.cell_key.column_key, new_value)
+        self.query_one(DataTable).update_cell(
+            event.cell_key.row_key, event.cell_key.column_key, new_value
+        )
 
     @on(DataTable.CellSelected)
     def edit_cell(self, event: DataTable.CellSelected) -> None:
         self.push_screen(CellEdit(event), callback=partial(self.update_cell, event))
+
 
 if __name__ == "__main__":
     TableApp().run()

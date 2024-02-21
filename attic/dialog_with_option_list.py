@@ -5,6 +5,7 @@ from textual.screen import ModalScreen
 from textual.widgets import Label, OptionList, Button
 from textual.widgets.option_list import Option
 
+
 class OptionsDialog(ModalScreen[str]):
 
     DEFAULT_CSS = """
@@ -45,9 +46,12 @@ class OptionsDialog(ModalScreen[str]):
         with Vertical():
             with Vertical(id="input"):
                 yield Label("Select a thing from the list of things")
-                yield OptionList(*[
-                    Option(f"This is option thing {n}", id=str(n)) for n in range(100)
-                ])
+                yield OptionList(
+                    *[
+                        Option(f"This is option thing {n}", id=str(n))
+                        for n in range(100)
+                    ]
+                )
             with Horizontal(id="buttons"):
                 yield Button("OK", id="ok", variant="primary")
                 yield Button("Cancel", id="cancel")
@@ -63,6 +67,7 @@ class OptionsDialog(ModalScreen[str]):
     def user_canceled(self) -> None:
         self.app.pop_screen()
 
+
 class OptionListDialogApp(App[None]):
 
     def compose(self) -> ComposeResult:
@@ -75,6 +80,7 @@ class OptionListDialogApp(App[None]):
     @on(Button.Pressed)
     def ask(self) -> None:
         self.push_screen(OptionsDialog(), callback=self.show_result)
+
 
 if __name__ == "__main__":
     OptionListDialogApp().run()

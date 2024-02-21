@@ -15,9 +15,8 @@ class SparklineBasicApp(App[None]):
         self.set_interval(0.25, self.update)
 
     def update(self):
-        self.query_one(Sparkline).data = [
-            randint(0, 9) for _ in range(10)
-        ]
+        self.query_one(Sparkline).data = [randint(0, 9) for _ in range(10)]
+
 
 if __name__ == "__main__":
     SparklineBasicApp().run()

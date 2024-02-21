@@ -2,8 +2,10 @@ from textual.app import App, ComposeResult
 from textual.widgets import Footer, Header, SelectionList
 from textual.widgets.selection_list import Selection, SelectionType
 
+
 class MySelectionList(SelectionList[SelectionType]):
     pass
+
 
 class SelectionListApp(App[None]):
 

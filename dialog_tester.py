@@ -10,6 +10,7 @@ from textual.screen import ModalScreen
 from textual.widgets import Button, Dialog, Label, Input, Select, OptionList, Checkbox
 from textual.widgets.dialog import DialogVariant
 
+
 class ModalDialog(ModalScreen):
 
     DEFAULT_CSS = """
@@ -44,7 +45,7 @@ class ModalDialog(ModalScreen):
 
 class BigDialog(ModalDialog):
 
-    NAMES =[
+    NAMES = [
         "Edison Carter",
         "Max Headroom",
         "Theora Jones",
@@ -52,7 +53,7 @@ class BigDialog(ModalDialog):
         "Bryce Lynch",
         "Murray McKenzie",
         "Blank Reg",
-        "Ned Grossberg"
+        "Ned Grossberg",
     ]
 
     DEFAULT_CSS = """
@@ -79,6 +80,7 @@ class BigDialog(ModalDialog):
                 yield Button("Guess")
                 yield Button("Whatever")
 
+
 class YesNo(ModalDialog):
 
     def __init__(self, question: str) -> None:
@@ -91,6 +93,7 @@ class YesNo(ModalDialog):
             with Dialog.ActionArea():
                 yield Button("Yes")
                 yield Button("No")
+
 
 class YesNoCheckbox(ModalDialog):
 
@@ -107,11 +110,13 @@ class YesNoCheckbox(ModalDialog):
                 yield Button("Yes")
                 yield Button("No")
 
+
 class BadVariant(ModalDialog):
 
     def compose(self) -> ComposeResult:
         with Dialog(variant="Loki"):
             yield Label("I am burdened with glorious purpose!")
+
 
 class SuccessDialog(ModalDialog):
 
@@ -123,6 +128,7 @@ class SuccessDialog(ModalDialog):
                 yield Button("Yay!")
                 yield Button("Awesome!")
 
+
 class WarningDialog(ModalDialog):
 
     def compose(self) -> ComposeResult:
@@ -133,6 +139,7 @@ class WarningDialog(ModalDialog):
                 yield Button("Hmm")
                 yield Button("Intensify anxiety")
 
+
 class ErrorDialog(ModalDialog):
 
     def compose(self) -> ComposeResult:
@@ -142,6 +149,7 @@ class ErrorDialog(ModalDialog):
                 yield Button("Eeep!")
                 yield Button("Run away!")
                 yield Button("Yeah I think I will nope out!")
+
 
 class UndecidedDialog(ModalDialog):
 
@@ -157,6 +165,7 @@ class UndecidedDialog(ModalDialog):
         assert isinstance(event.button.id, str)
         self.query_one(Dialog).variant = event.button.id
 
+
 class ManyButtons(ModalDialog):
 
     def compose(self) -> ComposeResult:
@@ -165,6 +174,7 @@ class ManyButtons(ModalDialog):
             with Dialog.ActionArea():
                 for n in range(5):
                     yield Button(f"This is button {str(n) * max(1, n)} oh yes it is")
+
 
 class DialogDialog(ModalDialog):
 
@@ -191,6 +201,7 @@ class DialogDialog(ModalDialog):
                 yield Label("As you look at me, I'm on the right.")
                 with Dialog.ActionArea():
                     yield Button("Okay")
+
 
 class DialogCeption(ModalDialog):
 
@@ -220,6 +231,7 @@ class DialogCeption(ModalDialog):
             with Dialog.ActionArea():
                 yield Button("Just")
                 yield Button("Because")
+
 
 class StyledBody(ModalDialog):
 
@@ -259,6 +271,7 @@ class StyledBody(ModalDialog):
             with Dialog.ActionArea():
                 yield Button("Obey")
                 yield Button("Ignore")
+
 
 class DialogTesterApp(App[None]):
 
@@ -368,20 +381,23 @@ class DialogTesterApp(App[None]):
     @on(Button.Pressed)
     def test(self, event: Button.Pressed) -> None:
         if event.button.id is not None:
-            self.push_screen({
-                "big": BigDialog,
-                "yes-no": partial(YesNo, "Working?"),
-                "seriously-yes-no": partial(YesNoCheckbox, "Working?"),
-                "bad-variant": BadVariant,
-                "success-variant": SuccessDialog,
-                "warning-variant": WarningDialog,
-                "error-variant": ErrorDialog,
-                "undecided-variant": UndecidedDialog,
-                "many-buttons": ManyButtons,
-                "dialog-dialog": DialogDialog,
-                "dialogception": DialogCeption,
-                "styled-body": StyledBody,
-            }[event.button.id]())
+            self.push_screen(
+                {
+                    "big": BigDialog,
+                    "yes-no": partial(YesNo, "Working?"),
+                    "seriously-yes-no": partial(YesNoCheckbox, "Working?"),
+                    "bad-variant": BadVariant,
+                    "success-variant": SuccessDialog,
+                    "warning-variant": WarningDialog,
+                    "error-variant": ErrorDialog,
+                    "undecided-variant": UndecidedDialog,
+                    "many-buttons": ManyButtons,
+                    "dialog-dialog": DialogDialog,
+                    "dialogception": DialogCeption,
+                    "styled-body": StyledBody,
+                }[event.button.id]()
+            )
+
 
 if __name__ == "__main__":
     DialogTesterApp().run()

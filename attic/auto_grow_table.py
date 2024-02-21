@@ -4,6 +4,7 @@ from textual.app import App, ComposeResult
 from textual.containers import Horizontal, Vertical
 from textual.widgets import DataTable, Footer, Static
 
+
 class ExpandingStatic(Static):
 
     def __init__(self) -> None:
@@ -13,6 +14,7 @@ class ExpandingStatic(Static):
     def add_row(self, row: str) -> None:
         self._text += f"{row}\n"
         self.update(self._text)
+
 
 class AutoGrowTableApp(App[None]):
 
@@ -33,9 +35,7 @@ class AutoGrowTableApp(App[None]):
     }
     """
 
-    BINDINGS = [
-        ("space", "add_row", "Add another row to both tables")
-    ]
+    BINDINGS = [("space", "add_row", "Add another row to both tables")]
 
     def compose(self) -> ComposeResult:
         with Horizontal():
@@ -58,6 +58,7 @@ class AutoGrowTableApp(App[None]):
         self.query_one(ExpandingStatic).add_row("Another Static Line")
         for table in self.query(DataTable):
             table.add_row("Another", "Table", "Row!")
+
 
 if __name__ == "__main__":
     AutoGrowTableApp().run()

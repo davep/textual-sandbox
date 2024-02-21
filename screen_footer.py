@@ -5,6 +5,7 @@ from textual.containers import Vertical
 from textual.screen import Screen, ModalScreen
 from textual.widgets import Footer
 
+
 class Child(ModalScreen):
 
     DEFAULT_CSS = """
@@ -28,6 +29,7 @@ class Child(ModalScreen):
         with Vertical():
             yield Footer()
 
+
 class Main(Screen):
 
     BINDINGS = [
@@ -47,6 +49,7 @@ class BindingsInSubScreensApp(App[None]):
 
     def on_mount(self) -> None:
         self.push_screen(Main())
+
 
 if __name__ == "__main__":
     BindingsInSubScreensApp().run()

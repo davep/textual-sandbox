@@ -4,6 +4,7 @@ from textual.app import App, ComposeResult
 from textual.containers import VerticalScroll, Horizontal
 from textual.widgets import Static
 
+
 class ScrollableGridApp(App[None]):
 
     CSS = """
@@ -24,6 +25,7 @@ class ScrollableGridApp(App[None]):
                 with Horizontal(classes="row"):
                     for x in range(20):
                         yield Static(f"{y} {x}")
+
 
 if __name__ == "__main__":
     ScrollableGridApp().run()

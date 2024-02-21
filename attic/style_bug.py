@@ -2,16 +2,15 @@
 
 from rich.text import Text
 
-from textual.app        import App, ComposeResult, RenderResult
+from textual.app import App, ComposeResult, RenderResult
 from textual.containers import Vertical
-from textual.widgets    import Header, Footer
-from textual.widget     import Widget
+from textual.widgets import Header, Footer
+from textual.widget import Widget
 
-class Tester( Widget, can_focus=True ):
 
-    COMPONENT_CLASSES = {
-        "tester--text"
-    }
+class Tester(Widget, can_focus=True):
+
+    COMPONENT_CLASSES = {"tester--text"}
 
     DEFAULT_CSS = """
     Tester {
@@ -27,18 +26,19 @@ class Tester( Widget, can_focus=True ):
     }
     """
 
-    def render( self ) -> RenderResult:
+    def render(self) -> RenderResult:
         return Text(
-            "This is a test widget",
-            style=self.get_component_rich_style( "tester--text" )
+            "This is a test widget", style=self.get_component_rich_style("tester--text")
         )
 
-class StyleBugApp( App[ None ] ):
 
-    def compose( self ) -> ComposeResult:
+class StyleBugApp(App[None]):
+
+    def compose(self) -> ComposeResult:
         yield Header()
-        yield Vertical( *[ Tester() for _ in range( 40 ) ] )
+        yield Vertical(*[Tester() for _ in range(40)])
         yield Footer()
+
 
 if __name__ == "__main__":
     StyleBugApp().run()

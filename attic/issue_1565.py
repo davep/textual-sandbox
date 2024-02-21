@@ -1,30 +1,29 @@
 """https://github.com/Textualize/textual/issues/1565"""
 
-from textual.app      import App, ComposeResult, RenderResult
-from textual.widgets  import Header, Footer, Label
+from textual.app import App, ComposeResult, RenderResult
+from textual.widgets import Header, Footer, Label
 from textual.reactive import reactive
 
-class MyLabel( Label, can_focus=True ):
 
-    BINDINGS = [
-        ( "up", "move(1)", "Up" ),
-        ( "down", "move(-1)", "Down" )
-    ]
+class MyLabel(Label, can_focus=True):
 
-    counter = reactive( 0 )
+    BINDINGS = [("up", "move(1)", "Up"), ("down", "move(-1)", "Down")]
 
-    def render( self ) -> RenderResult:
+    counter = reactive(0)
+
+    def render(self) -> RenderResult:
         """Render the content of the widget."""
         return f"{self.counter=}"
 
-    def action_move( self, direction: int ) -> None:
+    def action_move(self, direction: int) -> None:
         self.counter += direction
 
-class Issue1565App( App[ None ] ):
+
+class Issue1565App(App[None]):
 
     BINDINGS = [
-        ( "s", "show", "Show" ),
-        ( "h", "hide", "Hide" ),
+        ("s", "show", "Show"),
+        ("h", "hide", "Hide"),
     ]
 
     CSS = """
@@ -45,19 +44,20 @@ class Issue1565App( App[ None ] ):
     }
     """
 
-    def compose( self ) -> ComposeResult:
+    def compose(self) -> ComposeResult:
         yield Header()
         yield MyLabel()
         yield Footer()
 
-    def on_mount( self ) -> None:
-        self.query_one( MyLabel ).focus()
+    def on_mount(self) -> None:
+        self.query_one(MyLabel).focus()
 
-    def action_show( self ) -> None:
-        self.query_one( MyLabel ).set_class( False, "hidden" )
+    def action_show(self) -> None:
+        self.query_one(MyLabel).set_class(False, "hidden")
 
-    def action_hide( self ) -> None:
-        self.query_one( MyLabel ).set_class( True, "hidden" )
+    def action_hide(self) -> None:
+        self.query_one(MyLabel).set_class(True, "hidden")
+
 
 if __name__ == "__main__":
     Issue1565App().run()

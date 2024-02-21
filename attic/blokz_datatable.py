@@ -3,6 +3,7 @@
 from textual.widgets import DataTable
 from textual.app import ComposeResult, App
 
+
 class My_App(App):
 
     ROWS = [
@@ -30,7 +31,7 @@ class My_App(App):
         table = self.query_one(DataTable)
         print(table.cursor_coordinate)
 
+
 if __name__ == "__main__":
     app = My_App()
     app.run()
-

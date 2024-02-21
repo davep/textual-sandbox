@@ -1,6 +1,7 @@
 from textual.app import App, ComposeResult
 from textual.widgets import Tree
 
+
 class ScrollToNode(App[None]):
 
     def compose(self) -> ComposeResult:
@@ -14,6 +15,7 @@ class ScrollToNode(App[None]):
                 added = outer.add_leaf(str(m))
         tree.root.expand_all()
         self.call_after_refresh(tree.scroll_to_node, added)
+
 
 if __name__ == "__main__":
     ScrollToNode().run()

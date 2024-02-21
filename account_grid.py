@@ -33,6 +33,7 @@ class TUI(App):
             min(self.size.width // 30, 5), 1
         )
 
+
 if __name__ == "__main__":
     TUI().run()
 

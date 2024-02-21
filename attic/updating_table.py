@@ -5,6 +5,7 @@ from random import randint, random
 from textual.app import App, ComposeResult
 from textual.widgets import DataTable
 
+
 class UpdatingTableExampleApp(App[None]):
 
     def compose(self) -> ComposeResult:
@@ -24,6 +25,7 @@ class UpdatingTableExampleApp(App[None]):
         table = self.query_one(DataTable)
         row = randint(0, 49)
         table.update_cell(f"param{row}", "value", random())
+
 
 if __name__ == "__main__":
     UpdatingTableExampleApp().run()

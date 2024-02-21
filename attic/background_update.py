@@ -7,6 +7,7 @@ from textual.containers import Grid, Vertical
 from textual.screen import ModalScreen
 from textual.widgets import Label, Button
 
+
 class PopUp(ModalScreen[None]):
 
     DEFAULT_CSS = """
@@ -29,6 +30,7 @@ class PopUp(ModalScreen[None]):
 
     def on_button_pressed(self) -> None:
         self.dismiss()
+
 
 class Time(Label):
 
@@ -56,6 +58,7 @@ class Time(Label):
     def render(self) -> RenderResult:
         return str(datetime.now())
 
+
 class BackgroundRefreshApp(App[None]):
 
     CSS = """
@@ -75,6 +78,7 @@ class BackgroundRefreshApp(App[None]):
 
     def action_popup(self) -> None:
         self.push_screen(PopUp())
+
 
 if __name__ == "__main__":
     BackgroundRefreshApp().run()

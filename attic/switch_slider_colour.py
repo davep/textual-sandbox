@@ -3,6 +3,7 @@
 from textual.app import App, ComposeResult
 from textual.widgets import Switch
 
+
 class SwitchSliderColourApp(App[None]):
 
     CSS = """
@@ -17,6 +18,7 @@ class SwitchSliderColourApp(App[None]):
 
     def compose(self) -> ComposeResult:
         yield Switch()
+
 
 if __name__ == "__main__":
     SwitchSliderColourApp().run()

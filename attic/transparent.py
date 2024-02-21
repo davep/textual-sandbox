@@ -1,7 +1,8 @@
 from textual.app import App, ComposeResult
 from textual.widgets import Static
 
-class TransparentScreen( App[ None ] ):
+
+class TransparentScreen(App[None]):
 
     CSS = """
     Screen {
@@ -12,9 +13,9 @@ class TransparentScreen( App[ None ] ):
     }
     """
 
-    def compose( self ) -> ComposeResult:
-        yield Static( "Hello, World!" )
+    def compose(self) -> ComposeResult:
+        yield Static("Hello, World!")
+
 
 if __name__ == "__main__":
     TransparentScreen().run()
-

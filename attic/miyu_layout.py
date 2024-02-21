@@ -1,8 +1,9 @@
-from textual.app        import App, ComposeResult
+from textual.app import App, ComposeResult
 from textual.containers import Container, Vertical, Horizontal
-from textual.widgets    import Header, Footer
+from textual.widgets import Header, Footer
 
-class MiyuLayoutApp( App[ None ] ):
+
+class MiyuLayoutApp(App[None]):
 
     CSS = """
     #left {
@@ -28,14 +29,15 @@ class MiyuLayoutApp( App[ None ] ):
     }
     """
 
-    def compose( self ) -> ComposeResult:
+    def compose(self) -> ComposeResult:
         yield Header()
         with Horizontal():
-            with Vertical( id="left" ):
-                yield Vertical( id="top-box" )
-                yield Container( id="bottom-box" )
-            yield Container( id="right" )
+            with Vertical(id="left"):
+                yield Vertical(id="top-box")
+                yield Container(id="bottom-box")
+            yield Container(id="right")
         yield Footer()
+
 
 if __name__ == "__main__":
     MiyuLayoutApp().run()

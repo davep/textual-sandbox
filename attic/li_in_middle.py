@@ -1,6 +1,7 @@
 from textual.app import App, ComposeResult
 from textual.widgets import LoadingIndicator, Footer, Static
 
+
 class LoadingApp(App[None]):
 
     CSS = """
@@ -32,6 +33,7 @@ class LoadingApp(App[None]):
         yield Static("Three", id="three")
         yield LoadingIndicator()
         yield Footer()
+
 
 if __name__ == "__main__":
     LoadingApp().run()

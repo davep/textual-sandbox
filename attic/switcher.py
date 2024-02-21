@@ -4,6 +4,7 @@ from textual.app import App, ComposeResult
 from textual.screen import Screen
 from textual.widgets import Label
 
+
 class Info(Screen):
 
     BINDINGS = [
@@ -28,6 +29,7 @@ class Home(Screen):
         self.app.bell()
         yield Label("This is the home screen.")
 
+
 class SwitchScreenApp(App[None]):
 
     SCREENS = {
@@ -37,6 +39,7 @@ class SwitchScreenApp(App[None]):
 
     def on_mount(self) -> None:
         self.push_screen("home")
+
 
 if __name__ == "__main__":
     SwitchScreenApp().run()

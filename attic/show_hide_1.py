@@ -3,6 +3,7 @@
 from textual.app import App, ComposeResult
 from textual.widgets import Label
 
+
 class ShowHideLabel(Label):
 
     def on_show(self) -> None:
@@ -10,6 +11,7 @@ class ShowHideLabel(Label):
 
     def on_hide(self) -> None:
         self.notify("Hide!")
+
 
 class ShowHideApp(App[None]):
 
@@ -19,7 +21,10 @@ class ShowHideApp(App[None]):
         yield ShowHideLabel("Here I am")
 
     def action_toggle(self) -> None:
-        self.query_one(ShowHideLabel).visible = not self.query_one(ShowHideLabel).visible
+        self.query_one(ShowHideLabel).visible = not self.query_one(
+            ShowHideLabel
+        ).visible
+
 
 if __name__ == "__main__":
     ShowHideApp().run()

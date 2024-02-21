@@ -4,6 +4,7 @@ from textual import on
 from textual.app import App, ComposeResult
 from textual.widgets import Input, Checkbox
 
+
 class FocusNextOnSubmutApp(App[None]):
 
     def compose(self) -> ComposeResult:
@@ -16,6 +17,7 @@ class FocusNextOnSubmutApp(App[None]):
     @on(Input.Submitted)
     def go_next(self) -> None:
         self.screen.focus_next(Input)
+
 
 if __name__ == "__main__":
     FocusNextOnSubmutApp().run()

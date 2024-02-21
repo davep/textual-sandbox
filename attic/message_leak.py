@@ -3,6 +3,7 @@ from textual.app import App, ComposeResult
 from textual.message import Message
 from textual.widgets import Label, Log
 
+
 class MessageLeakApp(App[None]):
 
     def compose(self) -> ComposeResult:
@@ -17,6 +18,6 @@ class MessageLeakApp(App[None]):
         except:
             pass
 
+
 if __name__ == "__main__":
     MessageLeakApp().run()
-

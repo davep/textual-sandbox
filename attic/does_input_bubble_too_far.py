@@ -4,10 +4,12 @@ from textual.app import App, ComposeResult
 from textual.screen import Screen
 from textual.widgets import Input
 
+
 class InputScreen(Screen):
 
     def compose(self) -> ComposeResult:
         yield Input()
+
 
 class UpperScreen(Screen):
 
@@ -17,10 +19,12 @@ class UpperScreen(Screen):
     def on_input_changed(self) -> None:
         self.app.bell()
 
+
 class DoesInputChangedBubbleTooFarApp(App[None]):
 
     def on_mount(self) -> None:
         self.push_screen(UpperScreen())
+
 
 if __name__ == "__main__":
     DoesInputChangedBubbleTooFarApp().run()

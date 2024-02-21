@@ -1,9 +1,10 @@
 """https://github.com/Textualize/textual/issues/2502"""
 
-from textual.app     import App, ComposeResult
+from textual.app import App, ComposeResult
 from textual.widgets import Static
 
-class ResizeBlackHoleApp( App[ None ] ):
+
+class ResizeBlackHoleApp(App[None]):
 
     CSS = """
     Screen {
@@ -20,10 +21,11 @@ class ResizeBlackHoleApp( App[ None ] ):
     }
     """
 
-    def compose( self ) -> ComposeResult:
+    def compose(self) -> ComposeResult:
         for _ in range(100):
             yield Static(classes="fraction")
             yield Static(classes="fixed")
+
 
 if __name__ == "__main__":
     ResizeBlackHoleApp().run()

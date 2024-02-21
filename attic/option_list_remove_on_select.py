@@ -4,6 +4,7 @@ from textual import on
 from textual.app import App, ComposeResult
 from textual.widgets import OptionList
 
+
 class OptionListRemoveOnDeleteApp(App[None]):
 
     def compose(self) -> ComposeResult:
@@ -15,6 +16,7 @@ class OptionListRemoveOnDeleteApp(App[None]):
         if event.option_index == (options.option_count - 1):
             options._mouse_hovering_over = None
         options.remove_option_at_index(event.option_index)
+
 
 if __name__ == "__main__":
     OptionListRemoveOnDeleteApp().run()

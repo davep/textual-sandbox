@@ -2,13 +2,14 @@ from textual.app import App, ComposeResult
 from textual.widgets import Header, Static, Footer
 from textual.containers import Container
 
-class Issue1122( App[ None ] ):
+
+class Issue1122(App[None]):
 
     TITLE = "Test Issue 1122"
 
     BINDINGS = [
-        ( "s", "toggle( 'side' )", "Sidebar" ),
-        ( "b", "toggle( 'bottom' )", "Bottombar" ),
+        ("s", "toggle( 'side' )", "Sidebar"),
+        ("b", "toggle( 'bottom' )", "Bottombar"),
     ]
 
     CSS = """
@@ -65,19 +66,20 @@ class Issue1122( App[ None ] ):
         yield Container(
             Container(
                 Container(
-                    Static( classes="main box", id="left-main" ),
-                    Static( classes="main box", id="right-main" ),
-                    id="main-pane"
+                    Static(classes="main box", id="left-main"),
+                    Static(classes="main box", id="right-main"),
+                    id="main-pane",
                 ),
-                Static( classes="box", id="bottombar" ),
-                id="right-pane"
+                Static(classes="box", id="bottombar"),
+                id="right-pane",
             ),
-            Static( classes="box", id="sidebar" )
+            Static(classes="box", id="sidebar"),
         )
         yield Footer()
 
-    def action_toggle( self, bar: str ) -> None:
-        self.query_one( f"#{bar}bar" ).toggle_class( "shown" )
+    def action_toggle(self, bar: str) -> None:
+        self.query_one(f"#{bar}bar").toggle_class("shown")
+
 
 if __name__ == "__main__":
     Issue1122().run()

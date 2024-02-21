@@ -2,6 +2,7 @@ from textual.app import App, ComposeResult
 from textual.containers import Horizontal
 from textual.widgets import Label, Input
 
+
 class LabelAndInput(Horizontal):
 
     DEFAULT_CSS = """
@@ -24,12 +25,14 @@ class LabelAndInput(Horizontal):
         yield Label("Label")
         yield Input()
 
+
 class LabelAndInputWidgetApp(App[None]):
 
     def compose(self) -> ComposeResult:
         yield LabelAndInput()
         yield LabelAndInput()
         yield LabelAndInput()
+
 
 if __name__ == "__main__":
     LabelAndInputWidgetApp().run()

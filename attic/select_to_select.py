@@ -36,6 +36,7 @@ SCENARIOS = {
     ],
 }
 
+
 class Campaign(Widget):
 
     @dataclass
@@ -55,6 +56,7 @@ class Campaign(Widget):
         if event.select.value is not None:
             self.post_message(self.Selected(self, event.select.value))
 
+
 class Scenario(Widget):
 
     campaign: var[str] = var[str]("")
@@ -65,6 +67,7 @@ class Scenario(Widget):
     def watch_campaign(self) -> None:
         if self.campaign:
             self.query_one(Select).set_options(SCENARIOS[self.campaign])
+
 
 class SelectToSelectApp(App[None]):
 
@@ -82,6 +85,7 @@ class SelectToSelectApp(App[None]):
     @on(Campaign.Selected)
     def switch_campaign(self, event: Campaign.Selected) -> None:
         self.query_one(Scenario).campaign = event.selected
+
 
 if __name__ == "__main__":
     SelectToSelectApp().run()

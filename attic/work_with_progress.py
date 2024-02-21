@@ -5,6 +5,7 @@ from textual.app import App, ComposeResult
 from textual.widgets import Button, ProgressBar
 from textual.worker import get_current_worker
 
+
 class WorkWithProgress(App[None]):
 
     def compose(self) -> ComposeResult:
@@ -38,6 +39,7 @@ class WorkWithProgress(App[None]):
             # We could also use a custom message here too.
             # https://textual.textualize.io/guide/workers/#posting-messages
             self.call_from_thread(progress.advance)
+
 
 if __name__ == "__main__":
     WorkWithProgress().run()

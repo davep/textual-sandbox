@@ -1,10 +1,11 @@
 """https://github.com/Textualize/textual/discussions/1557"""
 
-from textual.app        import App, ComposeResult
+from textual.app import App, ComposeResult
 from textual.containers import Vertical
-from textual.widgets    import Header, Footer, Button
+from textual.widgets import Header, Footer, Button
 
-class SidebarExample( App[ None ] ):
+
+class SidebarExample(App[None]):
 
     CSS = """
     Screen {
@@ -24,23 +25,24 @@ class SidebarExample( App[ None ] ):
     }
     """
 
-    def compose( self ) -> ComposeResult:
+    def compose(self) -> ComposeResult:
         yield Header()
         yield Vertical(
-            Button( "Test Button "),
-            Button( "Test Button "),
-            Button( "Test Button "),
-            Button( "Test Button "),
-            Button( "Test Button "),
-            id="base"
+            Button("Test Button "),
+            Button("Test Button "),
+            Button("Test Button "),
+            Button("Test Button "),
+            Button("Test Button "),
+            id="base",
         )
         yield Vertical(
-            Button( "Side Button" ),
-            Button( "Side Button" ),
-            Button( "Side Button" ),
-            id="sidebar"
+            Button("Side Button"),
+            Button("Side Button"),
+            Button("Side Button"),
+            id="sidebar",
         )
         yield Footer()
+
 
 if __name__ == "__main__":
     SidebarExample().run()

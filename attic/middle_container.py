@@ -2,6 +2,7 @@ from textual.app import App, ComposeResult
 from textual.containers import Horizontal, Middle
 from textual.widgets import Input, Button
 
+
 class MiddleContainerTestApp(App[None]):
 
     CSS = """
@@ -50,6 +51,7 @@ class MiddleContainerTestApp(App[None]):
                 for n in range(5):
                     with Middle(classes="buttons"):
                         yield Button(str(n), id=f"height-{n}")
+
 
 if __name__ == "__main__":
     MiddleContainerTestApp().run()

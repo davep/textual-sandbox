@@ -3,6 +3,7 @@
 from textual.app import App, ComposeResult
 from textual.widgets import Log
 
+
 class CommandPaletteIsolation(App[None]):
 
     def compose(self) -> ComposeResult:
@@ -13,6 +14,7 @@ class CommandPaletteIsolation(App[None]):
 
     def on_mount(self) -> None:
         self.set_interval(1, self.tick)
+
 
 if __name__ == "__main__":
     CommandPaletteIsolation().run()

@@ -4,6 +4,7 @@ from textual import on
 from textual.app import App, ComposeResult
 from textual.widgets import TextArea, Markdown
 
+
 class MDEditor(App[None]):
 
     CSS = """
@@ -23,6 +24,7 @@ class MDEditor(App[None]):
     @on(TextArea.Changed)
     def update_preview(self, event: TextArea.Changed) -> None:
         self.query_one(Markdown).update(event.text_area.text)
+
 
 if __name__ == "__main__":
     MDEditor().run()

@@ -41,7 +41,6 @@ class OptionListApp(App[None]):
     def on_mount(self) -> None:
         self.query_one(OptionList).focus()
 
-
     def on_option_list_option_selected(self, event: OptionList.OptionSelected) -> None:
         # Here we're showing the option that was selected.
         self.query_one(Label).update(f"You selected option {event.option_index}")
@@ -52,6 +51,7 @@ class OptionListApp(App[None]):
         # - option: the option object itself
         # - option_id: The ID of the option, if it was given one.
         # - option_list: A reference to the option list that sent the message.
+
 
 if __name__ == "__main__":
     OptionListApp().run()

@@ -4,6 +4,7 @@ from textual.app import App, ComposeResult
 from textual.containers import Horizontal
 from textual.widgets import TabbedContent, TabPane, Label, Static
 
+
 class TabContentFun(App[None]):
 
     CSS = """
@@ -31,6 +32,7 @@ class TabContentFun(App[None]):
 
     def on_mount(self) -> None:
         self.query_one("#tree", Static).update(self.query_one(TabbedContent).tree)
+
 
 if __name__ == "__main__":
     TabContentFun().run()

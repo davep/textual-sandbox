@@ -9,11 +9,13 @@ mention, at least, perhaps?
 from textual.app import App, ComposeResult
 from textual.widgets import Input
 
+
 class InputFocusAoo(App[None]):
 
     def compose(self) -> ComposeResult:
         for n in range(20):
             yield Input(placeholder=str(n))
+
 
 if __name__ == "__main__":
     InputFocusAoo().run()

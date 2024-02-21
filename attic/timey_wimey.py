@@ -5,6 +5,7 @@ from textual.app import App, ComposeResult
 from textual.message import Message
 from textual.widgets import Button
 
+
 class TimeyWimeyApp(App[None]):
 
     CSS = """
@@ -32,6 +33,7 @@ class TimeyWimeyApp(App[None]):
     def tardis(self) -> None:
         sleep(5)
         self.post_message(self.Vwoorp())
+
 
 if __name__ == "__main__":
     TimeyWimeyApp().run()

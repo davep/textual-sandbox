@@ -3,6 +3,7 @@
 from textual.app import App, ComposeResult
 from textual.widgets import Static
 
+
 class WidgetSizeApp(App[None]):
 
     CSS = """
@@ -27,6 +28,7 @@ class WidgetSizeApp(App[None]):
     def show_sizes(self) -> None:
         for widget in self.query(Static):
             widget.update(f"{widget.size!r}")
+
 
 if __name__ == "__main__":
     WidgetSizeApp().run()

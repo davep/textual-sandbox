@@ -1,6 +1,7 @@
 from textual.app import App, ComposeResult
 from textual.widgets import Static, Footer
 
+
 class Demo(App):
     TITLE = "Demonstration"
     BINDINGS = [
@@ -94,4 +95,3 @@ class Demo(App):
 
 if __name__ == "__main__":
     Demo().run()
-

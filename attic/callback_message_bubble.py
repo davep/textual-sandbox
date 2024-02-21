@@ -64,6 +64,7 @@ class TestWidget(Vertical):
     def message_from_callback(self) -> None:
         self.app.push_screen(TestModal(), callback=self.modal_callback)
 
+
 class CallbackBubbleIssueApp(App[None]):
 
     def compose(self) -> ComposeResult:

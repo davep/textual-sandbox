@@ -6,7 +6,16 @@ from textual.app import App, ComposeResult
 from textual.binding import Binding
 from textual.containers import Container, ScrollableContainer
 from textual.widget import Widget
-from textual.widgets import Button, Footer, Header, Select, Static, TextLog, Placeholder, Markdown
+from textual.widgets import (
+    Button,
+    Footer,
+    Header,
+    Select,
+    Static,
+    TextLog,
+    Placeholder,
+    Markdown,
+)
 
 __ISSUE_MD__ = """
 ## Question #1 -- How do I make selecting the option list _NOT_ scroll the parent container
@@ -122,16 +131,19 @@ class DemoApp(App[None]):
                     Section(
                         SectionTitle("Example Section Title"),
                         Markdown(WIDGETS_MD),
-                        Placeholder("-- Example space of n+ other widgets and their children --"),
+                        Placeholder(
+                            "-- Example space of n+ other widgets and their children --"
+                        ),
                         Select(
                             [(f"Example Selectable Option {n}", n) for n in range(200)],
-                               prompt="Please choose an option.. (And watch it scroll)"),
+                            prompt="Please choose an option.. (And watch it scroll)",
+                        ),
                         Markdown(__ISSUE_MD__, id="issue-markdown"),
-                        id="bugged-section"
+                        id="bugged-section",
                     ),
                     classes="location-widgets location-first",
-                )
-            )
+                ),
+            ),
         )
         yield Footer()
 
@@ -145,13 +157,14 @@ class DemoApp(App[None]):
             f"Parent: {widget.parent!r}\n"
             f"Region: {widget.region!r}\n",
             title=f"{widget!r}",
-            timeout=10
+            timeout=10,
         )
         pass
 
     def action_check_select_visible(self) -> None:
         self.widget_info(self.query_one("SelectOverlay"))
         self.widget_info(self.query_one("Select"))
+
 
 app = DemoApp()
 if __name__ == "__main__":

@@ -36,6 +36,7 @@ class PassingScreenDataApp(App[None]):
     def on_mount(self) -> None:
         self.push_screen(Main())
 
+
 if __name__ == "__main__":
     PassingScreenDataApp().run()
 

@@ -2,6 +2,7 @@ from textual.app import App, ComposeResult
 from textual.containers import Horizontal, Vertical
 from textual.widgets import Label
 
+
 class TopAndSideBarApp(App[None]):
 
     CSS = """
@@ -25,6 +26,7 @@ class TopAndSideBarApp(App[None]):
                 with Horizontal(id="top-bar"):
                     yield Label("Here's the top bar")
                 yield Label("Here's the main body")
+
 
 if __name__ == "__main__":
     TopAndSideBarApp().run()

@@ -1,6 +1,7 @@
 from textual.app import App, ComposeResult
 from textual.widgets import Label, Footer
 
+
 class ArrowBindingsApp(App[None]):
 
     BINDINGS = [
@@ -13,6 +14,7 @@ class ArrowBindingsApp(App[None]):
     def compose(self) -> ComposeResult:
         yield Label("This has some bindings")
         yield Footer()
+
 
 if __name__ == "__main__":
     ArrowBindingsApp().run()

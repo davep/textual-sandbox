@@ -4,12 +4,14 @@ from textual.app import App
 from textual.containers import Horizontal, Vertical
 from textual.widgets import DataTable, Footer, Header, Label, Switch
 
+
 class Listing(DataTable):
     def on_mount(self):
         super().on_mount()
 
-        self.add_columns('foo', 'bar')
-        self.add_row('a', 'b')
+        self.add_columns("foo", "bar")
+        self.add_row("a", "b")
+
 
 class MyApp(App):
     DEFAULT_CSS = """
@@ -33,12 +35,12 @@ class MyApp(App):
         yield Header()
         yield Vertical(
             Horizontal(Switch()),
-            Horizontal(Label(''.join(map(str, range(10))))),
+            Horizontal(Label("".join(map(str, range(10))))),
             Horizontal(Listing()),
         )
         yield Footer()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     app = MyApp()
     app.run()
-

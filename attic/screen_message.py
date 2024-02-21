@@ -6,6 +6,7 @@ from textual.message import Message
 from textual.screen import Screen
 from textual.widgets import Button, Log
 
+
 class Child(Screen[None]):
 
     class Done(Message):
@@ -18,6 +19,7 @@ class Child(Screen[None]):
     def gtfo(self) -> None:
         self.app.post_message(self.Done())
         self.dismiss(None)
+
 
 class MessageOnTheWayOutApp(App[None]):
 

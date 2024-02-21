@@ -1,17 +1,19 @@
 """https://github.com/Textualize/textual/issues/1358"""
 
-from textual.app        import App, ComposeResult
+from textual.app import App, ComposeResult
 from textual.containers import Vertical
-from textual.widgets    import Header, Footer, Label
-from textual.binding    import Binding
+from textual.widgets import Header, Footer, Label
+from textual.binding import Binding
 
-class Dialog( Vertical ):
 
-    def compose( self ) -> ComposeResult:
+class Dialog(Vertical):
+
+    def compose(self) -> ComposeResult:
         """Compose the child widgets."""
-        yield Label( "This should not cause a scrollbar to appear" )
+        yield Label("This should not cause a scrollbar to appear")
 
-class DialogIssueApp( App[ None ] ):
+
+class DialogIssueApp(App[None]):
 
     CSS = """
     Screen {
@@ -38,17 +40,18 @@ class DialogIssueApp( App[ None ] ):
     """
 
     BINDINGS = [
-        Binding( "d", "dialog", "Toggle the dialog" ),
+        Binding("d", "dialog", "Toggle the dialog"),
     ]
 
-    def compose( self ) -> ComposeResult:
+    def compose(self) -> ComposeResult:
         yield Header()
         yield Vertical()
-        yield Dialog( classes="hidden" )
+        yield Dialog(classes="hidden")
         yield Footer()
 
-    def action_dialog( self ) -> None:
-        self.query_one( Dialog ).toggle_class( "hidden" )
+    def action_dialog(self) -> None:
+        self.query_one(Dialog).toggle_class("hidden")
+
 
 if __name__ == "__main__":
     DialogIssueApp().run()

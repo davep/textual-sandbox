@@ -1,7 +1,8 @@
-from textual.app     import App, ComposeResult
+from textual.app import App, ComposeResult
 from textual.widgets import Static
 
-class MouseReaction( Static ):
+
+class MouseReaction(Static):
 
     DEFAULT_CSS = """
     MouseReaction {
@@ -17,12 +18,13 @@ class MouseReaction( Static ):
     """
 
     def on_enter(self) -> None:
-        self.set_class( True, "mouse-here" )
+        self.set_class(True, "mouse-here")
 
     def on_leave(self) -> None:
-        self.set_class( False, "mouse-here" )
+        self.set_class(False, "mouse-here")
 
-class MouseEnterExitApp( App[ None ] ):
+
+class MouseEnterExitApp(App[None]):
 
     CSS = """
     Screen {
@@ -30,8 +32,9 @@ class MouseEnterExitApp( App[ None ] ):
     }
     """
 
-    def compose( self ) -> ComposeResult:
+    def compose(self) -> ComposeResult:
         yield MouseReaction()
+
 
 if __name__ == "__main__":
     MouseEnterExitApp().run()

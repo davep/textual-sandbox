@@ -1,32 +1,34 @@
-from textual.app        import App, ComposeResult
+from textual.app import App, ComposeResult
 from textual.containers import Grid
-from textual.screen     import Screen
-from textual.widgets    import Header, Footer, Button, Label
+from textual.screen import Screen
+from textual.widgets import Header, Footer, Button, Label
 
-class Popper( Screen ):
 
-    def compose( self ) -> ComposeResult:
+class Popper(Screen):
+
+    def compose(self) -> ComposeResult:
         """Compose the child widgets."""
-        yield Label( "WAIT FOR IT!" )
+        yield Label("WAIT FOR IT!")
 
-    def on_show( self ) -> None:
-        self.set_timer( 5.0, self.app.pop_screen )
+    def on_show(self) -> None:
+        self.set_timer(5.0, self.app.pop_screen)
 
 
-class Main( Screen ):
+class Main(Screen):
 
-    def compose( self ) -> ComposeResult:
+    def compose(self) -> ComposeResult:
         """Compose the child widgets."""
-        yield Label( ":-/" )
-        yield Button( "Press me!" )
+        yield Label(":-/")
+        yield Button("Press me!")
 
-    def on_show( self ) -> None:
-        self.app.push_screen( "popper" )
+    def on_show(self) -> None:
+        self.app.push_screen("popper")
 
-    def on_button_pressed( self, _: Button.Pressed ):
-        self.query_one( Label ).update( ":-D" )
+    def on_button_pressed(self, _: Button.Pressed):
+        self.query_one(Label).update(":-D")
 
-class DoublePush( App[ None ] ):
+
+class DoublePush(App[None]):
 
     CSS = """
     Screen {
@@ -34,18 +36,16 @@ class DoublePush( App[ None ] ):
     }
     """
 
-    SCREENS = {
-        "main": Main,
-        "popper": Popper
-    }
+    SCREENS = {"main": Main, "popper": Popper}
 
-    def compose( self ) -> ComposeResult:
+    def compose(self) -> ComposeResult:
         yield Header()
-        yield Button( "Make Screen" )
+        yield Button("Make Screen")
         yield Footer()
 
-    def on_button_pressed( self, _: Button.Pressed ):
-        self.push_screen( "main" )
+    def on_button_pressed(self, _: Button.Pressed):
+        self.push_screen("main")
+
 
 if __name__ == "__main__":
     DoublePush().run()

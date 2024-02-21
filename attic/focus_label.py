@@ -1,6 +1,7 @@
 from textual.app import App, ComposeResult
 from textual.widgets import Label
 
+
 class FocusableLabel(Label, can_focus=True):
 
     DEFAULT_CSS = """
@@ -8,6 +9,7 @@ class FocusableLabel(Label, can_focus=True):
         background: red;
     }
     """
+
 
 class FocusLableExampleApp(App[None]):
 
@@ -18,6 +20,7 @@ class FocusLableExampleApp(App[None]):
         yield FocusableLabel("Totally this though")
         yield Label("Nope, no focus")
         yield FocusableLabel("Oh hey look I have focus!")
+
 
 if __name__ == "__main__":
     FocusLableExampleApp().run()

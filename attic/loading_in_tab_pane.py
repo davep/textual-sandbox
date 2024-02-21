@@ -1,6 +1,7 @@
 from textual.app import App, ComposeResult
 from textual.widgets import TabbedContent, TabPane, LoadingIndicator
 
+
 class LoadingInTabPaneApp(App[None]):
 
     CSS = """
@@ -22,6 +23,7 @@ class LoadingInTabPaneApp(App[None]):
         with TabbedContent():
             with TabPane("Loading!", classes="center-things"):
                 yield LoadingIndicator()
+
 
 if __name__ == "__main__":
     LoadingInTabPaneApp().run()

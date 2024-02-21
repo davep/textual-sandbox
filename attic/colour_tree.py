@@ -3,6 +3,7 @@ from textual.widgets import Tree
 
 from rich.highlighter import ReprHighlighter
 
+
 class ColourTreeApp(App[None]):
 
     def compose(self) -> ComposeResult:
@@ -10,6 +11,7 @@ class ColourTreeApp(App[None]):
 
     def on_mount(self) -> None:
         self.query_one(Tree).root.add_leaf(ReprHighlighter()("{'foo', 23, 'bar'}"))
+
 
 if __name__ == "__main__":
     ColourTreeApp().run()

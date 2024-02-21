@@ -1,6 +1,7 @@
 from textual.app import App, ComposeResult
 from textual.widgets import TabbedContent, TabPane, Label
 
+
 class TabColourApp(App[None]):
 
     CSS = """
@@ -23,6 +24,7 @@ class TabColourApp(App[None]):
 
     def on_mount(self) -> None:
         self.query_one("Tab#tab-3").set_classes("green")
+
 
 if __name__ == "__main__":
     TabColourApp().run()

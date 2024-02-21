@@ -5,10 +5,11 @@ from textual.app import App, ComposeResult
 from textual.containers import Vertical
 from textual.widgets import RadioSet, Select
 
+
 class DynamicRadioSetApp(App[None]):
 
     def compose(self) -> ComposeResult:
-        yield Select[int]((("The Beatles", 0), ("Radiohead", 1),("REM", 2)))
+        yield Select[int]((("The Beatles", 0), ("Radiohead", 1), ("REM", 2)))
         with Vertical(id="band-picker"):
             yield RadioSet()
 
@@ -24,6 +25,7 @@ class DynamicRadioSetApp(App[None]):
         elif event.value == 2:
             members = ["Bill", "Peter", "Mike", "Michael"]
         await set_container.mount(RadioSet(*members))
+
 
 if __name__ == "__main__":
     DynamicRadioSetApp().run()

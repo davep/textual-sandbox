@@ -4,6 +4,7 @@ from textual import __version__
 from textual.app import App, ComposeResult
 from textual.widgets import Static
 
+
 class BrokenClassesApp(App[None]):
 
     CSS = """
@@ -27,6 +28,7 @@ class BrokenClassesApp(App[None]):
 
     def on_mount(self) -> None:
         self.screen.set_class(True, "go-red")
+
 
 if __name__ == "__main__":
     BrokenClassesApp().run()

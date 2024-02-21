@@ -1,9 +1,10 @@
 """https://github.com/Textualize/textual/issues/2229"""
 
-from textual.app        import App, ComposeResult
-from textual.binding    import Binding
+from textual.app import App, ComposeResult
+from textual.binding import Binding
 from textual.containers import Vertical
-from textual.widgets    import Header, Footer, TabbedContent, TabPane, Tabs, DirectoryTree
+from textual.widgets import Header, Footer, TabbedContent, TabPane, Tabs, DirectoryTree
+
 
 class SelfFocusPane(TabPane):
 
@@ -17,14 +18,15 @@ class SelfFocusPane(TabPane):
     }
     """
 
-    def compose( self ) -> ComposeResult:
+    def compose(self) -> ComposeResult:
         """Compose the child widgets."""
         yield DirectoryTree(".")
 
-    def on_show( self ) -> None:
-        self.query_one( DirectoryTree ).focus()
+    def on_show(self) -> None:
+        self.query_one(DirectoryTree).focus()
 
-class TabbedContentIssueApp( App[ None ] ):
+
+class TabbedContentIssueApp(App[None]):
 
     CSS = """
     Screen {
@@ -47,16 +49,16 @@ class TabbedContentIssueApp( App[ None ] ):
     """
 
     BINDINGS = [
-        Binding( "shift+left", "previous", "Previous" ),
-        Binding( "shift+right", "next", "Next" ),
+        Binding("shift+left", "previous", "Previous"),
+        Binding("shift+right", "next", "Next"),
     ]
 
-    def compose( self ) -> ComposeResult:
+    def compose(self) -> ComposeResult:
         yield Header()
         with Vertical():
             with TabbedContent():
-                for n in range( 6 ):
-                    yield SelfFocusPane( f"Tab {n}")
+                for n in range(6):
+                    yield SelfFocusPane(f"Tab {n}")
         yield Footer()
 
     def on_mount(self) -> None:
@@ -67,6 +69,7 @@ class TabbedContentIssueApp( App[ None ] ):
 
     def action_next(self) -> None:
         self.query_one(Tabs).action_next_tab()
+
 
 if __name__ == "__main__":
     TabbedContentIssueApp().run()

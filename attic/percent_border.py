@@ -1,8 +1,9 @@
-from textual.app        import App, ComposeResult
+from textual.app import App, ComposeResult
 from textual.containers import Horizontal, Container
-from textual.widgets    import Header, Footer, Label
+from textual.widgets import Header, Footer, Label
 
-class BorderPCentApp( App[ None ] ):
+
+class BorderPCentApp(App[None]):
 
     CSS = """
     Container {
@@ -22,11 +23,11 @@ class BorderPCentApp( App[ None ] ):
     }
     """
 
-    def compose( self ) -> ComposeResult:
+    def compose(self) -> ComposeResult:
         yield Header()
         yield Horizontal(
-            Container( Label( "No border percentage" ), classes="old-border-type" ),
-            Container( Label( "With border percentage" ), classes="new-border-type" ),
+            Container(Label("No border percentage"), classes="old-border-type"),
+            Container(Label("With border percentage"), classes="new-border-type"),
         )
         yield Footer()
 

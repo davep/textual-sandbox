@@ -1,6 +1,7 @@
 from textual.app import App, ComposeResult
 from textual.widgets import Label
 
+
 class LabelOffsetExample(App[None]):
 
     CSS = """
@@ -19,6 +20,7 @@ class LabelOffsetExample(App[None]):
 
     def compose(self) -> ComposeResult:
         yield Label("Here is a label!")
+
 
 if __name__ == "__main__":
     LabelOffsetExample().run()

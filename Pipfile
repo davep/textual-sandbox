@@ -4,13 +4,15 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-textual-dev = "*"
-pyinstrument = "*"
 textual = {extras = ["syntax"], version = "*"}
 
 [dev-packages]
+textual-dev = "*"
+pyinstrument = "*"
 mypy = "*"
 tomli = "*"
+black = "*"
+pre-commit = "*"
 
 [requires]
-python_version = "3.10"
+python_version = "3.8"

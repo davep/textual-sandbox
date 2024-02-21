@@ -6,11 +6,12 @@ folk. I feel that people may expect querying for a specific type to find
 that specific type first.
 """
 
-from textual.app        import App, ComposeResult
-from textual.widgets    import Static, Button
+from textual.app import App, ComposeResult
+from textual.widgets import Static, Button
 from textual.containers import Vertical
 
-class Specificity( App[ None ] ):
+
+class Specificity(App[None]):
 
     CSS = """
     Vertical { align: center middle; height: 50%; }
@@ -18,26 +19,27 @@ class Specificity( App[ None ] ):
     Static { text-align: center; }
     """
 
-    def compose( self ) -> ComposeResult:
+    def compose(self) -> ComposeResult:
         yield Vertical(
-            Button( "query_one( Button )", id="button" ),
-            Button( "query_one( Static )", id="static" ),
-            Button( "query_one( 'Button' )", id="button_str" ),
-            Button( "query_one( 'Static' )", id="static_str" )
+            Button("query_one( Button )", id="button"),
+            Button("query_one( Static )", id="static"),
+            Button("query_one( 'Button' )", id="button_str"),
+            Button("query_one( 'Static' )", id="static_str"),
         )
-        yield Vertical( Static( id="result" ) )
+        yield Vertical(Static(id="result"))
 
-    def on_button_pressed( self, event: Button.Pressed ) -> None:
+    def on_button_pressed(self, event: Button.Pressed) -> None:
         if event.button.id is not None:
             find = dict(
-                button=( Button, Button ),
-                static=( Static, Static ),
-                button_str=( "Button", Button ),
-                static_str=( "Static", Static )
+                button=(Button, Button),
+                static=(Static, Static),
+                button_str=("Button", Button),
+                static_str=("Static", Static),
             )
-            self.query_one( "#result", Static ).update(
+            self.query_one("#result", Static).update(
                 f"I found {self.query_one( *find[ event.button.id ] )}"
             )
+
 
 if __name__ == "__main__":
     Specificity().run()

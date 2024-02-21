@@ -20,14 +20,15 @@ class MyScreen(Screen):
 class MyApp(App):
 
     def on_mount(self):
-        self.install_screen(MyScreen(), 'myscreen')
-        self.push_screen('myscreen')
+        self.install_screen(MyScreen(), "myscreen")
+        self.push_screen("myscreen")
 
 
 async def test_this():
     app = MyApp()
     async with app.run_test():
-        raise Exception('never raised')
+        raise Exception("never raised")
         assert True
 
-run( test_this() )
+
+run(test_this())

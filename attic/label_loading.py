@@ -3,6 +3,7 @@
 from textual.app import App, ComposeResult
 from textual.widgets import Static, Label, Footer, Button
 
+
 class Fixed(Label):
 
     DEFAULT_CSS = """
@@ -12,6 +13,7 @@ class Fixed(Label):
         background: teal;
     }
     """
+
 
 class LabelLoadingTestApp(App[None]):
 
@@ -32,6 +34,7 @@ class LabelLoadingTestApp(App[None]):
     def action_toggle(self) -> None:
         for widget in self.query("Screen > *").results():
             widget.loading = not widget.loading
+
 
 if __name__ == "__main__":
     LabelLoadingTestApp().run()

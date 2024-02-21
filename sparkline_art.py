@@ -5,6 +5,7 @@ from itertools import cycle, chain
 from textual.app import App
 from textual.widgets import Sparkline
 
+
 class SparklineApp(App[None]):
 
     CSS = """
@@ -19,14 +20,14 @@ class SparklineApp(App[None]):
     """
 
     STEPS = (
-        lambda n: range(n+1),
-        lambda n: range((n*2)+1),
-        lambda n: range((n*3)+1),
-        lambda n: range((n*4)+1),
-        lambda n: range((n*8)+1),
-        lambda n: range((n*16)+1),
-        lambda n: range((n*32)+1),
-        lambda n: range((n*64)+1),
+        lambda n: range(n + 1),
+        lambda n: range((n * 2) + 1),
+        lambda n: range((n * 3) + 1),
+        lambda n: range((n * 4) + 1),
+        lambda n: range((n * 8) + 1),
+        lambda n: range((n * 16) + 1),
+        lambda n: range((n * 32) + 1),
+        lambda n: range((n * 64) + 1),
     )
 
     PATTERN = cycle(chain(STEPS, reversed(STEPS)))
@@ -35,8 +36,8 @@ class SparklineApp(App[None]):
         # Dodgy, buggy, fun.
         pattern = next(self.PATTERN)
         lines = list(self.query(Sparkline))
-        top = lines[:len(lines)//2]
-        tail = reversed(lines[len(lines)//2:])
+        top = lines[: len(lines) // 2]
+        tail = reversed(lines[len(lines) // 2 :])
         for n, line in enumerate(zip(top, tail)):
             line[0].data = list(pattern(n))
             line[1].data = list(pattern(n))
@@ -47,6 +48,7 @@ class SparklineApp(App[None]):
 
     def on_mount(self) -> None:
         self.set_interval(0.05, self.sparks)
+
 
 if __name__ == "__main__":
     SparklineApp().run()

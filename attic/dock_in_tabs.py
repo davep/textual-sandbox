@@ -1,8 +1,9 @@
-from textual.app        import App, ComposeResult
+from textual.app import App, ComposeResult
 from textual.containers import Container
-from textual.widgets    import TabbedContent, TabPane, Label
+from textual.widgets import TabbedContent, TabPane, Label
 
-class DocksInTabPanesApp( App[ None ] ):
+
+class DocksInTabPanesApp(App[None]):
 
     CSS = """
     TabbedContent ContentSwitcher {
@@ -38,7 +39,7 @@ class DocksInTabPanesApp( App[ None ] ):
     }
     """
 
-    def compose( self ) -> ComposeResult:
+    def compose(self) -> ComposeResult:
         with TabbedContent():
             for where in ("top", "left", "bottom", "right"):
                 with TabPane(where.capitalize()):

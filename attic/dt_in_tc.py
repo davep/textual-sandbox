@@ -21,7 +21,7 @@ class MyApp(App):
             self.table.add_row(*row)
 
     def compose(self):
-        with TabbedContent('Basic', 'Advanced'):
+        with TabbedContent("Basic", "Advanced"):
             yield self.table
             yield Label("Here's some advanced stuff", id="label")
 
@@ -29,4 +29,3 @@ class MyApp(App):
 if __name__ == "__main__":
     app = MyApp()
     app.run()
-

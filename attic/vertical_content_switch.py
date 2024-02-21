@@ -6,6 +6,7 @@ from textual.containers import Horizontal, Vertical
 from textual.widgets import OptionList, Label, Input, ContentSwitcher
 from textual.widgets.option_list import Option
 
+
 class ContentSwitchApp(App[None]):
 
     CSS = """
@@ -53,6 +54,7 @@ class ContentSwitchApp(App[None]):
     @on(OptionList.OptionSelected)
     def switch(self, event: OptionList.OptionSelected) -> None:
         self.query_one(ContentSwitcher).current = event.option_id
+
 
 if __name__ == "__main__":
     ContentSwitchApp().run()

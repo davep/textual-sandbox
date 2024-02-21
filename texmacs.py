@@ -10,12 +10,14 @@ No one would have believed in the last years of the nineteenth century that this
 
 """
 
+
 class TexMacs(TextArea):
 
     def __init__(self, soft_wrap: bool, id: str) -> None:
         super().__init__(INITIAL * 4, id=id)
         self.soft_wrap = soft_wrap
         self.indent_type = "tabs"
+
 
 class TexMacsApp(App[None]):
 
@@ -29,6 +31,7 @@ class TexMacsApp(App[None]):
         self.query_one(
             "#non-wrapped" if event.control.id == "wrapped" else "#wrapped", TexMacs
         ).text = event.text_area.text
+
 
 if __name__ == "__main__":
     TexMacsApp().run()

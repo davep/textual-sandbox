@@ -3,6 +3,7 @@
 from textual.app import App, ComposeResult
 from textual.widgets import OptionList
 
+
 class LoadingOverlayRedux(App[None]):
 
     CSS = """
@@ -13,17 +14,14 @@ class LoadingOverlayRedux(App[None]):
     }
     """
 
-    BINDINGS = [
-        ("space", "toggle")
-    ]
+    BINDINGS = [("space", "toggle")]
 
     def compose(self) -> ComposeResult:
-        yield OptionList(*[
-            ("X" * 500) for _ in range(1_000)
-        ])
+        yield OptionList(*[("X" * 500) for _ in range(1_000)])
 
     def action_toggle(self) -> None:
         self.query_one(OptionList).loading = not self.query_one(OptionList).loading
+
 
 if __name__ == "__main__":
     LoadingOverlayRedux().run()

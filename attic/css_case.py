@@ -1,19 +1,23 @@
 """https://github.com/Textualize/textual/discussions/2298"""
 
-from textual.app        import App, ComposeResult
+from textual.app import App, ComposeResult
 from textual.containers import Vertical
-from textual.widgets    import Header, Footer, Label
+from textual.widgets import Header, Footer, Label
 
-class ThisIsATest( Label ):
+
+class ThisIsATest(Label):
     pass
 
-class ThisisaTest( Label ):
+
+class ThisisaTest(Label):
     pass
 
-class Thisisatest( Label ):
+
+class Thisisatest(Label):
     pass
 
-class CSSCaseExampleApp( App[ None ] ):
+
+class CSSCaseExampleApp(App[None]):
 
     CSS = """
     ThisIsATest {
@@ -29,13 +33,14 @@ class CSSCaseExampleApp( App[ None ] ):
     }
     """
 
-    def compose( self ) -> ComposeResult:
+    def compose(self) -> ComposeResult:
         yield Header()
         with Vertical():
-            yield ThisIsATest( "This is one class" )
-            yield ThisisaTest( "This is another class" )
-            yield Thisisatest( "And this is another still" )
+            yield ThisIsATest("This is one class")
+            yield ThisisaTest("This is another class")
+            yield Thisisatest("And this is another still")
         yield Footer()
+
 
 if __name__ == "__main__":
     CSSCaseExampleApp().run()

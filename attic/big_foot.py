@@ -4,7 +4,8 @@ from textual.binding import Binding
 
 from rich.text import Text
 
-class BigFooter( Footer ):
+
+class BigFooter(Footer):
 
     def make_key_text(self) -> Text:
         text = super().make_key_text()
@@ -12,7 +13,8 @@ class BigFooter( Footer ):
         text.no_wrap = False
         return text
 
-class BigFoot( App[ None ] ):
+
+class BigFoot(App[None]):
 
     CSS = """
     BigFooter {
@@ -21,17 +23,14 @@ class BigFoot( App[ None ] ):
     """
 
     BINDINGS = [
-        Binding(
-            str( n ),
-            f"bell( {n})",
-            "This is some really long text about this"
-        ) for n in range( 10 )
+        Binding(str(n), f"bell( {n})", "This is some really long text about this")
+        for n in range(10)
     ]
 
     def compose(self) -> ComposeResult:
-        yield Static( "Stuff" )
+        yield Static("Stuff")
         yield BigFooter()
+
 
 if __name__ == "__main__":
     BigFoot().run()
-

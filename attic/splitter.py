@@ -5,7 +5,8 @@ from textual.widgets import Header, Footer
 from textual.containers import Horizontal, Vertical
 from textual.css.scalar import Scalar
 
-class Splitter( App[ None ] ):
+
+class Splitter(App[None]):
 
     CSS = """
     Horizontal {
@@ -18,23 +19,20 @@ class Splitter( App[ None ] ):
     }
     """
 
-    BINDINGS = [
-        ( "n", "new_pane", "New Pane" ),
-        ( "w", "widen_first", "Widen First Pane" )
-    ]
+    BINDINGS = [("n", "new_pane", "New Pane"), ("w", "widen_first", "Widen First Pane")]
 
     def compose(self) -> ComposeResult:
         yield Header()
-        yield Horizontal( id="main" )
+        yield Horizontal(id="main")
         yield Footer()
 
-    def action_new_pane( self ) -> None:
-        self.query_one( "#main", Horizontal ).mount( Vertical() )
+    def action_new_pane(self) -> None:
+        self.query_one("#main", Horizontal).mount(Vertical())
 
-    def action_widen_first( self ) -> None:
-        if len( panes := self.query( "#main Vertical" ) ) > 1:
-            panes.first().styles.width = Scalar.parse( "2fr" )
+    def action_widen_first(self) -> None:
+        if len(panes := self.query("#main Vertical")) > 1:
+            panes.first().styles.width = Scalar.parse("2fr")
+
 
 if __name__ == "__main__":
     Splitter().run()
-

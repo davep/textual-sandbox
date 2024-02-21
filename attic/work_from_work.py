@@ -7,6 +7,7 @@ from textual.app import App, ComposeResult
 from textual.widgets import Button, Log
 from textual.worker import get_current_worker
 
+
 class WorkerInWorkerApp(App[None]):
 
     def compose(self) -> ComposeResult:
@@ -21,10 +22,7 @@ class WorkerInWorkerApp(App[None]):
                 break
             if n == 10:
                 self.call_from_thread(self.inner)
-            self.call_from_thread(
-                self.query_one(Log).write_line,
-                f"Outer {n}"
-            )
+            self.call_from_thread(self.query_one(Log).write_line, f"Outer {n}")
             sleep(0.25)
 
     @work(thread=True)
@@ -33,15 +31,13 @@ class WorkerInWorkerApp(App[None]):
         for n in range(50):
             if worker.is_cancelled:
                 break
-            self.call_from_thread(
-                self.query_one(Log).write_line,
-                f"Inner {n}"
-            )
+            self.call_from_thread(self.query_one(Log).write_line, f"Inner {n}")
             sleep(0.25)
 
     @on(Button.Pressed)
     def start(self) -> None:
         self.outer()
+
 
 if __name__ == "__main__":
     WorkerInWorkerApp().run()

@@ -4,6 +4,7 @@ from textual.containers import Vertical
 from textual.widgets import OptionList, TextLog
 from textual.widgets.option_list import Option
 
+
 class OptionListApp(App[None]):
 
     CSS = """
@@ -30,6 +31,7 @@ class OptionListApp(App[None]):
     def log_highlighted(self) -> None:
         highlighted = self.query_one(OptionList).highlighted
         self.query_one(TextLog).write(f"Highlighted: {highlighted!r}")
+
 
 if __name__ == "__main__":
     OptionListApp().run()

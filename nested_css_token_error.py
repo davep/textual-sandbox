@@ -3,6 +3,7 @@
 from textual.app import App, ComposeResult
 from textual.widgets import Label
 
+
 class NestedCSSTokenErrorApp(App[None]):
 
     CSS = """
@@ -16,6 +17,7 @@ class NestedCSSTokenErrorApp(App[None]):
     def compose(self) -> ComposeResult:
         yield Label("This is class foo", classes="foo")
         yield Label("This is class bar", classes="bar")
+
 
 if __name__ == "__main__":
     NestedCSSTokenErrorApp().run()

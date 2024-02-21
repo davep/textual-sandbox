@@ -6,6 +6,7 @@ from textual.app import App, ComposeResult
 from textual.events import Print
 from textual.widgets import Log
 
+
 class PrintLog(Log):
 
     def on_mount(self) -> None:
@@ -13,6 +14,7 @@ class PrintLog(Log):
 
     def on_print(self, event: Print) -> None:
         self.write(event.text)
+
 
 class PrintLogApp(App[None]):
 
@@ -24,6 +26,7 @@ class PrintLogApp(App[None]):
 
     def on_mount(self) -> None:
         self.set_interval(1.0, self.print_time)
+
 
 if __name__ == "__main__":
     PrintLogApp().run()

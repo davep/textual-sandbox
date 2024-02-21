@@ -2,6 +2,7 @@ from textual.app import App, ComposeResult
 from textual.containers import Grid
 from textual.widgets import Static
 
+
 class HardHeightGrid(App[None]):
 
     CSS = """
@@ -24,6 +25,7 @@ class HardHeightGrid(App[None]):
             grid.styles.height = 50
             for n in range(25):
                 yield Static(f"This is grid cell {n}")
+
 
 if __name__ == "__main__":
     HardHeightGrid().run()

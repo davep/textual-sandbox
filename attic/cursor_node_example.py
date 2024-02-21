@@ -1,6 +1,7 @@
 from textual.app import App, ComposeResult
 from textual.widgets import Tree
 
+
 class TreeCursorNodeApp(App[None]):
 
     BINDINGS = [
@@ -19,6 +20,7 @@ class TreeCursorNodeApp(App[None]):
 
     def action_show(self) -> None:
         self.notify(f"{self.query_one(Tree).cursor_node}")
+
 
 if __name__ == "__main__":
     TreeCursorNodeApp().run()

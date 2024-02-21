@@ -3,6 +3,7 @@ python  := $(run) python
 textual := $(run) textual
 pyright := $(run) pyright
 mypy    := $(run) mypy --strict
+black   := $(run) black
 
 .PHONY: all
 all:
@@ -47,9 +48,14 @@ pyright:
 mypy:
 	$(mypy) *.py
 
+.PHONY: ugly
+ugly:				# Reformat the code with black.
+	$(black) *.py attic/*.py
+
 .PHONY: setup
 setup:				# Install all dependencies
 	pipenv sync --dev
+	$(run) pre-commit install
 
 .PHONY: resetup
 resetup:			# Recreate the virtual environment from scratch

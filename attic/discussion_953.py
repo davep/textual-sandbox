@@ -2,9 +2,10 @@ from textual.app import App, ComposeResult
 from textual.widgets import Footer
 from textual.containers import Container
 
-class LayoutTest( App[ None ] ):
 
-    CSS="""
+class LayoutTest(App[None]):
+
+    CSS = """
     #left {
         width: 20%;
         height: 100%;
@@ -37,10 +38,8 @@ class LayoutTest( App[ None ] ):
         yield Container(
             Container(id="left"),
             Container(
-                Container(id="top"),
-                Container(id="body"),
-                Container(id="bottom")
-            )
+                Container(id="top"), Container(id="body"), Container(id="bottom")
+            ),
         )
         yield Footer()
 

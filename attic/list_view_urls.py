@@ -4,6 +4,7 @@ from textual import on
 from textual.app import App, ComposeResult
 from textual.widgets import ListView, ListItem, Label
 
+
 class URLItem(ListItem):
 
     def __init__(self, title: str, url: str) -> None:
@@ -29,6 +30,7 @@ class ListViewExampleApp(App[None]):
     def url_choice(self, event: ListView.Selected) -> None:
         assert isinstance(event.item, URLItem)
         self.query_one("#result", Label).update(event.item.url)
+
 
 if __name__ == "__main__":
     ListViewExampleApp().run()

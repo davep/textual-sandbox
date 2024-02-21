@@ -15,11 +15,7 @@ class SelectionListApp(App[None]):
         return selections
 
     def compose(self) -> ComposeResult:
-        answer = [
-            {"item": "Hello"},
-            {"item2": "World"},
-            {"item3": "!"}
-        ]
+        answer = [{"item": "Hello"}, {"item2": "World"}, {"item3": "!"}]
         yield SelectionList[str](*self.make_selections(answer))
 
 

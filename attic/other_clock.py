@@ -4,6 +4,7 @@ from textual.app import App, ComposeResult, RenderResult
 from textual.widgets import Header, Label
 from textual.widgets._header import HeaderClock
 
+
 class UnixClock(HeaderClock):
 
     DEFAULT_CSS = """
@@ -14,6 +15,7 @@ class UnixClock(HeaderClock):
 
     def render(self) -> RenderResult:
         return str(time())
+
 
 class OtherClockApp(App[None]):
 
@@ -29,6 +31,7 @@ class OtherClockApp(App[None]):
 
     def on_mount(self) -> None:
         self.query_one(Header).mount(UnixClock())
+
 
 if __name__ == "__main__":
     OtherClockApp().run()

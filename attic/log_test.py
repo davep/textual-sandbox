@@ -3,6 +3,7 @@
 from textual.app import App, ComposeResult
 from textual.widgets import Log
 
+
 class LogApp(App[None]):
 
     BINDINGS = [
@@ -13,11 +14,10 @@ class LogApp(App[None]):
         yield Log()
 
     def on_mount(self) -> None:
-        self.query_one(Log).write_lines((
-            "This is line 0",
-            "This is line 1",
-            "This is line many"
-        ))
+        self.query_one(Log).write_lines(
+            ("This is line 0", "This is line 1", "This is line many")
+        )
+
 
 if __name__ == "__main__":
     LogApp().run()

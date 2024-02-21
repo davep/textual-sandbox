@@ -13,6 +13,7 @@ from textual.reactive import var
 from textual.timer import Timer
 from textual.widgets import Button, ProgressBar
 
+
 class TardisProgressApp(App[None]):
 
     CSS = """
@@ -68,20 +69,23 @@ class TardisProgressApp(App[None]):
             yield Button("Reset", id="just-sits-there", classes="reset")
             yield ProgressBar(classes="just-sits-there")
 
-    def update_progress(self, progress: ProgressBar, time_step: float, tardis: Callable[[float], float]) -> None:
+    def update_progress(
+        self, progress: ProgressBar, time_step: float, tardis: Callable[[float], float]
+    ) -> None:
         if progress in self.timers:
             self.timers[progress].stop()
         progress.progress += 1
         if progress.progress != 100:
             self.timers[progress] = self.set_timer(
                 tardis(time_step),
-                partial(self.update_progress, progress, tardis(time_step), tardis)
+                partial(self.update_progress, progress, tardis(time_step), tardis),
             )
 
     @staticmethod
     def constant_tardis(time_step: float) -> Callable[[float], float]:
         def step(_: float) -> float:
             return time_step
+
         return step
 
     def progress(self, progress: str) -> ProgressBar:
@@ -96,7 +100,9 @@ class TardisProgressApp(App[None]):
 
     @on(Button.Pressed, ".reset")
     def set_total_to_none(self, event: Button.Pressed) -> None:
-        if (progress := self.query_one(f"ProgressBar.{event.button.id}", ProgressBar)) in self.timers:
+        if (
+            progress := self.query_one(f"ProgressBar.{event.button.id}", ProgressBar)
+        ) in self.timers:
             self.timers[progress].stop()
         progress.total = None
 
@@ -117,7 +123,9 @@ class TardisProgressApp(App[None]):
         def random_tardis(_: float) -> Callable[[float], float]:
             def step(_: float) -> float:
                 return random()
+
             return step
+
         self.update_progress(self.progress("random"), 0, random_tardis(0))
 
     @on(Button.Pressed, "#all, .accelerating")
@@ -125,7 +133,9 @@ class TardisProgressApp(App[None]):
         def accelerating_tardis(_: float) -> Callable[[float], float]:
             def step(time_now: float) -> float:
                 return time_now * 0.9
+
             return step
+
         self.update_progress(self.progress("accelerating"), 3, accelerating_tardis(0))
 
     @on(Button.Pressed, "#all, .decelerating")
@@ -133,7 +143,9 @@ class TardisProgressApp(App[None]):
         def decelerating_tardis(_: float) -> Callable[[float], float]:
             def step(time_now: float) -> float:
                 return time_now / 0.9
+
             return step
+
         self.update_progress(self.progress("decelerating"), 0.1, decelerating_tardis(0))
 
     @on(Button.Pressed, "#all, .just-sits-there")
@@ -141,6 +153,7 @@ class TardisProgressApp(App[None]):
         progress = self.progress("just-sits-there")
         progress.progress = 0
         self.set_timer(1.0, partial(progress.update, progress=1))
+
 
 if __name__ == "__main__":
     TardisProgressApp().run()

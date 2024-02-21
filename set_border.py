@@ -4,6 +4,7 @@ from textual.app import App, ComposeResult
 from textual.containers import Horizontal
 from textual.widgets import Button
 
+
 class SetBorderApp(App[None]):
 
     CSS = """
@@ -19,6 +20,7 @@ class SetBorderApp(App[None]):
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
         self.query_one(Horizontal).border_title = event.button.id
+
 
 if __name__ == "__main__":
     SetBorderApp().run()

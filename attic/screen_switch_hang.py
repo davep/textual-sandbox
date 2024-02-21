@@ -4,6 +4,7 @@ from textual.app import App, ComposeResult
 from textual.screen import Screen
 from textual.widgets import Static, Header, Footer
 
+
 class ScreenA(Screen):
     BINDINGS = [("b", "switch_to_b", "Switch to screen B")]
 
@@ -15,11 +16,13 @@ class ScreenA(Screen):
     def action_switch_to_b(self):
         self.app.switch_screen(ScreenB())
 
+
 class ScreenB(Screen):
     def compose(self) -> ComposeResult:
         yield Header()
         yield Static("B")
         yield Footer()
+
 
 class ModalApp(App):
     BINDINGS = [("a", "push_a", "Push screen A")]

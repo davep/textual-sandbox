@@ -24,4 +24,3 @@ class IDTester(App[None]):
 
 if __name__ == "__main__":
     IDTester().run()
-

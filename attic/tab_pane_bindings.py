@@ -4,6 +4,7 @@ from textual.app import App, ComposeResult
 from textual.binding import Binding
 from textual.widgets import TabbedContent, TabPane, Button, Footer
 
+
 class BasePane(TabPane):
 
     BINDINGS = [
@@ -11,19 +12,20 @@ class BasePane(TabPane):
         Binding("f2", "another_thing", "Second thing"),
     ]
 
+
 class FirstPane(BasePane):
 
     def compose(self) -> ComposeResult:
         yield Button("This is the first pane")
 
+
 class SecondPane(BasePane):
 
-    BINDINGS = [
-        Binding("f3", "one_more_thing", "Also this too")
-    ]
+    BINDINGS = [Binding("f3", "one_more_thing", "Also this too")]
 
     def compose(self) -> ComposeResult:
         yield Button("This is the second pane")
+
 
 class TabbedContentBindings(App[None]):
 
@@ -32,6 +34,7 @@ class TabbedContentBindings(App[None]):
             yield FirstPane("First")
             yield SecondPane("Second")
         yield Footer()
+
 
 if __name__ == "__main__":
     TabbedContentBindings().run()

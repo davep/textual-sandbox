@@ -2,6 +2,7 @@ from textual import on
 from textual.app import App, ComposeResult
 from textual.widgets import Button, Label
 
+
 class RunAfterExitapp(App[None]):
 
     def compose(self) -> ComposeResult:
@@ -11,6 +12,7 @@ class RunAfterExitapp(App[None]):
     @on(Button.Pressed)
     def bye(self) -> None:
         self.exit()
+
 
 if __name__ == "__main__":
     RunAfterExitapp().run()

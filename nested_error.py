@@ -3,6 +3,7 @@
 from textual.app import App, ComposeResult
 from textual.widgets import Label
 
+
 class NestedParseErrorApp(App[None]):
 
     CSS = """
@@ -17,6 +18,7 @@ class NestedParseErrorApp(App[None]):
     def compose(self) -> ComposeResult:
         yield Label("First", id="first")
         yield Label("Second", id="second")
+
 
 if __name__ == "__main__":
     NestedParseErrorApp().run()

@@ -3,6 +3,7 @@
 from textual.app import App, ComposeResult
 from textual.containers import Grid, Container
 
+
 class BusyBox(Container, can_focus=True):
 
     DEFAULT_CSS = """
@@ -19,6 +20,7 @@ class BusyBox(Container, can_focus=True):
         self.border_title = f"Busy box {number}"
         self.loading = bool(number % 3)
 
+
 class LoadingApp(App[None]):
 
     CSS = """
@@ -31,6 +33,7 @@ class LoadingApp(App[None]):
         with Grid():
             for n in range(16):
                 yield BusyBox(n)
+
 
 if __name__ == "__main__":
     LoadingApp().run()

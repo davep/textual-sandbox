@@ -1,8 +1,9 @@
-from textual.app        import App, ComposeResult
+from textual.app import App, ComposeResult
 from textual.containers import Grid
-from textual.widgets    import Header, Footer, Static
+from textual.widgets import Header, Footer, Static
 
-class BorderExplorerApp( App[ None ] ):
+
+class BorderExplorerApp(App[None]):
 
     CSS = """
     Grid {
@@ -35,12 +36,13 @@ class BorderExplorerApp( App[ None ] ):
     #border-15 { border: none none none none none none none none none none none none none none none none none none none solid; }
     """
 
-    def compose( self ) -> ComposeResult:
+    def compose(self) -> ComposeResult:
         yield Header()
         with Grid():
-            for n in range( 4 * 4 ):
-                yield Static( f"Border {n}", id=f"border-{n}" )
+            for n in range(4 * 4):
+                yield Static(f"Border {n}", id=f"border-{n}")
         yield Footer()
+
 
 if __name__ == "__main__":
     BorderExplorerApp().run()

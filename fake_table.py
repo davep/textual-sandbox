@@ -7,13 +7,14 @@ from textual.app import App, ComposeResult
 from textual.containers import Grid
 from textual.widgets import Label
 
-DATA =(
+DATA = (
     ("Released", "Title", "Box Office"),
     ("Dec 20, 2019", "Star Wars: The Rise of Skywalker", "$952,110,690"),
     ("May 25, 2018", "Solo: A Star Wars Story", "$393,151,347"),
     ("Dec 15, 2017", "Star Wars Ep. V111: The Last Jedi", "$1,332,539,889"),
     ("Dec 16, 2016", "Rogue One: A Star Wars Story", "$1,332,439,889"),
 )
+
 
 class FakeTableApp(App[None]):
 
@@ -37,6 +38,7 @@ class FakeTableApp(App[None]):
             for row in DATA:
                 for col in row:
                     yield Label(col)
+
 
 if __name__ == "__main__":
     FakeTableApp().run()

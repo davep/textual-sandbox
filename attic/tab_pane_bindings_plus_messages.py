@@ -8,6 +8,7 @@ from textual.binding import Binding
 from textual.message import Message
 from textual.widgets import TabbedContent, TabPane, Button, Footer, Label
 
+
 class BasePane(TabPane):
 
     BINDINGS = [
@@ -22,21 +23,24 @@ class BasePane(TabPane):
     def action_invoke(self, action: str) -> None:
         self.post_message(self.TabPaneAction(action))
 
+
 class FirstPane(BasePane):
 
     def compose(self) -> ComposeResult:
         yield Button("This is the first pane")
+
 
 class SecondPane(BasePane):
 
     BINDINGS = [
         Binding("f3", "invoke('one_more_thing')", "Also this too"),
         Binding("f4", "invoke('even_more')", "Yes more"),
-        Binding("f5", "invoke('that_is_enough')", "No more bindings please")
+        Binding("f5", "invoke('that_is_enough')", "No more bindings please"),
     ]
 
     def compose(self) -> ComposeResult:
         yield Button("This is the second pane")
+
 
 class TabbedContentBindings(App[None]):
 
@@ -51,6 +55,7 @@ class TabbedContentBindings(App[None]):
     def perform_action(self, event: BasePane.TabPaneAction) -> None:
         # Here we'd treat event.action as some sort of ID to work off.
         self.query_one(Label).update(f"We've been asked to run a {event.action}")
+
 
 if __name__ == "__main__":
     TabbedContentBindings().run()

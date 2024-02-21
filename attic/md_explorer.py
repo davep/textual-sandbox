@@ -6,14 +6,18 @@ from textual.widgets import Static, Markdown
 
 from rich.markup import escape
 
+
 class ExplorerPane(VerticalScroll):
     pass
+
 
 class Document(Static):
     pass
 
+
 class Tree(Static):
     pass
+
 
 class MarkdownExplorerApp(App[None]):
 
@@ -41,7 +45,6 @@ class MarkdownExplorerApp(App[None]):
         Binding("r", "refresh"),
     ]
 
-
     def compose(self) -> ComposeResult:
         with Vertical():
             with ExplorerPane(id="document"):
@@ -65,9 +68,8 @@ class MarkdownExplorerApp(App[None]):
         )
 
     def action_refresh(self) -> None:
-        self.query_one(Tree).update(
-            self.query_one(Markdown).tree
-        )
+        self.query_one(Tree).update(self.query_one(Markdown).tree)
+
 
 if __name__ == "__main__":
     MarkdownExplorerApp().run()

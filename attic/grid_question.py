@@ -17,12 +17,14 @@ class Row(Grid):
         yield Static("Column 1")
         yield Static("Column 2")
 
+
 class Demo(App):
 
     def compose(self) -> ComposeResult:
         with Vertical():
             for i in range(9):
                 yield Row()
+
 
 if __name__ == "__main__":
     Demo().run()

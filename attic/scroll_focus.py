@@ -2,6 +2,7 @@ from textual.app import App, ComposeResult
 from textual.containers import Horizontal, VerticalScroll
 from textual.widgets import Button, Static
 
+
 class ScrollAndFocusApp(App[None]):
 
     def compose(self) -> ComposeResult:
@@ -15,6 +16,7 @@ class ScrollAndFocusApp(App[None]):
                 buttons.can_focus = False
                 for n in range(256):
                     yield Button(f"This is button {n}")
+
 
 if __name__ == "__main__":
     ScrollAndFocusApp().run()

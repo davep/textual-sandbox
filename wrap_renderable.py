@@ -12,6 +12,7 @@ TEXT = """[red]I must not fear.[/]
 [reverse]And when it has gone past, I will turn the inner eye to see its path.[/]
 [yellow on red]Where the fear has gone there will be nothing. Only I will remain.[/]"""
 
+
 class WrappingRenderableApp(App[None]):
 
     CSS = """
@@ -29,6 +30,7 @@ class WrappingRenderableApp(App[None]):
         with Grid():
             for _ in range(3):
                 yield Static(TEXT)
+
 
 if __name__ == "__main__":
     WrappingRenderableApp().run()

@@ -1,6 +1,7 @@
 from textual.app import App, ComposeResult
 from textual.widgets import Label, Header
 
+
 class NoCommandPaletteButtonApp(App[None]):
 
     HEADER = "Hello, World!"
@@ -11,6 +12,7 @@ class NoCommandPaletteButtonApp(App[None]):
 
     def on_mount(self) -> None:
         self.query_one("HeaderIcon").visible = True
+
 
 if __name__ == "__main__":
     NoCommandPaletteButtonApp().run()

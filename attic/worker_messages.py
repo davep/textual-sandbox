@@ -7,6 +7,7 @@ from textual.message import Message
 from textual.widgets import DataTable, Log
 from textual.worker import get_current_worker
 
+
 class BusyTable(DataTable):
 
     class Starting(Message):
@@ -39,6 +40,7 @@ class BusyTable(DataTable):
     def update_data(self, event: Updating) -> None:
         self.add_row("New row", str(event.on_step))
 
+
 class WorkerStateChangeApp(App[None]):
 
     CSS = """
@@ -56,6 +58,7 @@ class WorkerStateChangeApp(App[None]):
     @on(BusyTable.Finished)
     def log_message(self, event: Message) -> None:
         self.query_one(Log).write_line(f"{event!r}")
+
 
 if __name__ == "__main__":
     WorkerStateChangeApp().run()

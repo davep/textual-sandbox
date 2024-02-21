@@ -7,6 +7,7 @@ from textual.app import App, ComposeResult
 from textual.screen import Screen
 from textual.widgets import Label
 
+
 class LoadSomeStuff(Screen[str]):
 
     def compose(self) -> ComposeResult:
@@ -20,6 +21,7 @@ class LoadSomeStuff(Screen[str]):
     def on_mount(self) -> None:
         self.load_stuff()
 
+
 class LoadingScreenApp(App[None]):
 
     def compose(self) -> ComposeResult:
@@ -30,6 +32,7 @@ class LoadingScreenApp(App[None]):
 
     def on_mount(self) -> None:
         self.push_screen(LoadSomeStuff(), callback=self.stuff_loaded)
+
 
 if __name__ == "__main__":
     LoadingScreenApp().run()

@@ -30,8 +30,8 @@ class FlashCards(Screen):
 
     def new_card(self) -> list[ListItem]:
         return [
-            ListItem(Label(text)) for
-            text in random.sample(("one", "two", "three", "four"), k=4)
+            ListItem(Label(text))
+            for text in random.sample(("one", "two", "three", "four"), k=4)
         ]
 
     @on(Mount)
@@ -49,10 +49,12 @@ class FlashCards(Screen):
             event.item.add_class("good")
             self.set_timer(5.0, self.next_card)
 
+
 class FlashCardApp(App[None]):
 
     def on_mount(self) -> None:
         self.push_screen(FlashCards())
+
 
 if __name__ == "__main__":
     FlashCardApp().run()

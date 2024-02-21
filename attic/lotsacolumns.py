@@ -1,10 +1,11 @@
-from textual.app        import App, ComposeResult
+from textual.app import App, ComposeResult
 from textual.containers import Horizontal, Vertical
-from textual.widgets    import Header, Footer, Label
-from textual.binding    import Binding
-from textual.reactive   import reactive
+from textual.widgets import Header, Footer, Label
+from textual.binding import Binding
+from textual.reactive import reactive
 
-class LotsacolumnsApp( App[ None ] ):
+
+class LotsacolumnsApp(App[None]):
 
     CSS = """
     Vertical {
@@ -14,21 +15,19 @@ class LotsacolumnsApp( App[ None ] ):
     """
 
     BINDINGS = [
-        Binding( "n", "new", "New Column" ),
+        Binding("n", "new", "New Column"),
     ]
 
-    col = reactive( 0 )
+    col = reactive(0)
 
-    def compose( self ) -> ComposeResult:
+    def compose(self) -> ComposeResult:
         yield Header()
         yield Horizontal()
         yield Footer()
 
-    def action_new( self ) -> None:
+    def action_new(self) -> None:
         """"""
-        self.query_one( Horizontal ).mount(
-            Vertical( Label( str( self.col ) ) )
-        )
+        self.query_one(Horizontal).mount(Vertical(Label(str(self.col))))
         self.col += 1
 
 

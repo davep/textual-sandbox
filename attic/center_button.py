@@ -1,7 +1,8 @@
 from textual.app import App, ComposeResult
 from textual.widgets import Button
 
-class ButtonApp( App[ None ] ):
+
+class ButtonApp(App[None]):
 
     CSS = """
     Screen {
@@ -10,8 +11,8 @@ class ButtonApp( App[ None ] ):
     """
 
     def compose(self) -> ComposeResult:
-        yield Button( "PUSH ME!" )
+        yield Button("PUSH ME!")
+
 
 if __name__ == "__main__":
     ButtonApp().run()
-

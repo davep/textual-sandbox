@@ -4,6 +4,7 @@ from textual.events import Click
 from textual.screen import ModalScreen
 from textual.widgets import Input, Button
 
+
 class MyModal(ModalScreen[None]):
 
     DEFAULT_CSS = """
@@ -32,10 +33,12 @@ class MyModal(ModalScreen[None]):
         if self.get_widget_at(event.screen_x, event.screen_y)[0] is self:
             self.dismiss()
 
+
 class OutsideModalApp(App[None]):
 
     def on_mount(self) -> None:
         self.push_screen(MyModal())
+
 
 if __name__ == "__main__":
     OutsideModalApp().run()

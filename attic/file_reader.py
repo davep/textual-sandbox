@@ -5,6 +5,7 @@ from textual.app import App, ComposeResult
 from textual.screen import Screen
 from textual.widgets import Header, Log, Footer
 
+
 class ShowFile(Screen):
 
     def __init__(self, path: Path, *args, **kwargs) -> None:
@@ -27,10 +28,12 @@ class ShowFile(Screen):
             for line in f:
                 self.app.call_from_thread(log.write, line)
 
+
 class LoadUpFileApp(App[None]):
 
     def on_mount(self) -> None:
         self.push_screen(ShowFile(Path(__file__)))
+
 
 if __name__ == "__main__":
     LoadUpFileApp().run()

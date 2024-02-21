@@ -1,7 +1,8 @@
-from textual.app        import App, ComposeResult
+from textual.app import App, ComposeResult
 from textual.containers import Container
 
-class PastelBlackApp( App[ None ] ):
+
+class PastelBlackApp(App[None]):
 
     CSS = """
     #top {
@@ -15,9 +16,10 @@ class PastelBlackApp( App[ None ] ):
     }
     """
 
-    def compose( self ) -> ComposeResult:
-        yield Container( id="top" )
-        yield Container( id="bottom" )
+    def compose(self) -> ComposeResult:
+        yield Container(id="top")
+        yield Container(id="bottom")
+
 
 if __name__ == "__main__":
     PastelBlackApp().run()

@@ -7,6 +7,7 @@ from textual import on
 from textual.app import App, ComposeResult
 from textual.widgets import Markdown, MarkdownViewer
 
+
 class LinkableMarkdownViewer(MarkdownViewer):
 
     @on(Markdown.LinkClicked)
@@ -15,14 +16,18 @@ class LinkableMarkdownViewer(MarkdownViewer):
             event.prevent_default()
             open(event.href)
 
+
 class LinkyMDViewer(App[None]):
 
     def compose(self) -> ComposeResult:
-        yield LinkableMarkdownViewer("""\
+        yield LinkableMarkdownViewer(
+            """\
 # Example document
 
 [Here is a link](https://www.example.com/)
-        """)
+        """
+        )
+
 
 if __name__ == "__main__":
     LinkyMDViewer().run()

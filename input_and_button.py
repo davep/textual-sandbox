@@ -4,6 +4,7 @@ from textual import on
 from textual.app import App, ComposeResult
 from textual.widgets import Button, Input
 
+
 class InputAndButtonApp(App[None]):
 
     def compose(self) -> ComposeResult:
@@ -14,6 +15,7 @@ class InputAndButtonApp(App[None]):
     @on(Button.Pressed)
     def yay_the_user_submitted_a_thing(self) -> None:
         self.notify(self.query_one(Input).value, title="The Input")
+
 
 if __name__ == "__main__":
     InputAndButtonApp().run()

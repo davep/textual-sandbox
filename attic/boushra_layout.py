@@ -2,6 +2,7 @@ from textual.app import App, ComposeResult
 from textual.containers import Container, Vertical, Horizontal
 from textual.widgets import Button, Input, Header, Footer
 
+
 class LayoutExampleApp(App[None]):
 
     CSS = """
@@ -44,6 +45,7 @@ class LayoutExampleApp(App[None]):
                     yield Button("Four")
                     yield Button("Five")
         yield Footer()
+
 
 if __name__ == "__main__":
     LayoutExampleApp().run()

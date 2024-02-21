@@ -5,6 +5,7 @@ from textual.app import App, ComposeResult
 from textual.reactive import var
 from textual.widgets import Button
 
+
 class DelayedReactiveApp(App[None]):
 
     _username: var[str | None] = var(None)
@@ -31,6 +32,7 @@ class DelayedReactiveApp(App[None]):
     def set_username(self) -> None:
         self.username = "davep"
         self.notify("Username has been set")
+
 
 if __name__ == "__main__":
     DelayedReactiveApp().run()

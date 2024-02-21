@@ -9,6 +9,7 @@ from textual import on
 from textual.app import App, ComposeResult
 from textual.widgets import Input, Static
 
+
 class SubProcessApp(App[None]):
 
     def compose(self) -> ComposeResult:
@@ -19,11 +20,10 @@ class SubProcessApp(App[None]):
     def directory_listing(self, event: Input.Submitted) -> None:
         self.query_one("#ls", Static).update(
             subprocess.run(
-                f"ls {event.input.value}",
-                stdout=subprocess.PIPE,
-                shell=True
+                f"ls {event.input.value}", stdout=subprocess.PIPE, shell=True
             ).stdout.decode()
         )
+
 
 if __name__ == "__main__":
     SubProcessApp().run()

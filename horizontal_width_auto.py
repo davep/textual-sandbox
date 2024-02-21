@@ -4,6 +4,7 @@ from textual.app import App, ComposeResult
 from textual.containers import Horizontal
 from textual.widgets import Button, Label
 
+
 class HorizontalWidthAutoApp(App[None]):
 
     CSS = """
@@ -34,6 +35,7 @@ class HorizontalWidthAutoApp(App[None]):
         with Horizontal():
             for n in range(10):
                 yield Label(f"{n} This is a very wide label {n}")
+
 
 if __name__ == "__main__":
     HorizontalWidthAutoApp().run()

@@ -1,6 +1,7 @@
 from textual.app import App, ComposeResult
 from textual.widgets import TextArea
 
+
 class GrowingTextAreaApp(App[None]):
 
     CSS = """
@@ -13,6 +14,7 @@ class GrowingTextAreaApp(App[None]):
 
     def compose(self) -> ComposeResult:
         yield TextArea()
+
 
 if __name__ == "__main__":
     GrowingTextAreaApp().run()

@@ -9,6 +9,7 @@ from textual.message import Message
 from textual.reactive import reactive
 from textual.widgets import Input, Label
 
+
 class NameInput(Vertical):
 
     DEFAULT_CSS = """
@@ -52,6 +53,7 @@ class NameDisplay(Label):
     def _watch_last(self) -> None:
         self.refresh_name()
 
+
 class ExampleApp(App[None]):
 
     def compose(self) -> ComposeResult:
@@ -63,6 +65,7 @@ class ExampleApp(App[None]):
 
     def on_name_input_last_changed(self, event: NameInput.LastChanged) -> None:
         self.query_one(NameDisplay).last = event.last_name
+
 
 if __name__ == "__main__":
     ExampleApp().run()

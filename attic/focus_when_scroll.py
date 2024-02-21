@@ -3,6 +3,7 @@ from textual.app import App, ComposeResult
 from textual.containers import VerticalScroll
 from textual.widgets import Button, Label
 
+
 class MaybeFocus(VerticalScroll, can_focus=False):
 
     def watch_show_vertical_scrollbar(self) -> None:
@@ -10,6 +11,7 @@ class MaybeFocus(VerticalScroll, can_focus=False):
 
     def watch_show_horizontal_scrollbar(self) -> None:
         self.can_focus = self.show_horizontal_scrollbar or self.show_vertical_scrollbar
+
 
 class FocusWhenScrollApp(App[None]):
 
@@ -28,6 +30,7 @@ class FocusWhenScrollApp(App[None]):
     @on(Button.Pressed)
     def more(self) -> None:
         self.query_one(MaybeFocus).mount(Label("Stuff"))
+
 
 if __name__ == "__main__":
     FocusWhenScrollApp().run()

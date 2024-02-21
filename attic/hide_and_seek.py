@@ -2,6 +2,7 @@ from textual import on
 from textual.app import App, ComposeResult
 from textual.widgets import Label, Select
 
+
 class HideAndSeek(App[None]):
 
     CSS = """
@@ -20,6 +21,7 @@ class HideAndSeek(App[None]):
     def show_or_hide(self, event: Select.Changed) -> None:
         assert isinstance(event.value, bool)
         self.query_one(Label).set_class(not event.value, "hidden")
+
 
 if __name__ == "__main__":
     HideAndSeek().run()

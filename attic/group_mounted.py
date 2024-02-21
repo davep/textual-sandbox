@@ -9,14 +9,17 @@ from textual.message import Message
 from textual.widget import Widget
 from textual.widgets import Button, Log
 
+
 @dataclass
 class CountMessage(Message):
     widget: Widget
+
 
 class CheckingButton(Button):
 
     def on_mount(self) -> None:
         self.post_message(CountMessage(self))
+
 
 class CollectionOfWidgets(VerticalScroll):
 
@@ -33,6 +36,7 @@ class CollectionOfWidgets(VerticalScroll):
     def on_mount(self) -> None:
         self.post_message(CountMessage(self))
 
+
 class KnowWhenOthersAreMountedApp(App[None]):
 
     def compose(self) -> ComposeResult:
@@ -44,7 +48,10 @@ class KnowWhenOthersAreMountedApp(App[None]):
     def log_count(self, event: CountMessage) -> None:
         self.query_one(Log).write_line(f"Mounted: {event.widget!r}")
         if len(event.widget.children):
-            self.query_one(Log).write_line(f"    It also has {len(event.widget.children)} children")
+            self.query_one(Log).write_line(
+                f"    It also has {len(event.widget.children)} children"
+            )
+
 
 if __name__ == "__main__":
     KnowWhenOthersAreMountedApp().run()

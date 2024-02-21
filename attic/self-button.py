@@ -1,17 +1,19 @@
 from textual.app import App, ComposeResult
 from textual.widgets import Button
 
-class MyButton( Button ):
 
-    def __init__( self, caption, callback ):
+class MyButton(Button):
+
+    def __init__(self, caption, callback):
         self.callback = callback
-        super().__init__( caption )
+        super().__init__(caption)
 
-    def press( self ):
+    def press(self):
         super().press()
-        self.callback( self )
+        self.callback(self)
 
-class ButtonApp( App[ None ] ):
+
+class ButtonApp(App[None]):
 
     CSS = """
     Screen {
@@ -20,8 +22,8 @@ class ButtonApp( App[ None ] ):
     """
 
     def compose(self) -> ComposeResult:
-        yield MyButton( "PUSH ME!", lambda btn: self.bell() )
+        yield MyButton("PUSH ME!", lambda btn: self.bell())
+
 
 if __name__ == "__main__":
     ButtonApp().run()
-

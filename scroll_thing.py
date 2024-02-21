@@ -8,6 +8,7 @@ from textual.containers import Vertical, VerticalScroll
 from textual.widget import Widget
 from textual.widgets import Input
 
+
 class TextDisplayWidget(Widget):
 
     DEFAULT_CSS = """
@@ -20,7 +21,10 @@ class TextDisplayWidget(Widget):
     line_prefix: reactive[str] = reactive("This is an example")
 
     def render(self) -> RenderResult:
-        return Text("\n".join(f"{self.line_prefix} {n}" for n in range(self.line_count)))
+        return Text(
+            "\n".join(f"{self.line_prefix} {n}" for n in range(self.line_count))
+        )
+
 
 class ScrollTextThingApp(App[None]):
 
@@ -60,6 +64,7 @@ class ScrollTextThingApp(App[None]):
 
     def action_text(self, text: str) -> None:
         self.query_one(TextDisplayWidget).line_prefix = text
+
 
 if __name__ == "__main__":
     ScrollTextThingApp().run()

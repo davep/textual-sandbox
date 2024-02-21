@@ -2,6 +2,7 @@ from textual.app import App, ComposeResult
 from textual.containers import Vertical
 from textual.widgets import Input, Markdown
 
+
 class InputAndMarkdownApp(App[None]):
 
     CSS = """
@@ -31,6 +32,7 @@ class InputAndMarkdownApp(App[None]):
             yield Input(placeholder="Here is an input")
             yield Markdown("# Here is some markdown!")
             yield Input(placeholder="Here is an input")
+
 
 if __name__ == "__main__":
     InputAndMarkdownApp().run()

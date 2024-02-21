@@ -1,11 +1,12 @@
-from textual.app        import App, ComposeResult
+from textual.app import App, ComposeResult
 from textual.containers import Container, Vertical
-from textual.widgets    import Header, Footer, Placeholder
+from textual.widgets import Header, Footer, Placeholder
 
-class LayoutSwitchApp( App[ None ] ):
+
+class LayoutSwitchApp(App[None]):
 
     BINDINGS = [
-        ( "t", "toggle", "Toggle Layout" ),
+        ("t", "toggle", "Toggle Layout"),
     ]
 
     CSS = """
@@ -36,17 +37,18 @@ class LayoutSwitchApp( App[ None ] ):
     }
     """
 
-    def compose( self ) -> ComposeResult:
+    def compose(self) -> ComposeResult:
         yield Header()
         yield Container(
-            Vertical( Placeholder( "Top Left" ), Placeholder( "Bottom Left" ), id="left" ),
-            Placeholder( "Right", id="right" ),
-            id="main"
+            Vertical(Placeholder("Top Left"), Placeholder("Bottom Left"), id="left"),
+            Placeholder("Right", id="right"),
+            id="main",
         )
         yield Footer()
 
-    def action_toggle( self ) -> None:
-        self.query_one( "#main", Container ).toggle_class( "vertical" )
+    def action_toggle(self) -> None:
+        self.query_one("#main", Container).toggle_class("vertical")
+
 
 if __name__ == "__main__":
     LayoutSwitchApp().run()

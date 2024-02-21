@@ -4,6 +4,7 @@ from textual.app import App, ComposeResult
 from textual.containers import Vertical, Center
 from textual.widgets import Select, Label, Input, Button
 
+
 class SelectInTheMiddleApp(App[None]):
 
     CSS = """
@@ -11,6 +12,7 @@ class SelectInTheMiddleApp(App[None]):
         width: 50%;
     }
     """
+
     def compose(self) -> ComposeResult:
         with Vertical():
             with Center():
@@ -21,6 +23,7 @@ class SelectInTheMiddleApp(App[None]):
                 yield Input()
             with Center():
                 yield Button("Don't press me I don't do owt")
+
 
 if __name__ == "__main__":
     SelectInTheMiddleApp().run()

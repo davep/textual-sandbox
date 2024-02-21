@@ -4,14 +4,19 @@ from textual import on
 from textual.app import App, ComposeResult
 from textual.widgets import Button, Label, Select
 
+
 class BadSelectApp(App[None]):
 
     def compose(self) -> ComposeResult:
-        yield Select[int]((
-            ("Filthy", 0),
-            ("Rich", 1),
-            ("Catflap", 2),
-        ), allow_blank=False, value=1)
+        yield Select[int](
+            (
+                ("Filthy", 0),
+                ("Rich", 1),
+                ("Catflap", 2),
+            ),
+            allow_blank=False,
+            value=1,
+        )
         yield Label()
         yield Button("Make bad")
 
@@ -23,6 +28,7 @@ class BadSelectApp(App[None]):
     def make_bad(self) -> None:
         self.query_one(Select).value = "nope"
         self.show_value()
+
 
 if __name__ == "__main__":
     BadSelectApp().run()

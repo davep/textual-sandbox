@@ -28,9 +28,8 @@ class OptionListApp(App[None]):
 
     @on(OptionList.OptionSelected)
     def test_function(self, event: OptionList.OptionSelected) -> None:
-        self.query_one(Label).update(
-            f"You selected {event.option_index}"
-        )
+        self.query_one(Label).update(f"You selected {event.option_index}")
+
 
 if __name__ == "__main__":
     OptionListApp().run()

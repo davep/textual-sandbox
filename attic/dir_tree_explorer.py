@@ -1,15 +1,16 @@
 from pathlib import Path
 
-from textual.app        import App, ComposeResult
-from textual.binding    import Binding
+from textual.app import App, ComposeResult
+from textual.binding import Binding
 from textual.containers import Grid, Vertical
-from textual.widgets    import Footer, DirectoryTree
+from textual.widgets import Footer, DirectoryTree
 
-class Browser( Vertical ):
+
+class Browser(Vertical):
 
     BINDINGS = [
-        Binding( "r", "reload", "Reload" ),
-        Binding( "a", "expand_all", "Expand All"),
+        Binding("r", "reload", "Reload"),
+        Binding("a", "expand_all", "Expand All"),
     ]
 
     DEFAULT_CSS = """
@@ -22,19 +23,20 @@ class Browser( Vertical ):
     }
     """
 
-    def compose( self ) -> ComposeResult:
-        yield DirectoryTree( Path("~/develop").expanduser(), id=self.id )
+    def compose(self) -> ComposeResult:
+        yield DirectoryTree(Path("~/develop").expanduser(), id=self.id)
 
-    def on_mount( self ) -> None:
-        self.query_one( DirectoryTree ).border_title = self.id
+    def on_mount(self) -> None:
+        self.query_one(DirectoryTree).border_title = self.id
 
     def action_reload(self) -> None:
-        self.query_one( DirectoryTree ).reload()
+        self.query_one(DirectoryTree).reload()
 
     def action_expand_all(self) -> None:
-        self.query_one( DirectoryTree ).root.expand_all()
+        self.query_one(DirectoryTree).root.expand_all()
 
-class DirTreeExplorer( App[ None ] ):
+
+class DirTreeExplorer(App[None]):
 
     CSS = """
     Grid {
@@ -43,21 +45,22 @@ class DirTreeExplorer( App[ None ] ):
     """
 
     BINDINGS = [
-        Binding( "ctrl+a", "expand_all" ),
+        Binding("ctrl+a", "expand_all"),
     ]
 
-    def compose( self ) -> ComposeResult:
+    def compose(self) -> ComposeResult:
         with Grid():
-            for n in range( 9 ):
+            for n in range(9):
                 yield Browser(id=f"directory-tree-{n}")
         yield Footer()
 
-    def on_mount( self ) -> None:
-        self.query( DirectoryTree ).first().focus()
+    def on_mount(self) -> None:
+        self.query(DirectoryTree).first().focus()
 
     def action_expand_all(self):
-        for tree in self.query( DirectoryTree ):
+        for tree in self.query(DirectoryTree):
             tree.root.expand_all()
+
 
 if __name__ == "__main__":
     DirTreeExplorer().run()

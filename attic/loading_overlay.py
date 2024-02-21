@@ -3,6 +3,7 @@
 from textual.app import App, ComposeResult
 from textual.widgets import Label
 
+
 class LoadingOverlayApp(App[None]):
 
     CSS = """
@@ -20,9 +21,10 @@ class LoadingOverlayApp(App[None]):
     def on_mount(self) -> None:
         self.notify(
             "This is a really big notification. Loading should not overwrite it.",
-            timeout=9_999_999
+            timeout=9_999_999,
         )
         self.query_one(Label).loading = True
+
 
 if __name__ == "__main__":
     LoadingOverlayApp().run()

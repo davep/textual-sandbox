@@ -6,6 +6,7 @@ from textual import on, work
 from textual.app import App, ComposeResult
 from textual.widgets import Button, ProgressBar
 
+
 class ReuseProgressApp(App[None]):
 
     def compose(self) -> ComposeResult:
@@ -24,6 +25,7 @@ class ReuseProgressApp(App[None]):
         for _ in range(100):
             self.query_one(ProgressBar).advance()
             await sleep(0.1)
+
 
 if __name__ == "__main__":
     ReuseProgressApp().run()

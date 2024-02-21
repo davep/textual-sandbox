@@ -2,6 +2,7 @@ from textual.app import App, ComposeResult
 from textual.containers import Vertical
 from textual.widgets import ContentSwitcher, Input
 
+
 class ContentSwitcherFocusApp(App[None]):
 
     CSS = """
@@ -27,6 +28,7 @@ class ContentSwitcherFocusApp(App[None]):
     def action_go(self, content: int) -> None:
         self.query_one(ContentSwitcher).current = f"content-{content}"
         self.query(f"#content-{content} > *").first().focus()
+
 
 if __name__ == "__main__":
     ContentSwitcherFocusApp().run()

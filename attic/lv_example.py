@@ -1,18 +1,20 @@
-from textual.app     import App, ComposeResult
+from textual.app import App, ComposeResult
 from textual.widgets import Header, Footer, ListView, ListItem, Label
 
-class Choices( ListView ):
 
-    def __init__( self, choices: list[ str ] ) -> None:
+class Choices(ListView):
+
+    def __init__(self, choices: list[str]) -> None:
         super().__init__()
         self._choices = choices
 
-    def compose( self ) -> ComposeResult:
+    def compose(self) -> ComposeResult:
         """Compose the child widgets."""
         for choice in self._choices:
-            yield ListItem( Label( choice ) )
+            yield ListItem(Label(choice))
 
-class ListViewExample( App[ None ] ):
+
+class ListViewExample(App[None]):
 
     CSS = """
     Screen {
@@ -26,16 +28,17 @@ class ListViewExample( App[ None ] ):
     }
     """
 
-    def compose( self ) -> ComposeResult:
+    def compose(self) -> ComposeResult:
         yield Header()
-        yield Choices( [ "One", "Two", "Three", "More" ] )
-        yield Label( "Nothing selected right now", id="chosen" )
+        yield Choices(["One", "Two", "Three", "More"])
+        yield Label("Nothing selected right now", id="chosen")
         yield Footer()
 
-    def on_list_view_selected( self, event: ListView.Selected ) -> None:
-        self.query_one( "#chosen", Label ).update(
+    def on_list_view_selected(self, event: ListView.Selected) -> None:
+        self.query_one("#chosen", Label).update(
             f"Selected: {event.item.children[ 0 ].renderable}"
         )
+
 
 if __name__ == "__main__":
     ListViewExample().run()

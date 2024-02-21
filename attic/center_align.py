@@ -1,8 +1,9 @@
-from textual.app        import App, ComposeResult
+from textual.app import App, ComposeResult
 from textual.containers import Vertical, Horizontal
-from textual.widgets    import Header, Footer, Button, Label, Input
+from textual.widgets import Header, Footer, Button, Label, Input
 
-class CenterApp( App[ None ] ):
+
+class CenterApp(App[None]):
 
     CSS = """
     Vertical {
@@ -25,14 +26,15 @@ class CenterApp( App[ None ] ):
     }
     """
 
-    def compose( self ) -> ComposeResult:
+    def compose(self) -> ComposeResult:
         yield Header()
         yield Vertical(
-            Horizontal( Label( "This is a label" ) ),
-            Horizontal( Button( "This is a button, it's longer" ) ),
-            Horizontal( Input( placeholder="This is an input, it's even longer still" ) )
+            Horizontal(Label("This is a label")),
+            Horizontal(Button("This is a button, it's longer")),
+            Horizontal(Input(placeholder="This is an input, it's even longer still")),
         )
         yield Footer()
+
 
 if __name__ == "__main__":
     CenterApp().run()

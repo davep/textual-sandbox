@@ -2,19 +2,21 @@
 
 from random import sample
 
-from textual.app        import App, ComposeResult
+from textual.app import App, ComposeResult
 from textual.containers import Vertical, Horizontal
-from textual.widgets    import Header, Footer, TextLog, Label
-from textual.binding    import Binding
+from textual.widgets import Header, Footer, TextLog, Label
+from textual.binding import Binding
 
-class ChatPane( Vertical ):
 
-    def compose( self ) -> ComposeResult:
+class ChatPane(Vertical):
+
+    def compose(self) -> ComposeResult:
         """Compose the child widgets."""
-        yield Label( "Title" )
-        yield TextLog( wrap=True )
+        yield Label("Title")
+        yield TextLog(wrap=True)
 
-class FakeChatApp( App[ None ] ):
+
+class FakeChatApp(App[None]):
 
     CSS = """
     ChatPane {
@@ -39,18 +41,20 @@ class FakeChatApp( App[ None ] ):
     """
 
     BINDINGS = [
-        Binding( "l", "log", "Log something" ),
+        Binding("l", "log", "Log something"),
     ]
 
-    def compose( self ) -> ComposeResult:
+    def compose(self) -> ComposeResult:
         yield Header()
         yield Vertical(
-            Horizontal( ChatPane(), ChatPane(), ChatPane() ),
-            Horizontal( ChatPane(), ChatPane(), ChatPane() ),
+            Horizontal(ChatPane(), ChatPane(), ChatPane()),
+            Horizontal(ChatPane(), ChatPane(), ChatPane()),
         )
         yield Footer()
 
-    TEXT = list( set( """Python was created in the early 1990s by Guido van Rossum at Stichting
+    TEXT = list(
+        set(
+            """Python was created in the early 1990s by Guido van Rossum at Stichting
     Mathematisch Centrum (CWI, see http://www.cwi.nl) in the Netherlands
     as a successor of a language called ABC.  Guido remains Python's
     principal author, although it includes many contributions from others.
@@ -72,11 +76,14 @@ class FakeChatApp( App[ None ] ):
     the Open Source Definition).  Historically, most, but not all, Python
     Hit Return for more, or q (and Return) to quit:
     releases have also been GPL-compatible; the table below summarizes
-    the various releases.""".lower().split() ) )
+    the various releases.""".lower().split()
+        )
+    )
 
-    def action_log( self ):
-        if isinstance( self.focused, TextLog ):
-            self.focused.write( " ".join( sample( self.TEXT, 50 ) ) )
+    def action_log(self):
+        if isinstance(self.focused, TextLog):
+            self.focused.write(" ".join(sample(self.TEXT, 50)))
+
 
 if __name__ == "__main__":
     FakeChatApp().run()

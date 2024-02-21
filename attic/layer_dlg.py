@@ -9,6 +9,7 @@ from textual.widgets import Label, Footer, Header
 
 console = Console()
 
+
 class Dialog(Container):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -23,19 +24,22 @@ class Dialog(Container):
     def compose(self) -> ComposeResult:
         yield self.content
 
+
 DIALOG_HEIGHT = 11
 DIALOG_WIDTH = 51
+
 
 def get_dialog_position(dw, dh):
     x = (console.width - dw) // 2
     y = (console.height - dh) // 2
     return (x, y)
 
+
 class TestApp(App):
 
-    BINDINGS = [('ctrl+d', 'show_dialog', 'Show Dialog')]
+    BINDINGS = [("ctrl+d", "show_dialog", "Show Dialog")]
 
-    CSS = '''
+    CSS = """
         Dialog {
             margin-left: %s;
             margin-top: %s;
@@ -78,23 +82,24 @@ class TestApp(App):
             margin-top: 1;
             color: ansi_red;
         }
-    ''' % (get_dialog_position(DIALOG_WIDTH, DIALOG_HEIGHT) +
-           (DIALOG_WIDTH, DIALOG_HEIGHT))
+    """ % (
+        get_dialog_position(DIALOG_WIDTH, DIALOG_HEIGHT) + (DIALOG_WIDTH, DIALOG_HEIGHT)
+    )
 
     def __init__(self):
         super().__init__()
-        self.title = 'Test App'
+        self.title = "Test App"
         self.dialog_showing = False
-        self.dialog = Dialog(classes='hidden')
+        self.dialog = Dialog(classes="hidden")
 
     def action_show_dialog(self):
         if not self.dialog_showing:
-            self.dialog.toggle_class('hidden')
+            self.dialog.toggle_class("hidden")
             self.dialog_showing = True
 
     def hide_dialog(self):
         if self.dialog_showing:
-            self.dialog.toggle_class('hidden')
+            self.dialog.toggle_class("hidden")
             self.dialog_showing = False
 
     def on_key(self, event):
@@ -103,15 +108,14 @@ class TestApp(App):
     def compose(self) -> ComposeResult:
         yield Header()
         yield Footer()
-        pane1 = Vertical(Label('Pane 1'), id='pane1')
-        pane2 = Vertical(Label('Pane 2'),
-                         Label('Press any key to dismiss the dialog'),
-                         id='pane2')
-        pane3 = Container(Label('Pane 3'), id='pane3')
+        pane1 = Vertical(Label("Pane 1"), id="pane1")
+        pane2 = Vertical(
+            Label("Pane 2"), Label("Press any key to dismiss the dialog"), id="pane2"
+        )
+        pane3 = Container(Label("Pane 3"), id="pane3")
         yield Horizontal(pane1, pane2, pane3)
         yield self.dialog
 
 
 app = TestApp()
 app.run()
-

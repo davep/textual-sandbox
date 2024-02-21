@@ -9,6 +9,7 @@ from textual.containers import Vertical
 from textual.screen import ModalScreen
 from textual.widgets import ListView, ListItem, Label, Button
 
+
 class ModalDialog(ModalScreen[None]):
 
     CSS = """
@@ -27,12 +28,18 @@ class ModalDialog(ModalScreen[None]):
 
     def compose(self) -> ComposeResult:
         with Vertical():
-            yield ListView(*[ListItem(Label(f"This is list item in a modal screen {n}")) for n in range(100)])
+            yield ListView(
+                *[
+                    ListItem(Label(f"This is list item in a modal screen {n}"))
+                    for n in range(100)
+                ]
+            )
             yield Button("Close")
 
     @on(Button.Pressed)
     def close(self) -> None:
         self.dismiss()
+
 
 class ModalScreenFocusApp(App[None]):
 
@@ -42,6 +49,7 @@ class ModalScreenFocusApp(App[None]):
     @on(ListView.Selected)
     def show_modal(self) -> None:
         self.push_screen(ModalDialog())
+
 
 if __name__ == "__main__":
     ModalScreenFocusApp().run()

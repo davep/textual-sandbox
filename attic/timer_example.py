@@ -1,6 +1,7 @@
 from textual.app import App, ComposeResult
 from textual.widgets import Label
 
+
 class BoomApp(App[None]):
 
     def compose(self) -> ComposeResult:
@@ -11,6 +12,7 @@ class BoomApp(App[None]):
 
     def on_mount(self) -> None:
         self.set_timer(3, self.big_bada_boom)
+
 
 if __name__ == "__main__":
     BoomApp().run()

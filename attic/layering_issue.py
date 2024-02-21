@@ -3,17 +3,20 @@ from textual.screen import Screen
 from textual.widgets import Header, Footer, Label
 from textual.containers import Vertical, Container
 
-class Overlay( Container ):
 
-    def compose( self ) -> ComposeResult:
-        yield Label( "This should float over the top" )
-
-class Body( Vertical ):
+class Overlay(Container):
 
     def compose(self) -> ComposeResult:
-         yield Label( "My God! It's full of stars! " * 300 )
+        yield Label("This should float over the top")
 
-class Good( Screen ):
+
+class Body(Vertical):
+
+    def compose(self) -> ComposeResult:
+        yield Label("My God! It's full of stars! " * 300)
+
+
+class Good(Screen):
 
     def compose(self) -> ComposeResult:
         yield Header()
@@ -21,7 +24,8 @@ class Good( Screen ):
         yield Body()
         yield Footer()
 
-class Bad( Screen ):
+
+class Bad(Screen):
 
     def compose(self) -> ComposeResult:
         yield Overlay()
@@ -29,7 +33,8 @@ class Bad( Screen ):
         yield Body()
         yield Footer()
 
-class Layers( App[ None ] ):
+
+class Layers(App[None]):
 
     CSS = """
     Screen {
@@ -48,21 +53,18 @@ class Layers( App[ None ] ):
     }
     """
 
-    SCREENS = {
-        "good": Good,
-        "bad": Bad
-    }
+    SCREENS = {"good": Good, "bad": Bad}
 
-    BINDINGS = [
-        ( "t", "toggle", "Toggle Screen" )
-    ]
+    BINDINGS = [("t", "toggle", "Toggle Screen")]
 
-    def on_mount( self ):
-        self.push_screen( "good" )
+    def on_mount(self):
+        self.push_screen("good")
 
-    def action_toggle( self ):
-        self.switch_screen( "bad" if self.screen.__class__.__name__ == "Good" else "good" )
+    def action_toggle(self):
+        self.switch_screen(
+            "bad" if self.screen.__class__.__name__ == "Good" else "good"
+        )
+
 
 if __name__ == "__main__":
     Layers().run()
-

@@ -2,6 +2,7 @@ from textual.app import App, ComposeResult
 from textual.containers import Center
 from textual.widgets import Label, ListView, ListItem
 
+
 class LabelAndListViewApp(App[None]):
 
     CSS = """
@@ -27,6 +28,7 @@ class LabelAndListViewApp(App[None]):
                 ListItem(Label("Firefly!!!")),
                 ListItem(Label("Firefly!!!!")),
             )
+
 
 if __name__ == "__main__":
     LabelAndListViewApp().run()

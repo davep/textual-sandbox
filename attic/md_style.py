@@ -1,8 +1,9 @@
-from inspect         import cleandoc
-from textual.app     import App, ComposeResult
+from inspect import cleandoc
+from textual.app import App, ComposeResult
 from textual.widgets import Header, Footer, Markdown
 
-class MDStyleApp( App[ None ] ):
+
+class MDStyleApp(App[None]):
 
     CSS = """
     MarkdownH1 {
@@ -15,10 +16,11 @@ class MDStyleApp( App[ None ] ):
     }
     """
 
-    def compose( self ) -> ComposeResult:
+    def compose(self) -> ComposeResult:
         yield Header()
-        yield Markdown( cleandoc(
-            """# This is a H1
+        yield Markdown(
+            cleandoc(
+                """# This is a H1
 
             Here is some text.
 
@@ -30,8 +32,10 @@ class MDStyleApp( App[ None ] ):
 
             Here is even more text within the H3.
             """
-        ) )
+            )
+        )
         yield Footer()
+
 
 if __name__ == "__main__":
     MDStyleApp().run()

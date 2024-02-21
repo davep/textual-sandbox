@@ -6,13 +6,14 @@ https://github.com/Textualize/textual/issues/659
 from textual.app import App
 from textual.widget import Widget
 
-class SelfOwn( Widget ):
 
-    def __init__( self ) -> None:
-        super().__init__( self )
+class SelfOwn(Widget):
+
+    def __init__(self) -> None:
+        super().__init__(self)
 
 
-class SelfOwnage( App[ None ] ):
+class SelfOwnage(App[None]):
 
     def compose(self):
         yield SelfOwn()
@@ -20,4 +21,3 @@ class SelfOwnage( App[ None ] ):
 
 if __name__ == "__main__":
     SelfOwnage().run()
-

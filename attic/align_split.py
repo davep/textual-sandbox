@@ -2,6 +2,7 @@ from textual.app import App, ComposeResult
 from textual.containers import Horizontal
 from textual.widgets import Button, Checkbox
 
+
 class AlignSplitApp(App[None]):
 
     CSS = """
@@ -18,6 +19,7 @@ class AlignSplitApp(App[None]):
             with Horizontal(classes="right"):
                 yield Button("Start")
                 yield Checkbox("Convert to mp3")
+
 
 if __name__ == "__main__":
     AlignSplitApp().run()

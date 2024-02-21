@@ -4,11 +4,10 @@ from textual.app import App, ComposeResult
 from textual.widgets import OptionList, Log, Footer
 from textual.widgets.option_list import Option
 
+
 class OptionListAddBug(App[None]):
 
-    BINDINGS = [
-        (str(n), f"add({n})", f"Add {n}") for n in range(10)
-    ]
+    BINDINGS = [(str(n), f"add({n})", f"Add {n}") for n in range(10)]
 
     CSS = """
     OptionList, Log {

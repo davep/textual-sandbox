@@ -2,9 +2,10 @@ from pathlib import Path
 
 from typing import Iterable
 
-from textual.app        import App, ComposeResult
+from textual.app import App, ComposeResult
 from textual.containers import Horizontal
-from textual.widgets    import Header, Footer, DirectoryTree
+from textual.widgets import Header, Footer, DirectoryTree
+
 
 class MDDirectoryTree(DirectoryTree):
 
@@ -18,13 +19,15 @@ class MDDirectoryTree(DirectoryTree):
             The filtered paths.
         """
         return [
-            path for path in paths
-            if not path.name.startswith( "." ) and path.is_dir() or (
-                    path.is_file() and path.suffix == ".md"
-            )
+            path
+            for path in paths
+            if not path.name.startswith(".")
+            and path.is_dir()
+            or (path.is_file() and path.suffix == ".md")
         ]
 
-class DirTreeFilter( App[ None ] ):
+
+class DirTreeFilter(App[None]):
 
     CSS = """
     DirectoryTree {
@@ -32,13 +35,11 @@ class DirTreeFilter( App[ None ] ):
     }
     """
 
-    def compose( self ) -> ComposeResult:
+    def compose(self) -> ComposeResult:
         yield Header()
-        yield Horizontal(
-            DirectoryTree("."),
-            MDDirectoryTree(".")
-        )
+        yield Horizontal(DirectoryTree("."), MDDirectoryTree("."))
         yield Footer()
+
 
 if __name__ == "__main__":
     DirTreeFilter().run()

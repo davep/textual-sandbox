@@ -1,4 +1,4 @@
-from textual.app     import App, ComposeResult
+from textual.app import App, ComposeResult
 from textual.widgets import Header, Footer, Markdown
 
 EXAMPLE = """
@@ -20,12 +20,14 @@ EXAMPLE = """
 
 """
 
-class MarkdownViewerApp( App[ None ] ):
 
-    def compose( self ) -> ComposeResult:
+class MarkdownViewerApp(App[None]):
+
+    def compose(self) -> ComposeResult:
         yield Header()
-        yield Markdown( EXAMPLE )
+        yield Markdown(EXAMPLE)
         yield Footer()
+
 
 if __name__ == "__main__":
     MarkdownViewerApp().run()

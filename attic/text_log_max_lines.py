@@ -1,11 +1,12 @@
 """https://github.com/Textualize/textual/discussions/2561"""
 
-from textual.app        import App, ComposeResult
+from textual.app import App, ComposeResult
 from textual.containers import Grid
-from textual.widgets    import TextLog
-from textual.reactive   import var
+from textual.widgets import TextLog
+from textual.reactive import var
 
-class TextLogMaxLinesApp( App[ None ] ):
+
+class TextLogMaxLinesApp(App[None]):
 
     CSS = """
     Grid {
@@ -17,22 +18,23 @@ class TextLogMaxLinesApp( App[ None ] ):
     }
     """
 
-    line: var[ int ] = var( 0 )
+    line: var[int] = var(0)
 
-    def compose( self ) -> ComposeResult:
+    def compose(self) -> ComposeResult:
         with Grid():
-            for _ in range( 9 ):
-                yield TextLog( max_lines=10 )
+            for _ in range(9):
+                yield TextLog(max_lines=10)
 
-    def watch_line( self ) -> None:
-        for log in self.query( TextLog ):
-            log.write( str( self.line ) )
+    def watch_line(self) -> None:
+        for log in self.query(TextLog):
+            log.write(str(self.line))
 
-    def next_line( self ) -> None:
+    def next_line(self) -> None:
         self.line += 1
 
-    def on_mount( self ) -> None:
-        self.set_interval( 1 / 5, self.next_line )
+    def on_mount(self) -> None:
+        self.set_interval(1 / 5, self.next_line)
+
 
 if __name__ == "__main__":
     TextLogMaxLinesApp().run()

@@ -4,6 +4,7 @@ from textual.app import App, ComposeResult
 from textual.containers import Grid
 from textual.widgets import Label, Input, Select
 
+
 class StandardRow(Grid):
     """A standard row in the display.
 
@@ -19,6 +20,7 @@ class StandardRow(Grid):
     }
     """
 
+
 class InputWithLabel(StandardRow):
     """A labeled input row with optional select."""
 
@@ -33,12 +35,14 @@ class InputWithLabel(StandardRow):
         if self.with_select:
             yield Select([("a", "A"), ("b", "B"), ("c", "C")])
 
+
 class Issue3483Example(App[None]):
 
     def compose(self) -> ComposeResult:
         yield InputWithLabel("First Name")
         yield InputWithLabel("Last Name", with_select=True)
         yield InputWithLabel("Email")
+
 
 if __name__ == "__main__":
     Issue3483Example().run()

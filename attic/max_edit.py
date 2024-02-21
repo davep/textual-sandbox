@@ -4,6 +4,7 @@ from textual.app import App, ComposeResult
 from textual.containers import Vertical
 from textual.widgets import TextArea
 
+
 class MaxHeightEdit(App[None]):
 
     CSS = """
@@ -22,6 +23,7 @@ class MaxHeightEdit(App[None]):
     def compose(self) -> ComposeResult:
         with Vertical():
             yield TextArea()
+
 
 if __name__ == "__main__":
     MaxHeightEdit().run()

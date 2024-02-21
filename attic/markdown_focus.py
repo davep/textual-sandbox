@@ -1,8 +1,8 @@
 """https://github.com/Textualize/textual/issues/2380"""
 
-from textual.app        import App, ComposeResult
+from textual.app import App, ComposeResult
 from textual.containers import VerticalScroll
-from textual.widgets    import Header, Footer, Markdown
+from textual.widgets import Header, Footer, Markdown
 
 MARKDOWN = """\
 # Header
@@ -24,7 +24,8 @@ MARKDOWN = """\
 1. Another List
 """
 
-class MarkdownFocusApp( App[ None ] ):
+
+class MarkdownFocusApp(App[None]):
 
     CSS = """
     *:focus {
@@ -32,11 +33,12 @@ class MarkdownFocusApp( App[ None ] ):
     }
     """
 
-    def compose( self ) -> ComposeResult:
+    def compose(self) -> ComposeResult:
         yield Header()
         with VerticalScroll():
             yield Markdown(MARKDOWN)
         yield Footer()
+
 
 if __name__ == "__main__":
     MarkdownFocusApp().run()
