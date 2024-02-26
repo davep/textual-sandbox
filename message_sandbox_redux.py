@@ -11,6 +11,7 @@ from textual.widgets import (
     Button,
     Collapsible,
     DataTable,
+    Input,
     Label,
     Log,
     TabbedContent,
@@ -101,6 +102,19 @@ class DataTableColumnSandbox(TabPane):
         self.query_one(DataTable).cursor_coordinate = Coordinate(1, 1)
 
 
+class InputSandbox(TabPane):
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__("Input", *args, **kwargs)
+
+    def compose(self) -> ComposeResult:
+        yield Button("More input", id="input")
+        yield Input()
+
+    @on(Button.Pressed, "#input")
+    def more_input(self) -> None:
+        self.query_one(Input).value += "x"
+
+
 class MessageSandboxApp(App[None]):
     CSS = """
     TabbedContent {
@@ -119,6 +133,7 @@ class MessageSandboxApp(App[None]):
             yield DataTableCellSandbox()
             yield DataTableRowSandbox()
             yield DataTableColumnSandbox()
+            yield InputSandbox()
         yield Log()
 
     @on(Collapsible.Toggled)
@@ -130,6 +145,7 @@ class MessageSandboxApp(App[None]):
     @on(DataTable.ColumnSelected)
     @on(DataTable.HeaderSelected)
     @on(DataTable.RowLabelSelected)
+    @on(Input.Changed)
     def log_message(self, message: Message) -> None:
         self.query_one(Log).write_line(f"{message}")
 
