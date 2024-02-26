@@ -5,8 +5,30 @@ https://github.com/Textualize/textual/issues/3869
 
 from textual import on
 from textual.app import App, ComposeResult
+from textual.coordinate import Coordinate
 from textual.message import Message
-from textual.widgets import Button, Collapsible, Label, Log, TabbedContent, TabPane
+from textual.widgets import (
+    Button,
+    Collapsible,
+    DataTable,
+    Label,
+    Log,
+    TabbedContent,
+    TabPane,
+)
+
+DATA = [
+    ("lane", "swimmer", "country", "time"),
+    (4, "Joseph Schooling", "Singapore", 50.39),
+    (2, "Michael Phelps", "United States", 51.14),
+    (5, "Chad le Clos", "South Africa", 51.14),
+    (6, "László Cseh", "Hungary", 51.14),
+    (3, "Li Zhuhao", "China", 51.26),
+    (8, "Mehdy Metella", "France", 51.58),
+    (7, "Tom Shields", "United States", 51.73),
+    (1, "Aleksandr Sadovnikov", "Russia", 51.84),
+    (10, "Darren Burns", "Scotland", 51.84),
+]
 
 
 class CollapsibleSandbox(TabPane):
@@ -25,6 +47,60 @@ class CollapsibleSandbox(TabPane):
         ).collapsed
 
 
+class DataTableCellSandbox(TabPane):
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__("DataTable (Cell)", *args, **kwargs)
+
+    def compose(self) -> ComposeResult:
+        yield Button("Select Cell", id="selcell")
+        yield DataTable()
+
+    def on_mount(self) -> None:
+        table = self.query_one(DataTable)
+        table.add_columns(*DATA[0])
+        table.add_rows(DATA[1:])
+
+    @on(Button.Pressed, "#selcell")
+    def select_cell(self) -> None:
+        self.query_one(DataTable).cursor_coordinate = Coordinate(1, 1)
+
+
+class DataTableRowSandbox(TabPane):
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__("DataTable (Row)", *args, **kwargs)
+
+    def compose(self) -> ComposeResult:
+        yield Button("Select Row", id="selrow")
+        yield DataTable(cursor_type="row")
+
+    def on_mount(self) -> None:
+        table = self.query_one(DataTable)
+        table.add_columns(*DATA[0])
+        table.add_rows(DATA[1:])
+
+    @on(Button.Pressed, "#selrow")
+    def select_cell(self) -> None:
+        self.query_one(DataTable).cursor_coordinate = Coordinate(1, 1)
+
+
+class DataTableColumnSandbox(TabPane):
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__("DataTable (Column)", *args, **kwargs)
+
+    def compose(self) -> ComposeResult:
+        yield Button("Select Column", id="selcol")
+        yield DataTable(cursor_type="column")
+
+    def on_mount(self) -> None:
+        table = self.query_one(DataTable)
+        table.add_columns(*DATA[0])
+        table.add_rows(DATA[1:])
+
+    @on(Button.Pressed, "#selcol")
+    def select_cell(self) -> None:
+        self.query_one(DataTable).cursor_coordinate = Coordinate(1, 1)
+
+
 class MessageSandboxApp(App[None]):
     CSS = """
     TabbedContent {
@@ -40,9 +116,20 @@ class MessageSandboxApp(App[None]):
     def compose(self) -> ComposeResult:
         with TabbedContent():
             yield CollapsibleSandbox()
+            yield DataTableCellSandbox()
+            yield DataTableRowSandbox()
+            yield DataTableColumnSandbox()
         yield Log()
 
     @on(Collapsible.Toggled)
+    @on(DataTable.CellHighlighted)
+    @on(DataTable.CellSelected)
+    @on(DataTable.RowHighlighted)
+    @on(DataTable.RowSelected)
+    @on(DataTable.ColumnHighlighted)
+    @on(DataTable.ColumnSelected)
+    @on(DataTable.HeaderSelected)
+    @on(DataTable.RowLabelSelected)
     def log_message(self, message: Message) -> None:
         self.query_one(Log).write_line(f"{message}")
 
