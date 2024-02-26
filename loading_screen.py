@@ -5,13 +5,21 @@ from time import sleep
 from textual import work
 from textual.app import App, ComposeResult
 from textual.screen import Screen
-from textual.widgets import Label
+from textual.widgets import Label, LoadingIndicator
 
 
 class LoadSomeStuff(Screen[str]):
+    DEFAULT_CSS = """
+    LoadSomeStuff {
+        LoadingIndicator {
+            height: 1fr;
+        }
+    }
+    """
 
     def compose(self) -> ComposeResult:
         yield Label("Just wait a wee while, we'll be done soon.")
+        yield LoadingIndicator()
 
     @work(thread=True)
     def load_stuff(self) -> None:
@@ -23,7 +31,6 @@ class LoadSomeStuff(Screen[str]):
 
 
 class LoadingScreenApp(App[None]):
-
     def compose(self) -> ComposeResult:
         yield Label("The result will go in here.")
 
