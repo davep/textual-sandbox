@@ -3,6 +3,8 @@
 https://github.com/Textualize/textual/issues/3869
 """
 
+from pathlib import Path
+
 from textual import on
 from textual.app import App, ComposeResult
 from textual.containers import Horizontal
@@ -27,6 +29,7 @@ from textual.widgets import (
     Switch,
     TabbedContent,
     TabPane,
+    TextArea,
 )
 
 DATA = [
@@ -264,6 +267,38 @@ class ToggleButtonSandbox(TabPane):
         self.query_one("#tester", RadioButton).value = True
 
 
+class TextAreaSandbox(TabPane):
+    DEFAULT_CSS = """
+    TextAreaSandbox {
+        Horizontal {
+            height: auto;
+        }
+    }
+    """
+
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__("TextArea", *args, **kwargs)
+
+    def compose(self) -> ComposeResult:
+        with Horizontal():
+            yield Button("Set the text", id="paste")
+            yield Button("Load text", id="load")
+            yield Button("Select all", id="select-all")
+        yield TextArea(language="python")
+
+    @on(Button.Pressed, "#paste")
+    def set_text(self) -> None:
+        self.query_one(TextArea).text = Path(__file__).read_text()
+
+    @on(Button.Pressed, "#load")
+    def load_text(self) -> None:
+        self.query_one(TextArea).load_text(Path(__file__).read_text())
+
+    @on(Button.Pressed, "#select-all")
+    def select_all_text(self) -> None:
+        self.query_one(TextArea).select_all()
+
+
 class MessageSandboxApp(App[None]):
     CSS = """
     TabbedContent {
@@ -289,28 +324,31 @@ class MessageSandboxApp(App[None]):
             yield SelectionListSandbox()
             yield SwitchSandbox()
             yield ToggleButtonSandbox()
+            yield TextAreaSandbox()
         yield Log()
 
+    @on(Checkbox.Changed)
     @on(Collapsible.Toggled)
     @on(DataTable.CellHighlighted)
     @on(DataTable.CellSelected)
-    @on(DataTable.RowHighlighted)
-    @on(DataTable.RowSelected)
     @on(DataTable.ColumnHighlighted)
     @on(DataTable.ColumnSelected)
     @on(DataTable.HeaderSelected)
+    @on(DataTable.RowHighlighted)
     @on(DataTable.RowLabelSelected)
+    @on(DataTable.RowSelected)
     @on(Input.Changed)
     @on(ListView.Highlighted)
     @on(OptionList.OptionHighlighted)
-    @on(Select.Changed)
-    @on(SelectionList.SelectionHighlighted)
-    @on(SelectionList.SelectionToggled)
-    @on(SelectionList.SelectedChanged)
-    @on(Switch.Changed)
-    @on(Checkbox.Changed)
     @on(RadioButton.Changed)
     @on(RadioSet.Changed)
+    @on(Select.Changed)
+    @on(SelectionList.SelectedChanged)
+    @on(SelectionList.SelectionHighlighted)
+    @on(SelectionList.SelectionToggled)
+    @on(Switch.Changed)
+    @on(TextArea.Changed)
+    @on(TextArea.SelectionChanged)
     def log_message(self, message: Message) -> None:
         self.query_one(Log).write_line(f"{message}")
 
