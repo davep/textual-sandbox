@@ -10,6 +10,7 @@ from textual.coordinate import Coordinate
 from textual.message import Message
 from textual.widgets import (
     Button,
+    Checkbox,
     Collapsible,
     DataTable,
     Input,
@@ -18,6 +19,9 @@ from textual.widgets import (
     ListView,
     Log,
     OptionList,
+    RadioButton,
+    RadioSet,
+    Rule,
     Select,
     SelectionList,
     Switch,
@@ -230,6 +234,36 @@ class SwitchSandbox(TabPane):
         self.query_one(Switch).value = not self.query_one(Switch).value
 
 
+class ToggleButtonSandbox(TabPane):
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__("Toggle Buttons", *args, **kwargs)
+
+    def compose(self) -> ComposeResult:
+        yield Button("Toggle checkbox", id="toggle-checkbox")
+        yield Checkbox("Test checkbox")
+        yield Rule()
+        yield Button("Toggle radio button", id="toggle-radiobutton")
+        yield RadioButton("Test radio button")
+        yield Rule()
+        yield Button("Tick #2", id="change-radioset")
+        with RadioSet():
+            yield RadioButton("One")
+            yield RadioButton("Two", id="tester")
+            yield RadioButton("Three")
+
+    @on(Button.Pressed, "#toggle-checkbox")
+    def toggle_checkbox(self) -> None:
+        self.query_one(Checkbox).value = not self.query_one(Checkbox).value
+
+    @on(Button.Pressed, "#toggle-radiobutton")
+    def toggle_radiobutton(self) -> None:
+        self.query_one(RadioButton).value = not self.query_one(RadioButton).value
+
+    @on(Button.Pressed, "#change-radioset")
+    def change_radioset(self) -> None:
+        self.query_one("#tester", RadioButton).value = True
+
+
 class MessageSandboxApp(App[None]):
     CSS = """
     TabbedContent {
@@ -254,6 +288,7 @@ class MessageSandboxApp(App[None]):
             yield SelectSandbox()
             yield SelectionListSandbox()
             yield SwitchSandbox()
+            yield ToggleButtonSandbox()
         yield Log()
 
     @on(Collapsible.Toggled)
@@ -273,6 +308,9 @@ class MessageSandboxApp(App[None]):
     @on(SelectionList.SelectionToggled)
     @on(SelectionList.SelectedChanged)
     @on(Switch.Changed)
+    @on(Checkbox.Changed)
+    @on(RadioButton.Changed)
+    @on(RadioSet.Changed)
     def log_message(self, message: Message) -> None:
         self.query_one(Log).write_line(f"{message}")
 
