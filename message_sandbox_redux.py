@@ -13,6 +13,8 @@ from textual.widgets import (
     DataTable,
     Input,
     Label,
+    ListItem,
+    ListView,
     Log,
     OptionList,
     TabbedContent,
@@ -116,6 +118,27 @@ class InputSandbox(TabPane):
         self.query_one(Input).value += "x"
 
 
+class ListViewSandbox(TabPane):
+    DEFAULT_CSS = """
+    ListViewSandbox {
+        ListView {
+            height: 1fr;
+        }
+    }
+    """
+
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__("ListView", *args, **kwargs)
+
+    def compose(self) -> ComposeResult:
+        yield Button("Go to 3", id="option-jump")
+        yield ListView(*[ListItem(Label(f"This is option {n}")) for n in range(20)])
+
+    @on(Button.Pressed, "#option-jump")
+    def more_input(self) -> None:
+        self.query_one(ListView).index = 3
+
+
 class OptionListSandbox(TabPane):
     DEFAULT_CSS = """
     OptionListSandbox {
@@ -156,6 +179,7 @@ class MessageSandboxApp(App[None]):
             yield DataTableRowSandbox()
             yield DataTableColumnSandbox()
             yield InputSandbox()
+            yield ListViewSandbox()
             yield OptionListSandbox()
         yield Log()
 
@@ -169,6 +193,7 @@ class MessageSandboxApp(App[None]):
     @on(DataTable.HeaderSelected)
     @on(DataTable.RowLabelSelected)
     @on(Input.Changed)
+    @on(ListView.Highlighted)
     @on(OptionList.OptionHighlighted)
     def log_message(self, message: Message) -> None:
         self.query_one(Log).write_line(f"{message}")
