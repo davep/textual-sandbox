@@ -14,6 +14,7 @@ from textual.widgets import (
     Input,
     Label,
     Log,
+    OptionList,
     TabbedContent,
     TabPane,
 )
@@ -115,6 +116,27 @@ class InputSandbox(TabPane):
         self.query_one(Input).value += "x"
 
 
+class OptionListSandbox(TabPane):
+    DEFAULT_CSS = """
+    OptionListSandbox {
+        OptionList {
+            height: 1fr;
+        }
+    }
+    """
+
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__("OptionList", *args, **kwargs)
+
+    def compose(self) -> ComposeResult:
+        yield Button("Go to 3", id="option-jump")
+        yield OptionList(*[f"This is option {n}" for n in range(20)])
+
+    @on(Button.Pressed, "#option-jump")
+    def more_input(self) -> None:
+        self.query_one(OptionList).highlighted = 3
+
+
 class MessageSandboxApp(App[None]):
     CSS = """
     TabbedContent {
@@ -134,6 +156,7 @@ class MessageSandboxApp(App[None]):
             yield DataTableRowSandbox()
             yield DataTableColumnSandbox()
             yield InputSandbox()
+            yield OptionListSandbox()
         yield Log()
 
     @on(Collapsible.Toggled)
@@ -146,6 +169,7 @@ class MessageSandboxApp(App[None]):
     @on(DataTable.HeaderSelected)
     @on(DataTable.RowLabelSelected)
     @on(Input.Changed)
+    @on(OptionList.OptionHighlighted)
     def log_message(self, message: Message) -> None:
         self.query_one(Log).write_line(f"{message}")
 
