@@ -20,6 +20,7 @@ from textual.widgets import (
     OptionList,
     Select,
     SelectionList,
+    Switch,
     TabbedContent,
     TabPane,
 )
@@ -216,6 +217,19 @@ class SelectionListSandbox(TabPane):
         self.query_one(SelectionList).deselect(3)
 
 
+class SwitchSandbox(TabPane):
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__("Switch", *args, **kwargs)
+
+    def compose(self) -> ComposeResult:
+        yield Button("Toggle", id="toggle")
+        yield Switch()
+
+    @on(Button.Pressed, "#toggle")
+    def toggle_the_thing(self) -> None:
+        self.query_one(Switch).value = not self.query_one(Switch).value
+
+
 class MessageSandboxApp(App[None]):
     CSS = """
     TabbedContent {
@@ -239,6 +253,7 @@ class MessageSandboxApp(App[None]):
             yield OptionListSandbox()
             yield SelectSandbox()
             yield SelectionListSandbox()
+            yield SwitchSandbox()
         yield Log()
 
     @on(Collapsible.Toggled)
@@ -257,6 +272,7 @@ class MessageSandboxApp(App[None]):
     @on(SelectionList.SelectionHighlighted)
     @on(SelectionList.SelectionToggled)
     @on(SelectionList.SelectedChanged)
+    @on(Switch.Changed)
     def log_message(self, message: Message) -> None:
         self.query_one(Log).write_line(f"{message}")
 
