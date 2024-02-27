@@ -5,6 +5,7 @@ https://github.com/Textualize/textual/issues/3869
 
 from textual import on
 from textual.app import App, ComposeResult
+from textual.containers import Horizontal
 from textual.coordinate import Coordinate
 from textual.message import Message
 from textual.widgets import (
@@ -18,6 +19,7 @@ from textual.widgets import (
     Log,
     OptionList,
     Select,
+    SelectionList,
     TabbedContent,
     TabPane,
 )
@@ -174,6 +176,46 @@ class SelectSandbox(TabPane):
         self.query_one(Select).value = 3
 
 
+class SelectionListSandbox(TabPane):
+    DEFAULT_CSS = """
+    SelectionListSandbox {
+        SelectionList {
+            height: 1fr;
+        }
+        Horizontal {
+            height: auto;
+        }
+    }
+    """
+
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__("SelectionList", *args, **kwargs)
+
+    def compose(self) -> ComposeResult:
+        with Horizontal():
+            yield Button("Go to 3", id="option-jump")
+            yield Button("Toggle 3", id="toggle")
+            yield Button("Select 3", id="select")
+            yield Button("Deselect 3", id="deselect")
+        yield SelectionList[int](*[(f"This is selection {n}", n) for n in range(20)])
+
+    @on(Button.Pressed, "#option-jump")
+    def more_input(self) -> None:
+        self.query_one(SelectionList).highlighted = 3
+
+    @on(Button.Pressed, "#toggle")
+    def toggle_a_thing(self) -> None:
+        self.query_one(SelectionList).toggle(3)
+
+    @on(Button.Pressed, "#select")
+    def select_a_thing(self) -> None:
+        self.query_one(SelectionList).select(3)
+
+    @on(Button.Pressed, "#deselect")
+    def deselect_a_thing(self) -> None:
+        self.query_one(SelectionList).deselect(3)
+
+
 class MessageSandboxApp(App[None]):
     CSS = """
     TabbedContent {
@@ -196,6 +238,7 @@ class MessageSandboxApp(App[None]):
             yield ListViewSandbox()
             yield OptionListSandbox()
             yield SelectSandbox()
+            yield SelectionListSandbox()
         yield Log()
 
     @on(Collapsible.Toggled)
@@ -211,6 +254,9 @@ class MessageSandboxApp(App[None]):
     @on(ListView.Highlighted)
     @on(OptionList.OptionHighlighted)
     @on(Select.Changed)
+    @on(SelectionList.SelectionHighlighted)
+    @on(SelectionList.SelectionToggled)
+    @on(SelectionList.SelectedChanged)
     def log_message(self, message: Message) -> None:
         self.query_one(Log).write_line(f"{message}")
 
