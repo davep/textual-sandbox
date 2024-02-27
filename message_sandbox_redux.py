@@ -17,6 +17,7 @@ from textual.widgets import (
     ListView,
     Log,
     OptionList,
+    Select,
     TabbedContent,
     TabPane,
 )
@@ -160,6 +161,19 @@ class OptionListSandbox(TabPane):
         self.query_one(OptionList).highlighted = 3
 
 
+class SelectSandbox(TabPane):
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__("Select", *args, **kwargs)
+
+    def compose(self) -> ComposeResult:
+        yield Button("Go to 3", id="option-jump")
+        yield Select[int](((data[1], data[0]) for data in DATA[1:]))
+
+    @on(Button.Pressed, "#option-jump")
+    def more_input(self) -> None:
+        self.query_one(Select).value = 3
+
+
 class MessageSandboxApp(App[None]):
     CSS = """
     TabbedContent {
@@ -181,6 +195,7 @@ class MessageSandboxApp(App[None]):
             yield InputSandbox()
             yield ListViewSandbox()
             yield OptionListSandbox()
+            yield SelectSandbox()
         yield Log()
 
     @on(Collapsible.Toggled)
@@ -195,6 +210,7 @@ class MessageSandboxApp(App[None]):
     @on(Input.Changed)
     @on(ListView.Highlighted)
     @on(OptionList.OptionHighlighted)
+    @on(Select.Changed)
     def log_message(self, message: Message) -> None:
         self.query_one(Log).write_line(f"{message}")
 
