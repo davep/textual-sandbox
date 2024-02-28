@@ -30,6 +30,7 @@ from textual.widgets import (
     TabbedContent,
     TabPane,
     TextArea,
+    Tree,
 )
 
 DATA = [
@@ -299,6 +300,44 @@ class TextAreaSandbox(TabPane):
         self.query_one(TextArea).select_all()
 
 
+class TreeSandbox(TabPane):
+    DEFAULT_CSS = """
+    TreeSandbox {
+        Horizontal {
+            height: auto;
+        }
+    }
+    """
+
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__("Tree", *args, **kwargs)
+
+    def compose(self) -> ComposeResult:
+        with Horizontal():
+            yield Button("Expand Root", id="expand")
+            yield Button("Collapse Root", id="collapse")
+            yield Button("Highlight Root", id="highlight")
+        yield Tree("Root")
+
+    def on_mount(self) -> None:
+        tree = self.query_one(Tree)
+        child = tree.root.add("Node")
+        for n in range(5):
+            child.add_leaf(f"Leaf {n}")
+
+    @on(Button.Pressed, "#expand")
+    def expand_root(self) -> None:
+        self.query_one(Tree).root.expand()
+
+    @on(Button.Pressed, "#collapse")
+    def collapse_root(self) -> None:
+        self.query_one(Tree).root.collapse()
+
+    @on(Button.Pressed, "#highlight")
+    def highlight_root(self) -> None:
+        self.query_one(Tree).select_node(self.query_one(Tree).root)
+
+
 class MessageSandboxApp(App[None]):
     CSS = """
     TabbedContent {
@@ -325,6 +364,7 @@ class MessageSandboxApp(App[None]):
             yield SwitchSandbox()
             yield ToggleButtonSandbox()
             yield TextAreaSandbox()
+            yield TreeSandbox()
         yield Log()
 
     @on(Checkbox.Changed)
@@ -349,6 +389,10 @@ class MessageSandboxApp(App[None]):
     @on(Switch.Changed)
     @on(TextArea.Changed)
     @on(TextArea.SelectionChanged)
+    @on(Tree.NodeHighlighted)
+    @on(Tree.NodeSelected)
+    @on(Tree.NodeExpanded)
+    @on(Tree.NodeCollapsed)
     def log_message(self, message: Message) -> None:
         self.query_one(Log).write_line(f"{message}")
 
