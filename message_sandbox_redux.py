@@ -20,6 +20,7 @@ from textual.widgets import (
     ListItem,
     ListView,
     Log,
+    Markdown,
     OptionList,
     RadioButton,
     RadioSet,
@@ -338,6 +339,19 @@ class TreeSandbox(TabPane):
         self.query_one(Tree).select_node(self.query_one(Tree).root)
 
 
+class MarkdownSandbox(TabPane):
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__("Markdown", *args, **kwargs)
+
+    def compose(self) -> ComposeResult:
+        yield Button("Update TOC")
+        yield Markdown("# This is some markdown\n\nReally, this is Markdown.")
+
+    @on(Button.Pressed)
+    def update_toc(self) -> None:
+        self.query_one(Markdown).update("")
+
+
 class MessageSandboxApp(App[None]):
     CSS = """
     TabbedContent {
@@ -365,6 +379,7 @@ class MessageSandboxApp(App[None]):
             yield ToggleButtonSandbox()
             yield TextAreaSandbox()
             yield TreeSandbox()
+            yield MarkdownSandbox()
         yield Log()
 
     @on(Checkbox.Changed)
@@ -393,6 +408,8 @@ class MessageSandboxApp(App[None]):
     @on(Tree.NodeSelected)
     @on(Tree.NodeExpanded)
     @on(Tree.NodeCollapsed)
+    @on(Markdown.TableOfContentsUpdated)
+    @on(Markdown.TableOfContentsSelected)
     def log_message(self, message: Message) -> None:
         self.query_one(Log).write_line(f"{message}")
 
