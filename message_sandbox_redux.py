@@ -15,6 +15,7 @@ from textual.widgets import (
     Checkbox,
     Collapsible,
     DataTable,
+    DirectoryTree,
     Input,
     Label,
     ListItem,
@@ -352,6 +353,38 @@ class MarkdownSandbox(TabPane):
         self.query_one(Markdown).update("")
 
 
+class DirectoryTreeSandbox(TabPane):
+    DEFAULT_CSS = """
+    DirectoryTreeSandbox {
+        Horizontal {
+            height: auto;
+        }
+    }
+    """
+
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__("DirectoryTree", *args, **kwargs)
+
+    def compose(self) -> ComposeResult:
+        with Horizontal():
+            yield Button("Expand Root", id="expand")
+            yield Button("Collapse Root", id="collapse")
+            yield Button("Highlight Root", id="highlight")
+        yield DirectoryTree("/Users/davep")
+
+    @on(Button.Pressed, "#expand")
+    def expand_root(self) -> None:
+        self.query_one(DirectoryTree).root.expand()
+
+    @on(Button.Pressed, "#collapse")
+    def collapse_root(self) -> None:
+        self.query_one(DirectoryTree).root.collapse()
+
+    @on(Button.Pressed, "#highlight")
+    def highlight_root(self) -> None:
+        self.query_one(DirectoryTree).select_node(self.query_one(DirectoryTree).root)
+
+
 class MessageSandboxApp(App[None]):
     CSS = """
     TabbedContent {
@@ -380,6 +413,7 @@ class MessageSandboxApp(App[None]):
             yield TextAreaSandbox()
             yield TreeSandbox()
             yield MarkdownSandbox()
+            yield DirectoryTreeSandbox()
         yield Log()
 
     @on(Checkbox.Changed)
@@ -410,6 +444,8 @@ class MessageSandboxApp(App[None]):
     @on(Tree.NodeCollapsed)
     @on(Markdown.TableOfContentsUpdated)
     @on(Markdown.TableOfContentsSelected)
+    @on(DirectoryTree.FileSelected)
+    @on(DirectoryTree.DirectorySelected)
     def log_message(self, message: Message) -> None:
         self.query_one(Log).write_line(f"{message}")
 
