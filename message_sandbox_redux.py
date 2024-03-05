@@ -249,7 +249,7 @@ class ToggleButtonSandbox(TabPane):
         yield Checkbox("Test checkbox")
         yield Rule()
         yield Button("Toggle radio button", id="toggle-radiobutton")
-        yield RadioButton("Test radio button")
+        yield RadioButton("Test radio button", id="test-radiobutton")
         yield Rule()
         yield Button("Tick #2", id="change-radioset")
         with RadioSet():
@@ -263,7 +263,8 @@ class ToggleButtonSandbox(TabPane):
 
     @on(Button.Pressed, "#toggle-radiobutton")
     def toggle_radiobutton(self) -> None:
-        self.query_one(RadioButton).value = not self.query_one(RadioButton).value
+        radio_button = self.query_one("#test-radiobutton", RadioButton)
+        radio_button.value = not radio_button.value
 
     @on(Button.Pressed, "#change-radioset")
     def change_radioset(self) -> None:
