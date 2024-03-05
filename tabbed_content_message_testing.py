@@ -23,6 +23,7 @@ class WrapperForTesting(Container):
         with Horizontal():
             yield Button("Select 3", id="select")
             yield Button("Clear", id="clear")
+            yield Button("Remove all", id="remove-all")
             yield Button("Hide all", id="hide-all")
         with TabbedContent():
             for title in ("One", "Two", "Three", "Four", "Five"):
@@ -35,6 +36,11 @@ class WrapperForTesting(Container):
     @on(Button.Pressed, "#clear")
     def clear_tabs(self) -> None:
         self.query_one(TabbedContent).clear_panes()
+
+    @on(Button.Pressed, "#remove-all")
+    async def remove_all(self) -> None:
+        for n in range(5):
+            await self.query_one(TabbedContent).remove_pane(f"tab-{n+1}")
 
     @on(Button.Pressed, "#hide-all")
     def hide_all(self) -> None:
