@@ -2,7 +2,9 @@
 
 from pathlib import Path
 
+from textual import on
 from textual.app import App, ComposeResult
+from textual.events import AppBlur, AppFocus
 from textual.widgets import Digits, Input, TextArea
 
 
@@ -22,6 +24,18 @@ class AppFocusBlurApp(App[None]):
 
     def watch_app_focus(self) -> None:
         self.update_digits()
+
+    def sneak_focus_back(self) -> None:
+        self.query_one(Input).focus()
+
+    @on(AppBlur)
+    def goodbye(self) -> None:
+        self.notify("Wait! Don't go! Come back!")
+        self.set_timer(0.5, self.sneak_focus_back)
+
+    @on(AppFocus)
+    def hello(self) -> None:
+        self.notify("Pfft! Need me again do you? :-P")
 
 
 if __name__ == "__main__":
