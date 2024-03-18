@@ -15,7 +15,7 @@ class TabbedContentMessageStealingApp(App[None]):
 
     def compose(self) -> ComposeResult:
         with TabbedContent():
-            with TabPane("Test", id="avoid-me"):
+            with TabPane("Test"):
                 yield Button("Disable", id="disable")
                 yield Tabs("One", "Two", "Three", id="test-tabs")
 
