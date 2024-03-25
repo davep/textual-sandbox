@@ -71,11 +71,11 @@
                 "syntax"
             ],
             "hashes": [
-                "sha256:4232e5c2b423ed7c63baaeb6030355e14e1de1b9df096c9655b68a1e60e4de5f",
-                "sha256:960a19df2319482918b4a58736d9552cdc1ab65d170ba0bc15273ce0e1922b7a"
+                "sha256:23ba673be7974819ded35ea88d28df7117987e53d58f15b2cc890ac2ecf56401",
+                "sha256:32201aa9d334ed064d5e670f15fe3d7f19c736ca54cecb054a5b995691104434"
             ],
             "markers": "python_version >= '3.8' and python_version < '4.0'",
-            "version": "==0.52.1"
+            "version": "==0.53.1"
         },
         "tree-sitter": {
             "hashes": [
@@ -773,12 +773,12 @@
         },
         "pre-commit": {
             "hashes": [
-                "sha256:ba637c2d7a670c10daedc059f5c49b5bd0aadbccfcd7ec15592cf9665117532c",
-                "sha256:c3ef34f463045c88658c5b99f38c1e297abdcc0ff13f98d3370055fbbfabc67e"
+                "sha256:5eae9e10c2b5ac51577c3452ec0a490455c45a0533f7960f993a0d01e59decab",
+                "sha256:e209d61b8acdcf742404408531f0c37d49d2c734fd7cff2d6076083d191cb060"
             ],
             "index": "pypi",
             "markers": "python_version >= '3.9'",
-            "version": "==3.6.2"
+            "version": "==3.7.0"
         },
         "pygments": {
             "hashes": [
@@ -933,11 +933,11 @@
                 "syntax"
             ],
             "hashes": [
-                "sha256:4232e5c2b423ed7c63baaeb6030355e14e1de1b9df096c9655b68a1e60e4de5f",
-                "sha256:960a19df2319482918b4a58736d9552cdc1ab65d170ba0bc15273ce0e1922b7a"
+                "sha256:23ba673be7974819ded35ea88d28df7117987e53d58f15b2cc890ac2ecf56401",
+                "sha256:32201aa9d334ed064d5e670f15fe3d7f19c736ca54cecb054a5b995691104434"
             ],
             "markers": "python_version >= '3.8' and python_version < '4.0'",
-            "version": "==0.52.1"
+            "version": "==0.53.1"
         },
         "textual-dev": {
             "hashes": [
