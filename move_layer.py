@@ -8,6 +8,10 @@ class MoveLayersApp(App[None]):
     CSS = """
     Screen {
         layers: bottom top;
+
+        &.bottom-top {
+            layers: top bottom;
+        }
     }
 
     .box {
@@ -19,17 +23,11 @@ class MoveLayersApp(App[None]):
         background: red;
         offset-x: 15;
         offset-y: 7;
+        layer: top;
     }
 
     #green {
         background: green;
-    }
-
-    .top {
-        layer: top;
-    }
-
-    .bottom {
         layer: bottom;
     }
     """
@@ -39,11 +37,11 @@ class MoveLayersApp(App[None]):
     ]
 
     def compose(self) -> ComposeResult:
-        yield Widget(id="red", classes="box top")
-        yield Widget(id="green", classes="box bottom")
+        yield Widget(id="red", classes="box")
+        yield Widget(id="green", classes="box")
 
     def action_move(self) -> None:
-        self.query(".box").toggle_class("top").toggle_class("bottom")
+        self.screen.toggle_class("bottom-top")
 
 
 if __name__ == "__main__":
