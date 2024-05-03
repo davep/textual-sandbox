@@ -11,16 +11,12 @@ class ArrowList(OptionList):
         _, scroll_y = self.scroll_offset
         line_number = scroll_y + y
         line = super().render_line(y)
-        return (
-            Strip.join(
-                [Strip([Segment("> ")]), line, Strip([Segment(" <")])]
-            ).simplify()
+        return Strip.join(
+            [Strip([Segment("> ")]), line, Strip([Segment(" <")])]
             if self.highlighted is not None
             and line_number in self._spans[self.highlighted]
-            else Strip.join(
-                [Strip([Segment("  ")]), line, Strip([Segment("  ")])]
-            ).simplify()
-        )
+            else [Strip([Segment("  ")]), line, Strip([Segment("  ")])]
+        ).simplify()
 
     def _left_gutter_width(self) -> int:
         # Twice the left to make up for the right too.
