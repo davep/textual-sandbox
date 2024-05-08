@@ -7,12 +7,19 @@ from textual.widgets import Input
 
 class NextInputOnSubmitApp(App[None]):
     def compose(self) -> ComposeResult:
-        for n in range(10):
-            yield Input(placeholder=f"This is input #{n}", id=f"input-{n}")
+        yield Input(id="username")
+        yield Input(id="password")
+
+    @on(Input.Submitted, "#username")
+    def user_name(self) -> None:
+        self.notify("Cool, that's the user name")
+
+    @on(Input.Submitted, "#password")
+    def password(self) -> None:
+        self.notify("Aaaaaaaand that's the password")
 
     @on(Input.Submitted)
-    def input_submitted(self, event: Input.Submitted) -> None:
-        self.notify(f"The user did a submit on Input#{event.input.id}")
+    def bump_focus(self) -> None:
         self.screen.focus_next()
 
 
