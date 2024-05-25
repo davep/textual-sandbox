@@ -71,11 +71,11 @@
                 "syntax"
             ],
             "hashes": [
-                "sha256:5208c1df961848889ff0a0c7628f203a2bc773fc2a45d6e842b27a8e34c15499",
-                "sha256:563c1c13a087c8f4fef8a47aae43e1274139e85d00e0b0898b8eb89c5e494997"
+                "sha256:4d49ed5f50afe2390c23ed01d07b168c2802f497fab48ffb1dd80d4ffdd298ab",
+                "sha256:54ec9bad963f59ffa9bfadd0d44ac386b7c9b9dde470b2f282b58cc99d2a7ff2"
             ],
             "markers": "python_version >= '3.8' and python_version < '4.0'",
-            "version": "==0.62.0"
+            "version": "==0.63.2"
         },
         "tree-sitter": {
             "hashes": [
@@ -922,22 +922,22 @@
         },
         "setuptools": {
             "hashes": [
-                "sha256:6c1fccdac05a97e598fb0ae3bbed5904ccb317337a51139dcd51453611bbb987",
-                "sha256:c636ac361bc47580504644275c9ad802c50415c7522212252c033bd15f301f32"
+                "sha256:54faa7f2e8d2d11bcd2c07bed282eef1046b5c080d1c32add737d7b5817b1ad4",
+                "sha256:f211a66637b8fa059bb28183da127d4e86396c991a942b028c6650d4319c3fd0"
             ],
             "markers": "python_version >= '3.8'",
-            "version": "==69.5.1"
+            "version": "==70.0.0"
         },
         "textual": {
             "extras": [
                 "syntax"
             ],
             "hashes": [
-                "sha256:5208c1df961848889ff0a0c7628f203a2bc773fc2a45d6e842b27a8e34c15499",
-                "sha256:563c1c13a087c8f4fef8a47aae43e1274139e85d00e0b0898b8eb89c5e494997"
+                "sha256:4d49ed5f50afe2390c23ed01d07b168c2802f497fab48ffb1dd80d4ffdd298ab",
+                "sha256:54ec9bad963f59ffa9bfadd0d44ac386b7c9b9dde470b2f282b58cc99d2a7ff2"
             ],
             "markers": "python_version >= '3.8' and python_version < '4.0'",
-            "version": "==0.62.0"
+            "version": "==0.63.2"
         },
         "textual-dev": {
             "hashes": [
