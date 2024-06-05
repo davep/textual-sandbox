@@ -71,11 +71,11 @@
                 "syntax"
             ],
             "hashes": [
-                "sha256:6834f13e7274060e26e1298e74bc4f346f2decf4b2a2086641480bf3eb7be690",
-                "sha256:e7084bf9caca2308316415da9d4b84c6e6dbd73f01cff03e7c17bd4b0db6c01d"
+                "sha256:12a2a00f9b5675577fffa0f71171be5cdd138c42460b7ee95b3182542ee25aa0",
+                "sha256:22b05430aa2c7f90adc38fb7458bdde9395ca90960063432ae1273510e35e682"
             ],
             "markers": "python_version >= '3.8' and python_version < '4.0'",
-            "version": "==0.65.0"
+            "version": "==0.65.1"
         },
         "tree-sitter": {
             "hashes": [
@@ -925,11 +925,11 @@
                 "syntax"
             ],
             "hashes": [
-                "sha256:6834f13e7274060e26e1298e74bc4f346f2decf4b2a2086641480bf3eb7be690",
-                "sha256:e7084bf9caca2308316415da9d4b84c6e6dbd73f01cff03e7c17bd4b0db6c01d"
+                "sha256:12a2a00f9b5675577fffa0f71171be5cdd138c42460b7ee95b3182542ee25aa0",
+                "sha256:22b05430aa2c7f90adc38fb7458bdde9395ca90960063432ae1273510e35e682"
             ],
             "markers": "python_version >= '3.8' and python_version < '4.0'",
-            "version": "==0.65.0"
+            "version": "==0.65.1"
         },
         "textual-dev": {
             "hashes": [
